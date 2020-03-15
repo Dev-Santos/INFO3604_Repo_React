@@ -1,10 +1,9 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 //Setting Up the PostgreSQL Database
 const db = require('./config/database');
@@ -15,6 +14,9 @@ db.authenticate()
 
 //Items Middleware - Use Routes
 app.use('/api/items', require('./routes/api/Items'));
+
+//Users Middleware - Use Routes
+app.use('/api/users', require('./routes/api/Users'));
 
 //Serve static assets if in production
 if(process.env.NODE_ENV === 'production'){

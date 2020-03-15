@@ -1,11 +1,12 @@
 var Sequelize = require("sequelize");
+require('dotenv/config');
 
 var mode;
 
 mode = 'dev';
 
 if(mode == 'dev'){
-  module.exports = new Sequelize('postgres://nwahogac:3vTo5mkRYc3EkTlNPCcZvkwOSe5jR6P0@drona.db.elephantsql.com:5432/nwahogac');
+  module.exports = new Sequelize(process.env.PG_URI);
   /*module.exports = new Sequelize('system_db', 'dev_acc', 'password123', {
     host: 'localhost',
     dialect: 'postgres'
