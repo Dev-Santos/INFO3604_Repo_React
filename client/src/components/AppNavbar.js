@@ -22,7 +22,7 @@ class AppNavbar extends Component{
 
     toggle = () => {
         this.setState( {
-            isOpen: !this.setState.isOpen});
+            isOpen: !this.state.isOpen});
     }
 
     static propTypes = {
@@ -40,6 +40,9 @@ class AppNavbar extends Component{
                     <span className="navbar-text mr-3">
                         <strong>{user ? `Welcome ${user.name}`: ''}</strong>
                     </span>
+                </NavItem>
+                <NavItem>
+                        <NavLink href="/api/ereport">Make EWaste Report</NavLink> 
                 </NavItem>
                 <NavItem>
                     <Logout/>

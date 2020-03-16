@@ -4,6 +4,11 @@ import './App.css';
 import AppNavbar from './components/AppNavbar';
 import ShoppingList from './components/ShoppingList';
 import ItemModal from './components/ItemModal';
+import Homepage from './components/Homepage';
+import EWasteReport from './components/EWasteReport';
+import ImageClassifier from './components/ImageClassifier';
+
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import {Container} from 'reactstrap';
 
@@ -21,11 +26,20 @@ class App extends Component{
   render(){
     return(<Provider store={store}>
       <div className="App">
-        <AppNavbar/>
-        <Container>
-          <ItemModal/>
-          <ShoppingList/>
-        </Container>
+        <Router>
+          <AppNavbar/>
+          <Switch>
+            <Route path={["/api/home","/"]} exact component={Homepage}/>
+            <Route path="/items" exact>
+              <Container>
+                <ItemModal/>
+                <ShoppingList/>
+              </Container>
+            </Route>
+            <Route path="/api/ereport" exact component={EWasteReport}/>
+            <Route path="/api/img" exact component={ImageClassifier}/>
+          </Switch>
+        </Router>
       </div>
     </Provider>);
   }
