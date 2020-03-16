@@ -18,6 +18,9 @@ app.use('/api/items', require('./routes/api/Items'));
 //Users Middleware - Use Routes
 app.use('/api/users', require('./routes/api/Users'));
 
+//Auth Middleware - Use Routes
+app.use('/api/auth', require('./routes/api/Auth'));
+
 //Serve static assets if in production
 if(process.env.NODE_ENV === 'production'){
     //Set static folder

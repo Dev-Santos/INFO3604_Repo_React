@@ -1,12 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const config = require('config');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+
 
 //User Model
 const User = require('../../models/User');
 
+
+//@route    POST api/users
+//@desc     Register new user
+//@access   Public
 router.post('/', (req, res)=>{
-    //res.send('Register');
+    
     const { name, email, password } = req.body;
 
     //Simple validation
@@ -35,9 +43,18 @@ router.post('/', (req, res)=>{
                     let {name, email, password , reg_date} = newUser;
                 
                     User.create({name, email, password, reg_date})
-                        .then(user => res.json({ name: user.name, reg_date: user.reg_date}))
-                        .catch(err => console.log(err));
-
+                        .then(user => 
+                                
+                            jwt.sign(
+                                {id: user.id},
+                                config.get('SECRET_KEY'),
+                                { expiresIn: 1200 },
+                                (err, token) => {
+                                    if(err) throw err;
+                                    res.json({ token, id: user.id, name: user.name, reg_date: user.reg_date});
+                                }
+                            )
+                        )
                 }).catch(err => console.log(err));
         });
 });
