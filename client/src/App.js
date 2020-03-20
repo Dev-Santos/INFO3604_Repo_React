@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import AppNavbar from './components/AppNavbar';
-import ShoppingList from './components/ShoppingList';
-import ItemModal from './components/ItemModal';
 import Homepage from './components/Homepage';
 import EWasteReport from './components/EWasteReport';
-import ImageClassifier from './components/ImageClassifier';
+//import Upload from './components/ReactUploadImage';
+
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -28,17 +27,12 @@ class App extends Component{
       <div className="App">
         <Router>
           <AppNavbar/>
-          <Switch>
-            <Route path={["/api/home","/"]} exact component={Homepage}/>
-            <Route path="/items" exact>
-              <Container>
-                <ItemModal/>
-                <ShoppingList/>
-              </Container>
-            </Route>
-            <Route path="/api/ereport" exact component={EWasteReport}/>
-            <Route path="/api/img" exact component={ImageClassifier}/>
-          </Switch>
+          <Container className="mt-4">
+            <Switch>
+              <Route path={["/api/home","/"]} exact component={Homepage}/>
+              <Route path="/api/ereport" exact component={EWasteReport}/>
+            </Switch>
+          </Container>
         </Router>
       </div>
     </Provider>);
