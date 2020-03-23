@@ -56,6 +56,7 @@ function ImageClassifier(){
         next();
         const classificationResults = await model.classify(imgRef.current);
         setResults(classificationResults);
+        console.log(classificationResults);
         setTopResult(classificationResults[0].className);
         next();
     }

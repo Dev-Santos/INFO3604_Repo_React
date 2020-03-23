@@ -4,7 +4,6 @@ import './App.css';
 import AppNavbar from './components/AppNavbar';
 import Homepage from './components/Homepage';
 import EWasteReport from './components/EWasteReport';
-//import Upload from './components/ReactUploadImage';
 
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
