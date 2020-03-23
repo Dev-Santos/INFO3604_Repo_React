@@ -85,12 +85,12 @@ router.post("/", (req, res) => {
 
                 console.log(list);
 
-                fs.unlink(`${__dirname}/images/${file.name}`, err => {
+                /*fs.unlink(`${__dirname}/images/${file.name}`, err => {
                     if (err) 
                         console.log(err);
                     else
                         console.log('The file was deleted');
-                });
+                });*/
                 
                 res.json({ list });
 
