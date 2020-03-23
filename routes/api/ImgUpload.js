@@ -6,7 +6,11 @@ const fs = require('fs');
 
 const { Image, createCanvas } = require('canvas');
 
-router.use(fileUpload());
+router.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
+
 router.use(express.json());
 
 router.post("/", (req, res) => {
@@ -15,12 +19,6 @@ router.post("/", (req, res) => {
         return res.json({ msg: 'File not received'}); 
 
     let file = req.files.file;
-
-    file.mv(`${__dirname}/images/${file.name}`, err => {
-        if(err){
-            console.log(err);
-        }
-    });
 
     tf.loadGraphModel('file://routes/api/class_model/model.json')
     .then(model => {
@@ -46,9 +44,8 @@ router.post("/", (req, res) => {
             //throw err 
             res.status(500).json({ msg: 'Image not loaded successfully!' });
         };
-        
-        //img.src = `${__dirname}/images/forest2.jpg`;
-        img.src = `${__dirname}/images/${file.name}`;
+
+        img.src = file.tempFilePath;
 
         let tensor = tf.browser.fromPixels(canvas, 3)
                         .resizeNearestNeighbor([224,224])
@@ -84,13 +81,6 @@ router.post("/", (req, res) => {
                 });
 
                 console.log(list);
-
-                /*fs.unlink(`${__dirname}/images/${file.name}`, err => {
-                    if (err) 
-                        console.log(err);
-                    else
-                        console.log('The file was deleted');
-                });*/
                 
                 res.json({ list });
 
@@ -101,7 +91,6 @@ router.post("/", (req, res) => {
         console.log(err);
         res.status(500).json({ msg: 'Server side error!' });
     });
-
 
 });
 
