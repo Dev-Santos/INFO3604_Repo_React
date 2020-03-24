@@ -1,14 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Container
-} from 'reactstrap';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+
 import RegisterModal from './auth/RegisterModal';
 import LoginModal from './auth/LoginModal';
 import Logout from "./auth/Logout";
@@ -36,47 +28,62 @@ class AppNavbar extends Component{
 
         const authLinks = (
             <Fragment>
-                <NavItem>
-                    <span className="navbar-text mr-3">
+                <Nav.Item>
+                    <Nav.Link href="#">Donate</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href="#">Request</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                        <Nav.Link href="/api/ereport">Make EWaste Report</Nav.Link> 
+                </Nav.Item>
+                <Nav.Item>
+                    <Logout/>
+                </Nav.Item>
+                <Nav.Item>
+                    <span className="navbar-text mr-3 ml-3">
                         <strong>{user ? `Welcome ${user.name}`: ''}</strong>
                     </span>
-                </NavItem>
-                <NavItem>
-                        <NavLink href="/api/ereport">Make EWaste Report</NavLink> 
-                </NavItem>
-                <NavItem>
-                    <Logout/>
-                </NavItem>
+                </Nav.Item>
             </Fragment>
         );
 
         const guestLinks = (
             <Fragment>
-                <NavItem>
+                <Nav.Item>
                     <RegisterModal/>
-                </NavItem>
-                <NavItem>
+                </Nav.Item>
+                <Nav.Item className="mr-5">
                     <LoginModal/>
-                </NavItem>
+                </Nav.Item>
             </Fragment>
         );
 
         return(
-            <div>
-            <Navbar color="dark" dark expand="sm" className="mb-5">
-                <Container>
-                    <NavbarBrand href="/">E-Waste Management System</NavbarBrand>
-                    <NavbarToggler onClick={this.toggle}/>
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            {isAuthenticated ? authLinks: guestLinks}
-                        </Nav>
-                    </Collapse>
-                </Container>
+            <Navbar bg="dark" expand="lg" variant="dark">
+            <Navbar.Brand href="/api/home">RSC E-Waste System</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                <Nav.Link href="/api/home">Home</Nav.Link>
+                <Nav.Link href="#link">Gallery</Nav.Link>
+                <Nav.Link href="#link">About Us</Nav.Link>
+                <Nav.Link href="#link">Join Us</Nav.Link>
+                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                </NavDropdown>
+                </Nav>
+                <Nav>
+                    {isAuthenticated ? authLinks: guestLinks}
+                </Nav>     
+            </Navbar.Collapse>
             </Navbar>
-        </div>
         );
-    }  
+    }
 };
 
 const mapStateToProps = (state) => ({
