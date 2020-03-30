@@ -67,8 +67,7 @@ class AppNavbar extends Component{
                 <Nav className="mr-auto">
                 <Nav.Link href="/api/home">Home</Nav.Link>
                 <Nav.Link href="#link">Gallery</Nav.Link>
-                <Nav.Link href="#link">About Us</Nav.Link>
-                <Nav.Link href="#link">Join Us</Nav.Link>
+                <Nav.Link href="/api/aboutus">About Us</Nav.Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                     <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

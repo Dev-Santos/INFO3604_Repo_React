@@ -54,9 +54,12 @@ router.post("/", (req, res) => {
                         .reverse(-1);
 
         const TARGET_CLASSES = {
-            0: "Buildings",
-            1: "Forest",
-            2: "Glacier"
+            0: "CPU",
+            1: "Keyboard",
+            2: "Laptop",
+            3: "Monitor",
+            4: "Mouse",
+            5: "Printer"
         };
 
         model.predict(tensor).data()

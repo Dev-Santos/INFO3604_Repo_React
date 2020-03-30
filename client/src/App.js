@@ -4,6 +4,7 @@ import './App.css';
 import AppNavbar from './components/AppNavbar';
 import Homepage from './components/Homepage';
 import EWasteReport from './components/EWasteReport';
+import AboutUs from './components/AboutUs';
 
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -30,6 +31,7 @@ class App extends Component{
             <Switch>
               <Route path={["/api/home","/"]} exact component={Homepage}/>
               <Route path="/api/ereport" exact component={EWasteReport}/>
+              <Route path="/api/aboutus" exact component={AboutUs}/>
             </Switch>
           </Container>
         </Router>

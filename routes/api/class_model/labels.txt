@@ -1,3 +1,6 @@
-Buildings
-Forest
-Glaciers
+CPU
+Keyboard
+Laptop
+Monitor
+Mouse
+Printer
