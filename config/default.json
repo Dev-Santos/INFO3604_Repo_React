@@ -1,4 +1,8 @@
 {
     "SECRET_KEY": "hsdnjdf9ew9ew",
-    "DB_URI": "postgres://nwahogac:3vTo5mkRYc3EkTlNPCcZvkwOSe5jR6P0@drona.db.elephantsql.com:5432/nwahogac"
+    "DB_URI": "postgres://nwahogac:3vTo5mkRYc3EkTlNPCcZvkwOSe5jR6P0@drona.db.elephantsql.com:5432/nwahogac",
+    "DB_NAME": "a6XERCK5OC",
+    "DB_USER": "a6XERCK5OC",
+    "DB_PASSWORD": "Bqws3gKffQ",
+    "DB_HOST": "remotemysql.com"
 }
