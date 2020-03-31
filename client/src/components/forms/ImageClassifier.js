@@ -1,7 +1,7 @@
 import React, { useReducer, useState, useRef } from 'react';
 import * as mobilenet from '@tensorflow-models/mobilenet';
 
-import '../ImgClass.css';
+import '../../ImgClass.css';
 
 const stateMachine = {
     initial: "initial",
