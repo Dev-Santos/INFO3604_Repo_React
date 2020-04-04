@@ -5,21 +5,24 @@ const app = express();
 
 app.use(express.json());
 
-//Setting Up the PostgreSQL Database
+//Setting Up the MySQL Database connection
 const db = require('./config/database');
 
 db.authenticate()
     .then(()=>console.log('Database connected'))
     .catch(err => console.log('Error: ' + err));
 
-//Users Middleware - Use Routes
-app.use('/api/users', require('./routes/api/Users'));
+//Registration Middleware - Use Routes
+app.use('/api/register', require('./routes/api/Registration'));
 
-//Auth Middleware - Use Routes
+//Authentication Middleware - Use Routes
 app.use('/api/auth', require('./routes/api/Auth'));
 
 //Upload Middleware - Use Routes
 app.use('/api/upload', require('./routes/api/ImgUpload'));
+
+//Club Middleware - Use Routes
+app.use('/api/clubs', require('./routes/api/Clubs'));
 
 
 //Serve static assets if in production

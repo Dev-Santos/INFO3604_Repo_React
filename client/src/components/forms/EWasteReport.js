@@ -1,30 +1,38 @@
+// Needed React Modules
 import React, { Component, Fragment } from 'react';
-import { Button, Form, FormGroup, Label, Input, Container} from 'reactstrap';
-//import ImageClassifier from './ImageClassifier';
+
+//Imported Bootstrap elements
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+
+//import ImageClassifier from './ImageClassifier'; - This is an alternative image classifier component
+
+//Imported Image Classifier Component
 import ImageClassifier from './ReactUploadImage';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 
 
-
+//Component Specification
 class EWasteReport extends Component {
 
-    
-    static propTypes = {
-        isAuthenticated: PropTypes.bool
-    };
-
+    //This is executed once the user submits
     onSubmit = e => {
         console.log('Form selected');
     }
 
     render(){
+        
+        //The following is rendered/displayed on the browser
 
-        const authView = ( 
-            <Fragment>
+        return( 
+     
+            <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
+                
                 <h2 className="ml-5" style={{textAlign: "center"}}>Report E-Waste Form</h2>
+
+                {/* E-Waste Form */}
                 <Form onSubmit={this.onSubmit}>
+
                     <FormGroup>       
+
                         <Label for="name">Name</Label>
                         <Input type="text" name="name" id="name" placeholder="Enter your name" className="mb-3" required/>
 
@@ -36,7 +44,7 @@ class EWasteReport extends Component {
 
                         <Label for="">Image of E-waste</Label>
                         
-                        <ImageClassifier/>
+                        <ImageClassifier/>{/* Positioning of Image Classifier Component*/}
 
                         <Button color="dark" style={{marginTop: '2rem', fontSize: '20px'}} type="submit">Submit Form</Button> 
 
@@ -44,21 +52,9 @@ class EWasteReport extends Component {
 
                 </Form> 
                 
-            </Fragment>);
-
-
-        return(
-            <div>    
-                <Container>
-                    { this.props.isAuthenticated ? authView : ''}
-                </Container>    
-            </div>
+            </Fragment>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, null)(EWasteReport);
+export default EWasteReport;//Export the component to be used

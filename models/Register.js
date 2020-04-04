@@ -1,27 +1,24 @@
 var Sequelize = require("sequelize");
 const db = require('../config/database');
 
-const User = db.define('users' , {
+const RegisterUser = db.define('registration' , {
         name:{
             type: Sequelize.TEXT
         },
         email:{
             type: Sequelize.TEXT
         },
+        clubID:{
+            type: Sequelize.INTEGER
+        },
         password:{
             type: Sequelize.TEXT
         },
-        reg_date:{
-            type: Sequelize.DATE,
-        },
-        userType:{
-            type: Sequelize.INTEGER,
-        },
-        clubID:{
-            type: Sequelize.INTEGER,
+        status:{
+            type: Sequelize.INTEGER
         }
     },{
         timestamps: false
     });
 
-module.exports = User;
+module.exports = RegisterUser;

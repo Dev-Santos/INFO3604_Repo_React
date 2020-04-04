@@ -13,18 +13,25 @@ router.use(fileUpload({
 
 router.use(express.json());
 
+
+//@route    POST api/upload
+//@desc     Receives image uploaded and returns the classification results
+//@access   Public
 router.post("/", (req, res) => {
 
+    //If no image is provided
     if(req.files == null)
         return res.json({ msg: 'File not received'}); 
 
     let file = req.files.file;
 
+    //This function loads our classification model
     tf.loadGraphModel('file://routes/api/class_model/model.json')
     .then(model => {
 
         console.log('Model loaded successfully');
 
+        //The following is responsible for pre-processing the image to be classified
         const width = 300;
         const height = 300;
 
@@ -53,6 +60,7 @@ router.post("/", (req, res) => {
                         .toFloat()
                         .reverse(-1);
 
+        //Here we define our classification labels                     
         const TARGET_CLASSES = {
             0: "CPU",
             1: "Keyboard",
@@ -62,17 +70,22 @@ router.post("/", (req, res) => {
             5: "Printer"
         };
 
+        //Now we classify our provided image
         model.predict(tensor).data()
             .then(predictions => {
+                
+                //After classification we generate a json object of our results
+
                 let results = Array.from(predictions)
-                    .map(function (p, i) { // this is Array.map
+                    .map(function (p, i) {
                         return {
                             probability: p,
                             className: TARGET_CLASSES[i] // we are selecting the value from the obj
                         };
                     }).sort(function (a, b) {
                         return b.probability - a.probability;
-                    }).slice(0, 3);
+                    }).slice(0, 3);// Select only the top 3 results
+                
                 
                 let list = [];
 
@@ -85,6 +98,7 @@ router.post("/", (req, res) => {
 
                 console.log(list);
                 
+                //We return our classification results
                 res.json({ list });
 
             })

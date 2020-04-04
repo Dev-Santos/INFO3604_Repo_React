@@ -1,7 +1,9 @@
 import React from 'react';
 
+//Component Specification using React Hooks
 function AboutUs(){
     return(
+        //The following is the HTML code from the previous system built
         <div>
             <div class="bg-light">
                 <div class="container py-5">
@@ -91,4 +93,4 @@ function AboutUs(){
     );
 }
 
-export default AboutUs;
+export default AboutUs;//Export the component to be used
