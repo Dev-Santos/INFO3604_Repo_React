@@ -108,11 +108,11 @@ class AppNavbar extends Component{
                         </Nav.Item>
 
                         <Nav.Item>
-                            <Nav.Link href="#">Donate</Nav.Link>
+                            <Nav.Link href="/api/donate">Donate</Nav.Link>
                         </Nav.Item>
 
                         <Nav.Item>
-                            <Nav.Link href="#">Request</Nav.Link>
+                            <Nav.Link href="/api/request">Request</Nav.Link>
                         </Nav.Item>
 
                     </Nav>

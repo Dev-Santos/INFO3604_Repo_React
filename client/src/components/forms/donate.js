@@ -13,12 +13,12 @@ import ImageClassifier from './ReactUploadImage';
 
 
 //Component Specification
-class EWasteReport extends Component {
+class donate extends Component {
 
     //This is executed once the user submits
     onSubmit = e => {
         console.log('Form selected');
-        alert("Your report was successfully sent, please await an email with further instructions")
+        alert("Your donation form was completed successfully, please await an email to confirm the retrieval date of the item.")
     }
 
     constructor(props){
@@ -86,11 +86,11 @@ class EWasteReport extends Component {
      
             <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
                 
-                <h2 className="ml-5" style={{textAlign: "center"}}>Report E-Waste Form</h2>
+                <h2 className="ml-5" style={{textAlign: "center"}}>Donation Form</h2>
                 {this.getLocation()}
                 
 
-                {/* E-Waste Form */}
+                {/* Donate Form */}
                 <Form onSubmit={this.onSubmit}>
 
                     <FormGroup>       
@@ -98,17 +98,23 @@ class EWasteReport extends Component {
                         <Label for="name">Name</Label>
                         <Input type="text" name="name" id="name" placeholder="Enter your name" className="mb-3" required/>
 
-                        <Label for="desc">Description</Label>
-                        <Input type="text" name="desc" id="desc" placeholder="Enter E-Waste description" className="mb-3" required/>
+                        <Label for="dept">Company/Club</Label>
+                        <Input type="text" name="dept" id="dept" placeholder="Enter your company/club" className="mb-3"/>
+
+                        <Label for="type">Type of Donation Item</Label>
+                        <Input type="text" name="type" id="type" placeholder="Enter the type of item you wish to donate(eg. PC, laptop, etc.)" className="mb-3" required/> 
+
+                        <Label for="desc">Item Description</Label>
+                        <Input type="text" name="desc" id="desc" placeholder="Enter a descriptio ofn the item(eg. item mode, condition, etc.)" className="mb-3" />  
                         
-                        <Label for="loc">Location</Label>
-                        <Input type="text" name="loc" id="loc" placeholder="Enter your location" className="mb-3" required/>
+                        <Label for="rloc">Retrieval Location</Label>
+                        <Input type="text" name="rloc" id="rloc" placeholder="Enter your location" className="mb-3" required/>
 
-                        <Label for="loc2">Current Location</Label>
-                        <Input type="text" name="loc2" id="loc2" placeholder={this.state.userAddress} className="mb-3" readOnly/>
-                                               
+                        <Label for="loc">Current Location</Label>
+                        <Input type="text" name="loc" id="loc" placeholder={this.state.userAddress} className="mb-3" readOnly/>
 
-                        <Label for="">Image of E-waste</Label>
+
+                        <Label for="">Image of E-waste you wish to donate</Label>
                         
                         <ImageClassifier/>{/* Positioning of Image Classifier Component*/}
 
@@ -123,4 +129,4 @@ class EWasteReport extends Component {
     }
 }
 
-export default EWasteReport;//Export the component to be used
+export default donate;//Export the component to be used

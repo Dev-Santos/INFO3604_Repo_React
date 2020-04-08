@@ -13,6 +13,8 @@ import './App.css';
 import AppNavbar from './components/AppNavbar';
 import Homepage from './components/Homepage';
 import EWasteReport from './components/forms/EWasteReport';
+import Donate from './components/forms/donate';
+import Request from './components/forms/request';
 import AboutUs from './components/AboutUs';
 import Gallery from './components/gallery/ImageGallery';
 import Footer from './components/Footer';
@@ -62,6 +64,10 @@ class App extends Component{
                 <Route path="/api/aboutus" exact component={AboutUs}/>
 
                 <Route path="/api/ereport" exact component={EWasteReport}/>
+
+                <Route path="/api/donate" exact component={Donate}/>
+
+                <Route path="/api/request" exact component={Request}/>
 
                 {/* You can put multiple routes in an array */}
                 <Route path={[ "/api/dashboard" , "/api/dashboard/:page" ]} exact component={Dashboard}/>
