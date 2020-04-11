@@ -13,7 +13,7 @@ import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 
 //Imported Title Component
-import Title from './Title';
+import Title from '../Title';
 
 
 //Styling classes defined => which referenced by different elements in the component
@@ -73,17 +73,17 @@ function DashboardOptions() {
 
                 <Paper className={fixedHeightPaper}>
 
-                    <Title>Registration Listing</Title>
+                    <Title>Record Club Activities</Title>
 
                     <Typography color="textPrimary" className={classes.depositContext}>
-                      View pending registrations submitted by the public
+                      Brief Description
                     </Typography>
 
                     <div>
                       <Link color="primary" href="/api/dashboard/register">
 
                         <Button variant="contained" color="primary">
-                          View Registration Listing
+                          Log Completed Activities
                         </Button>
                         
                       </Link>
@@ -100,7 +100,7 @@ function DashboardOptions() {
 
                 <Paper className={fixedHeightPaper}>
 
-                    <Title>Donor Information</Title>
+                    <Title>Delivery Schedule</Title>
 
                     <Typography color="textPrimary" className={classes.depositContext}>
                       Brief Description
@@ -110,7 +110,7 @@ function DashboardOptions() {
                       <Link color="primary" href="#">
                         
                         <Button variant="contained" color="primary">
-                          View Donor Info
+                          View Delivery Schedule
                         </Button>
 
                       </Link>
@@ -127,7 +127,7 @@ function DashboardOptions() {
 
                 <Paper className={fixedHeightPaper}>
 
-                    <Title>Beneficiary Information</Title>
+                    <Title>Club Notice Board</Title>
 
                     <Typography color="textPrimary" className={classes.depositContext}>
                       Brief Description
@@ -137,7 +137,7 @@ function DashboardOptions() {
                       <Link color="primary" href="#">
                         
                         <Button variant="contained" color="primary">
-                          View Beneficiary Info
+                          View Club Notice Board
                         </Button>
 
                       </Link>
@@ -165,60 +165,6 @@ function DashboardOptions() {
                         
                         <Button variant="contained" color="primary">
                           View Warehouse Details
-                        </Button>
-
-                      </Link>
-                    </div>
-                
-                </Paper>
-
-            </Grid>
-
-
-            {/*  Third Box on the Left */}
-
-            <Grid item xs={12} md={7} lg={6} style={{paddingLeft: '50px'}}>
-
-                <Paper className={fixedHeightPaper}>
-
-                    <Title>E-Waste Reports</Title>
-
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
-                    </Typography>
-
-                    <div>
-                      <Link color="primary" href="#">
-                        
-                        <Button variant="contained" color="primary">
-                          View E-Waste Reports
-                        </Button>
-
-                      </Link>
-                    </div>
-                
-                </Paper>
-
-            </Grid>
-
-
-            {/*  Third Box on the Right */}
-
-            <Grid item xs={12} md={7} lg={6} style={{paddingLeft: '50px'}}>
-
-                <Paper className={fixedHeightPaper}>
-
-                    <Title>Club Information</Title>
-
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
-                    </Typography>
-
-                    <div>
-                      <Link color="primary" href="#">
-                        
-                        <Button variant="contained" color="primary">
-                          View Club Details
                         </Button>
 
                       </Link>

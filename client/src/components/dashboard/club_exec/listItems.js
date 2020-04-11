@@ -16,7 +16,7 @@ import Link from '@material-ui/core/Link';
 
 
 //The following is rendered/displayed on the browser
-export const mainListItems = (
+export const CE_MainListItems = (
   
   <div>
 
@@ -64,7 +64,7 @@ export const mainListItems = (
   </div>
 );
 
-export const secondaryListItems = (
+export const CE_SecondaryListItems = (
   <div>
 
     {/* Second Half of Options */}

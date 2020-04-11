@@ -15,9 +15,14 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
 //Imported components to be included somewhere in the document
-import { mainListItems, secondaryListItems } from './listItems'; //These are the items seen on the left-hand side of the dashboard
-import RegistrationListing from './RegistrationListing'; // This component captures the registration tables seen
-import DashboardOptions from './DashboardOptions';//This component displays the initial options/features on the dashboard
+
+import { CE_MainListItems, CE_SecondaryListItems } from './club_exec/listItems'; //These are the items seen on the left-hand side of the dashboard
+import RegistrationListing from './club_exec/RegistrationListing'; // This component captures the registration tables seen
+import CE_DashboardOptions from './club_exec/DashboardOptions';//This component displays the initial options/features on the dashboard
+
+
+import { CM_MainListItems } from './club_member/listItems';
+import CM_DashboardOptions from './club_member/DashboardOptions';//This component displays the initial options/features on the dashboard
 
 //These modules allow us to use the states defined in the reducer folder 
 import {useSelector, shallowEqual}  from 'react-redux';
@@ -90,6 +95,9 @@ function Dashboard() {
 
   //This function accesses the auth state in the reducer folder to determine if a user is authenticated
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated, shallowEqual);
+
+  //This function accesses the auth state in the reducer folder to capture the user's information
+  const user = useSelector( (state) => state.auth.user, shallowEqual );
   
   console.log(isAuthenticated);
 
@@ -100,7 +108,8 @@ function Dashboard() {
 
   //Here we define the HTML/JSX elements of this component before rendering them on the browser
   //We need to check if the user is authenticated first before rendering the component
-  const view = (
+  //This defines the dashboard of the club executive interface
+  const clubExecView = (
 
       <Container>
             
@@ -115,12 +124,12 @@ function Dashboard() {
                       <Drawer variant="permanent" classes={{ paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose), }} open={open}>
                         
                         {/*  First Half of Options  */}
-                        <List>{mainListItems}</List>
+                        <List>{CE_MainListItems}</List>
 
                         <Divider />
 
                         {/*  Second Half of Options  */}  
-                        <List>{secondaryListItems}</List>
+                        <List>{CE_SecondaryListItems}</List>
 
                       </Drawer>
 
@@ -137,11 +146,61 @@ function Dashboard() {
 
                       
                       {/* Initially the dashboard options are shown to the user */}
-                      <Route path="/api/dashboard" exact  component={DashboardOptions} />   
+                      <Route path="/api/dashboard" exact  component={CE_DashboardOptions} />   
 
 
                       {/* Only this route/url, the RegistrationListing component is shown*/}
                       <Route path="/api/dashboard/register" exact  component={RegistrationListing} />     
+
+                </Grid>
+
+            </Container>	
+
+        </div>
+
+    </Container>
+  )
+
+
+  //Here we define the HTML/JSX elements of this component before rendering them on the browser
+  //We need to check if the user is authenticated first before rendering the component
+  //This defines the dashboard of the club member interface
+  const clubMemView = (
+
+      <Container>
+            
+          <Typography component="h3" variant="h3" align="center" color="textPrimary" gutterBottom>
+            Dashboard
+          </Typography>
+
+          <div className={classes.root}>
+      
+                  {/* Left-Hand Sidebar of Options  */}
+
+                      <Drawer variant="permanent" classes={{ paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose), }} open={open}>
+                        
+                        {/*  Set of Options  */}
+                        <List>{CM_MainListItems}</List>
+
+                        <Divider />
+
+                      </Drawer>
+
+            {/*  This creates a space between the left-hand side of options on the dashboard and everything on the right  */}  
+            <div className={classes.appBarSpacer} />
+
+
+            <Container className={classes.container} >
+              
+                <Grid container spacing={3}>
+
+                      {/* The following describes which components are rendered based on the current/submitted url path */}
+                      {/* It is always positioned on the right of the dashboard's sidebar options  */}
+
+                      
+                      {/* Initially the dashboard options are shown to the user */}
+                      <Route path="/api/dashboard" exact  component={CM_DashboardOptions} />   
+   
 
                 </Grid>
 
@@ -158,10 +217,15 @@ function Dashboard() {
       <div>
 
         {/* The isAuthenticated state is a boolean */}
-        {/* Only if the user is authenticated, we render the HTML/JSX elements defined from lines 103-154 */}
-        {/* Else nothing is shown*/}
 
-        { isAuthenticated ? view : null}
+        {/* If the user is authenticated and has a user type of 1 (Club Executive), render the elements in clubExecView variable (line 112) */}
+        { isAuthenticated && user.userType === 1 ? clubExecView : null}
+        
+        {/* If the user is authenticated and has a user type of 2 (Club Member), render the elements in clubMemView variable (line 168) */}
+        { isAuthenticated && user.userType === 2 ? clubMemView : null }
+
+
+        {/* Else nothing is shown*/}
 
       </div>
 

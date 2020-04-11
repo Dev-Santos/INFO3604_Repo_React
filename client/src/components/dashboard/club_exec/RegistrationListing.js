@@ -17,13 +17,13 @@ import Paper from '@material-ui/core/Paper';
 import { Button } from 'reactstrap';
 
 //Imported Title Component
-import Title from './Title';
+import Title from '../Title';
 
 //These modules allow us to use the actions in the actions folder and states defined in the reducer folder 
 import {useSelector, useDispatch, shallowEqual}  from 'react-redux';
 
 //Functions imported from the regActions file in the actions folder
-import { getRegListing, updateRegStatus, createUser } from '../../actions/regActions';
+import { getRegListing, updateRegStatus, createUser } from '../../../actions/regActions';
 
 
 //Styling classes defined => which referenced by different elements in the component

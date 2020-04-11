@@ -148,10 +148,17 @@ const ReactUploadImage = () => {
                 {/* Similarly, if the showResults state is true, then show the classification results on the browser*/}
                 {/* The AND operator allows us to do this*/}
                 { showResults && 
-                    <ul className="mt-4">      
-                        {/* We utilise the function on line 13 to format the results*/}
-                        {results.map(formatResult)}
-                    </ul>
+                    <div>
+                        
+                        <ul className="mt-4">      
+                            {/* We utilise the function on line 13 to format the results*/}
+                            {results.map(formatResult)}
+                        </ul>
+
+                            {/* We store the top result from the image classification in an input tag */}
+                            <Input type="text" name="class_res" id="class_res" placeholder={results[0].className} value={results[0].className} className="mb-3" readOnly hidden/>
+
+                    </div>
                 }
 
         </Fragment>

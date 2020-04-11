@@ -7,7 +7,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 //import ImageClassifier from './ImageClassifier'; - This is an alternative image classifier component
 
 //Imported Image Classifier Component
-import ImageClassifier from './ReactUploadImage';
+import ImageClassifier from './ImageClassifier';
 
 // const GOOGLE_API_KEY= "AIzaSyAGG9b0Xrge2Ve_c0MiJn-bWhARVmVFgK8";
 
