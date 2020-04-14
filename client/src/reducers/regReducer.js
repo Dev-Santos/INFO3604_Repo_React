@@ -47,12 +47,12 @@ export default function(state = initialState, action){
             return{
                 ...state,
                 loading: true
-            }
+            };
         case UPDATE_REG_STATUS:
             return{
                 ...state,
                 regRecord: action.payload
-            }
+            };
         default:
             return state;
     }   

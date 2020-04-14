@@ -2,14 +2,34 @@
 import React, { Component, Fragment } from 'react';
 
 //Imported Bootstrap elements
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 
-//import ImageClassifier from './ImageClassifier'; - This is an alternative image classifier component
+//The Axios module was also used in the different files in the actions folder
+//This is how the front-end component of the system communicates/accesses with the backend api and database (Express & Nodejs)
+import axios from 'axios';
 
-//Imported Image Classifier Component
-import ImageClassifier from './ImageClassifier';
+//Import module to access Firebase storage bucket
+import { storage } from '../../firebase/index';
+
+
+//This module is used to connect to all the different actions/functions in the actions folder 
+//and the different states/events in the reducers folder
+import {connect} from 'react-redux';
+
+import PropTypes from 'prop-types';
+
+//Imported the submitEReport function from the formActions file in the actions folder
+import { submitEReport } from '../../actions/formActions';
 
 // const GOOGLE_API_KEY= "AIzaSyAGG9b0Xrge2Ve_c0MiJn-bWhARVmVFgK8";
+
+//This functions formats how the classification results are displayed
+//It is in the form of list items, it will be called later down
+const formatResult = ({ className, probability}) => (
+    <li key={className}>
+        {`${className}: %${(probability * 100).toFixed(2)}`}
+    </li>
+);
 
 
 //Component Specification
@@ -23,11 +43,29 @@ class EWasteReport extends Component {
             userAddress: null,
             name: null,
             email: null,
-            desc: null
+            desc: null,
+            file: '',
+            filename: 'Select file',
+            imageUrl: null,
+            results: {},
+            showResults: false,
+            classBtn: false, 
+            progress: 0
         };
+
+        //These are additional properties (both state variables and functions) of the component that can be accessed at any point
+        this.propTypespropTypes = {
+            error: PropTypes.object.isRequired,
+            ereport: PropTypes.object.isRequired,
+            submitEReport: PropTypes.func.isRequired,
+        }
+
         this.getLocation = this.getLocation.bind(this);
         this.getCoordinates = this.getCoordinates.bind(this);
         this.reverseCoordinates = this.reverseCoordinates.bind(this);
+        this.handleUpload = this.handleUpload.bind(this);
+        this.classify = this.classify.bind(this);
+
     }
 
     //Executed everytime an input field on the form is changed - the value is stored in the state of the component
@@ -40,21 +78,98 @@ class EWasteReport extends Component {
 
         e.preventDefault();
 
-        //console.log('Form selected');
-        alert("Your report was successfully sent, please await an email with further instructions");
-
+        //Captures the current location information from the read-only input field
         const loc =  document.getElementById('loc').placeholder;
 
-        const class_res = document.getElementById('class_res').value;
+        //Captures the top classification result from the hidden input field
+        let class_res = document.getElementById('class_res');
 
-        const { name, email, desc } = this.state;
+        //If the e-waste image submitted was classified
+        if (class_res){
 
-        const newEReport = {
-            name, email, desc, loc, class_res
-        };
+            //Store its value
+            class_res = class_res.value;
 
-        console.log(newEReport);
+            //The following is repsonsible for creating the name and directory of the image for the firebase database
 
+            //Generates a random number
+            const min = 1;
+            const max = 2000;
+            const random = min + (Math.random() * (max - min));
+            
+            //Stores today's data in a string variable
+            var todayDate = new Date().toISOString().slice(0,10);
+
+            //Concatenates the above elements to generate the name of the file to be stored in firebase
+            let storage_name = todayDate + '_' + Math.round(random).toString() + '_' + this.state.filename;
+
+            console.log(storage_name);
+
+            //This function (its a call-back function) is responsible for storing the image in the firebase db
+            const uploadTask = storage.ref(`${class_res}/${storage_name}`).put(this.state.file);
+
+            //Once the state of the callback function changes, do the following
+            uploadTask.on('state_changed',
+                (snapshot) => {
+
+                    //progress function (This is running while the image upload is in progress)
+                    const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                    this.setState({progress});
+
+                },
+                (error) => {
+
+                    //error function (This executes once there is an error in the image upload)
+                    alert("Error in image upload. Please resubmit your e-waste image");
+                    console.log(error);
+
+                },
+                () => {
+
+                    //complete function (Once the image has been successfully uploaded)
+                    // We want to capture the url where you can download the image just uploaded and store it in the backend database
+                    storage.ref(`${class_res}`).child(storage_name).getDownloadURL() 
+                    .then(url => {
+                        
+                        console.log(url);
+
+                        const { name, email, desc } = this.state;
+
+                        //Construct our E-Waste Report object to be sent to the backend db
+                        const newEReport = {
+                            rep_person: name, email, description: desc, location: loc, classification: class_res ,image_url: url
+                        };
+
+                        console.log(newEReport);
+
+                        //Utilise the submitEReport function in the formActions file in the actions folder (line 21)
+                        //Aims to submit the E-Waste Report to the backend db
+                        this.props.submitEReport(newEReport);
+
+                        //Reset our component's state to how it initially was
+                        this.setState({
+                            filename: 'Select file',
+                            imageUrl: null,
+                            results: {},
+                            showResults: false,
+                            classBtn: false, 
+                            progress: 0
+                        })
+
+                        //Message alert to the user
+                        window.alert( 'Your report was successfully sent, please await an email with further instructions' );
+
+                        //Reset or clear all fields in the form
+                        document.getElementById('ereport_form').reset();
+
+                    })
+                    .catch(err => console.log(err));
+                });                
+
+        }else{
+            window.alert('Please classify your image.');
+        }
+        
     }
 
     getLocation(){
@@ -102,6 +217,84 @@ class EWasteReport extends Component {
     }
  
 
+    handleUpload = (e) => {
+
+        //Extracts all the file information submitted on the form
+        const { files } = e.target;
+
+        //Once there is at least one file
+        if(files.length > 0){
+
+            //Save the image file (the first file) in file state of the component using its designated function
+            this.setState({file: e.target.files[0]});
+            //setFile(e.target.files[0]);
+
+            //Similarly, save the image's filename in filename state of the component using its designated function
+            this.setState({filename: e.target.files[0].name});
+            //setFilename(e.target.files[0].name);
+
+            //Get the image's url
+            const url = URL.createObjectURL(files[0]);
+
+
+            //Save it to the imageUrl state of the component using its designated function 
+            //setImageUrl(url);
+            this.setState({imageUrl: url});
+
+            //showClassBtn(true);
+            this.setState({classBtn: true});
+            //Change the classBtn state of the component to true using its designated function 
+            //This essentially means show the classification button only when an image file is uploaded
+            
+            //setShowResults(false);
+            //Change the showResults state of the component to false using its designated function 
+            //This essentially means don't show the results until it is classified.
+            
+        }
+    };
+
+    classify = async e => {
+       
+        e.preventDefault();
+
+        //Once an image is provided
+        if(this.state.file !== ''){
+             
+            //Create the request body using the FormData class
+            const formData = new FormData();
+
+             //Append the submitted file to the request body
+            formData.append('file', this.state.file);
+
+            try {
+
+                //Hit the backend api (Express & Nodejs) with the image to be classified => the response/results are stored in res
+                const res = await axios.post('/api/upload', formData);
+
+                //Extract the classification results
+                const { list } = res.data;
+
+                console.log(list);
+                
+                //Save the result to the results state of the component using its designated function 
+                this.setState({results: list});
+                //setResults(list);
+                
+                //Change the showResults state to true as we have classified the image
+                this.setState({showResults: true});
+                //setShowResults(true);
+
+            } catch (err) {//If an error is caught
+                if(err.response.status === 500 )
+                    console.log(err.response.data.msg);
+                else
+                    console.log(err);
+            }
+        }else{
+            window.alert('Image not submitted successfully');
+        }
+    }
+
     render(){
         
         //The following is rendered/displayed on the browser
@@ -112,15 +305,15 @@ class EWasteReport extends Component {
                 
                 <h2 className="ml-5" style={{textAlign: "center"}}>E-Waste Report Form</h2>
                 {this.getLocation()}
-                
+
 
                 {/* E-Waste Form */}
-                <Form>
+                <Form onSubmit={this.onSubmit} id="ereport_form">
 
                     <FormGroup>       
 
-                        <Label for="name">Name</Label>
-                        <Input type="text" name="name" id="name" placeholder="Enter your name" className="mb-3" onChange={this.onChange} required/>
+                        <Label for="name">Name/Organisation</Label>
+                        <Input type="text" name="name" id="name" placeholder="Enter your name/organisation" className="mb-3" onChange={this.onChange} required/>
 
                         <Label for="email">Email</Label>
                         <Input type="email" name="email" id="email" placeholder="Enter email" className="mb-3" onChange={this.onChange} required/>
@@ -134,9 +327,47 @@ class EWasteReport extends Component {
 
                         <Label for="">Image of E-waste</Label>
                         
-                        <ImageClassifier/>{/* Positioning of Image Classifier Component*/}
+                        {/* The Image Classifier was defined was included in this component as opposed to being seperate (then imported)*/}
 
-                        <Button color="dark" style={{marginTop: '2rem', fontSize: '20px'}} type="submit" onClick={this.onSubmit}>Submit Form</Button> 
+                        <Container className="custom-file mb-4">
+
+                            <Label className="custom-file-label" for="class_input">
+                                {/* Since we stored the image's filename in the filename state of the component we can display it*/}
+                                {/* The following is how you render a component variable on the browser screen */}
+                                {this.state.filename}
+                            </Label>
+                            
+                            {/* Image Input Field */}
+                            <Input type="file" className="custom-file-input mt-4" id="class_input" onChange={this.handleUpload} accept="image/*" capture="camera" required/>    
+
+                        </Container>
+
+                        {/* The classBtn state is boolean*/}
+                        {/* This essentially means if the classBtn state is true, then show the uploaded image on the browser*/}
+                        {/* The AND operator allows us to do this*/}
+                        { this.state.classBtn && <img src={this.state.imageUrl} style={{width: '150px', height: '150px'}} alt="" className="class_img" id="class_img"/>}
+
+                        {/* Similarly, if the classBtn state is true, then show the classification button on the browser*/}
+                        { this.state.classBtn && <Button style={{ display: 'block'}} className="btn btn-primary block mt-4" onClick={this.classify}>Classify Image</Button> }
+
+                        {/* The showResults state is also boolean*/}
+                        {/* Similarly, if the showResults state is true, then show the classification results on the browser*/}
+                        {/* The AND operator allows us to do this*/}
+                        { this.state.showResults && 
+                            <div>
+                                
+                                <ul className="mt-4">      
+                                    {/* We utilise the function on line 27 to format the results*/}
+                                    {this.state.results.map(formatResult)}
+                                </ul>
+
+                                    {/* We can store the top result from the image classification in a hidden input tag */}
+                                    <Input type="text" name="class_res" id="class_res" placeholder={this.state.results[0].className} value={this.state.results[0].className} className="mb-3" readOnly hidden/>
+
+                            </div>
+                        }                        
+
+                        <Button color="dark" style={{ marginTop: '2rem', fontSize: '20px', display: 'block'}} type="submit" >Submit Form</Button> 
 
                     </FormGroup>
 
@@ -147,4 +378,11 @@ class EWasteReport extends Component {
     }
 }
 
-export default EWasteReport;//Export the component to be used
+//This is used to import various states of the system as defined in the reducers folder
+const mapStateToProps = (state) => ({
+    error: state.error,
+    ereport: state.form.ereport
+});
+
+//This is where the imported connect module incorporates all the functions/actions from the actions folder and states from the reducers folder into the actual component.
+export default connect(mapStateToProps, { submitEReport })(EWasteReport);

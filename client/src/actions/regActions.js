@@ -54,13 +54,13 @@ export const clearRegMessage = () => {
 
 
 //This function gets the all the registration records from the database
-export const getRegListing = () => dispatch =>{
+export const getRegListing = () => (dispatch, getState) =>{
     
     dispatch(setRegListLoading());
 
     //Access the backend api (Express & Nodejs) to get all the registration records from the database
     axios
-        .get('/api/register/listing')
+        .get('/api/register/listing', tokenConfig(getState))
         .then(res => dispatch({
             type: GET_REG_LISTING,
             payload: res.data
@@ -79,19 +79,13 @@ export const setRegListLoading = () => {
 
 //This function is responsible for changing the registration status of a user from 0 (Pending) to 1 (Authenticated)
 //in the database based on their registration id
-export const updateRegStatus = (id) => dispatch =>{
-    //Headers
-    const config = {
-        headers: {
-            "Content-type" : "application/json" 
-        }
-    }
+export const updateRegStatus = (id) => (dispatch, getState) =>{
 
     //Create request body
     const body = JSON.stringify({ id });
   
     //Access the backend api (Express & Nodejs) to update the registration information in the database
-    axios.post('/api/register/update', body, config)
+    axios.post('/api/register/update', body, tokenConfig(getState))
         .then(res => dispatch({
             type: UPDATE_REG_STATUS,
             payload: res.data
@@ -151,3 +145,25 @@ export const createAdmin = ({ name, email, password, clubID}) => dispatch => {
             dispatch({type: REGISTER_FAIL});
         });
 }
+
+
+//Setup config/headers and token
+export const tokenConfig = (getState) => {
+    
+    //Get token from local storage
+    const token = getState().auth.token;
+
+    //Headers
+    const config = {
+        headers: {
+            "Content-type" : "application/json"
+        }
+    }
+
+    //If token then add to headers
+    if(token){
+        config.headers['x-auth-token'] = token;
+    }
+
+    return config;
+};

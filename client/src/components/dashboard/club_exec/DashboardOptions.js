@@ -188,7 +188,7 @@ function DashboardOptions() {
                     </Typography>
 
                     <div>
-                      <Link color="primary" href="#">
+                      <Link color="primary" href="/api/dashboard/ereports">
                         
                         <Button variant="contained" color="primary">
                           View E-Waste Reports

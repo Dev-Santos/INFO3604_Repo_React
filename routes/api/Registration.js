@@ -38,13 +38,21 @@ router.post('/', (req, res)=>{
             //Ensure that a user with the provided email does not exists
             if(user)  return res.status(400).json({ msg: 'User already exists'});
             
-            //Create a record in the registrations table
-            Register.create({name, email, clubID, password, status: 0})
-                .then(register => {
-                    return res.status(200).json(register);//Return details of newly created record
-                }).catch(err => {
-                    return res.status(500).json({ msg: 'Error in registering user'});
-                })
+            //Hash their password
+            bcrypt.hash(password,13)
+                .then((hash)=>{
+       
+                    //Create a record in the registrations table
+                    Register.create({name, email, clubID, password: hash, status: 0})
+                    .then(register => {
+                        return res.status(200).json(register);//Return details of newly created record
+                    }).catch(err => {
+                        return res.status(500).json({ msg: 'Error in registering user'});
+                    });    
+                    
+                }).catch(err => console.log(err));
+
+            
         }).catch(err => {
             
             return res.status(500).json({ msg: 'Error in searching for user'});
@@ -55,9 +63,8 @@ router.post('/', (req, res)=>{
 
 //@route    GET api/register/listing
 //@desc     Get Register Listing
-//@access   SUPPOSESD TO BE Private (only for authenticated users) BUT Public (for now)
-//router.get('/listing', auth, (req, res)=>{
-router.get('/listing', (req, res)=>{
+//@access   Private
+router.get('/listing', auth, (req, res)=>{
 
     //Pull all the records in the registrations table
     db.query("SELECT `registrations`.`id`, `registrations`.`name`, `registrations`.`email`, `registrations`.`clubID` ,`registrations`.`password` ,`clubs`.`location`, `clubs`.`address`, `registrations`.`status`  FROM `registrations` INNER JOIN `clubs` ON `registrations`.`clubID` = `clubs`.`id`;", { type: QueryTypes.SELECT})
@@ -73,9 +80,8 @@ router.get('/listing', (req, res)=>{
 
 //@route    POST api/register/update
 //@desc     Update a user's registration status
-//@access   SUPPOSED TO BE Private (only for authenticated users) BUT Public (for now)
-//router.post('/update', auth, (req, res)=>{
-router.post('/update', (req, res)=>{
+//@access   Private
+router.post('/update', auth, (req, res)=>{
 
     const { id } = req.body;
     if(id){
@@ -128,40 +134,19 @@ router.post('/user', (req, res)=>{
             
             if(user) return res.status(400).json({ msg: 'User already exists'}); 
             
-            //Construct user object
-            const newUser = {
-                name,
-                email,
-                password,
-                reg_date: Date.now(),
-                userType: 2, // A club member user has a userType of 2
-                clubID
-            }
+            //Create record in the users table
+            User.create({name, email, password, reg_date: Date.now(), userType:2, clubID})
+                .then(user => {     
 
-            //Hash their password
-            bcrypt.hash(password,13)
-                .then((hash)=>{
+                    res.status(200).json(user);//Return user details
+
+                }).catch(err => {
                     
-                    newUser.password = hash;
-                    
-                    let {name, email, password , reg_date, userType, clubID} = newUser;
-                
-                    //Create a record in the users table
-                    User.create({name, email, password, reg_date, userType, clubID})
-                        .then(user => 
-                                     
-                            //Generate security token
-                            jwt.sign(
-                                {id: user.id},
-                                config.get('SECRET_KEY'),
-                                { expiresIn: 1200 },
-                                (err, token) => {
-                                    if(err) throw err;
-                                    res.json({ token, id: user.id, name: user.name, reg_date: user.reg_date, userType: user.userType, clubID: user.clubID});//Return token and user details
-                                }
-                            )
-                        )
-                }).catch(err => console.log(err));
+                    console.log(err);
+                    res.status(500).json({msg: 'Error in creating a user'});//If an error is caught
+
+                });
+
         });
 });
 

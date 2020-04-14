@@ -54,12 +54,14 @@ export const CE_MainListItems = (
       <ListItemText primary="Beneficiaries" />
     </ListItem>
 
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="E-Waste Reports" />
-    </ListItem>
+    <Link href="/api/dashboard/ereports">
+      <ListItem button>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="E-Waste Reports" />
+      </ListItem>
+    </Link>
 
   </div>
 );

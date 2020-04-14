@@ -16,12 +16,13 @@ import Grid from '@material-ui/core/Grid';
 
 //Imported components to be included somewhere in the document
 
-import { CE_MainListItems, CE_SecondaryListItems } from './club_exec/listItems'; //These are the items seen on the left-hand side of the dashboard
+import { CE_MainListItems, CE_SecondaryListItems } from './club_exec/listItems'; //These are the items seen on the left-hand side of the dashboard for the club executive interface
 import RegistrationListing from './club_exec/RegistrationListing'; // This component captures the registration tables seen
 import CE_DashboardOptions from './club_exec/DashboardOptions';//This component displays the initial options/features on the dashboard
+import EWasteReportsListing from './club_exec/EWasteReportsListing';//This component captures all the e-waste records from the database
 
 
-import { CM_MainListItems } from './club_member/listItems';
+import { CM_MainListItems } from './club_member/listItems';//These are the items seen on the left-hand side of the dashboard for the club member interface
 import CM_DashboardOptions from './club_member/DashboardOptions';//This component displays the initial options/features on the dashboard
 
 //These modules allow us to use the states defined in the reducer folder 
@@ -64,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   container: {
-    width: '70%',
+    width: '90%',
     paddingTop: theme.spacing(0),
     paddingBottom: theme.spacing(0),
   },
@@ -112,7 +113,8 @@ function Dashboard() {
   const clubExecView = (
 
       <Container>
-            
+          
+          <br/>
           <Typography component="h3" variant="h3" align="center" color="textPrimary" gutterBottom>
             Dashboard
           </Typography>
@@ -151,6 +153,10 @@ function Dashboard() {
 
                       {/* Only this route/url, the RegistrationListing component is shown*/}
                       <Route path="/api/dashboard/register" exact  component={RegistrationListing} />     
+
+
+                      {/* Only this route/url, the EWasteReportsListing component is shown*/}
+                      <Route path="/api/dashboard/ereports" exact  component={EWasteReportsListing} />
 
                 </Grid>
 

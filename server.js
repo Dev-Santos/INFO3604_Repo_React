@@ -24,6 +24,8 @@ app.use('/api/upload', require('./routes/api/ImgUpload'));
 //Club Middleware - Use Routes
 app.use('/api/clubs', require('./routes/api/Clubs'));
 
+//EWaste Report Middleware - Use Routes
+app.use('/api/ereport', require('./routes/api/EWaste_Report'));
 
 //Serve static assets if in production
 if(process.env.NODE_ENV === 'production'){
