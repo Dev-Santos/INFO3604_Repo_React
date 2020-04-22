@@ -17,13 +17,13 @@ import Paper from '@material-ui/core/Paper';
 import { Button } from 'reactstrap';
 
 //Imported Title Component
-import Title from '../Title';
+import Title from '../../Title';
 
 //These modules allow us to use the actions in the actions folder and states defined in the reducer folder 
 import {useSelector, useDispatch, shallowEqual}  from 'react-redux';
 
 //Functions imported from the regActions file in the actions folder
-import { getRegListing, updateRegStatus, createUser } from '../../../actions/regActions';
+import { getRegListing, updateRegStatus, createUser } from '../../../../actions/regActions';
 
 
 //Styling classes defined => which referenced by different elements in the component
@@ -83,7 +83,7 @@ export default function RegistrationListing() {//This is a shorter method of def
 
     //We create a user object using the extracted fields
     const newUser = {
-      name, email, password, clubID
+      name, email, password, clubID, userType:2
     }
 
     console.log(newUser);
@@ -98,7 +98,7 @@ export default function RegistrationListing() {//This is a shorter method of def
         dispatch( updateRegStatus(id) );
 
         //Executes the createUser function from the regActions file in the actions folder
-        //This creates a new user in the users table of the db using the object containing their information (line 83)
+        //This creates a new user in the users table of the db using the object containing their information (line 85)
         dispatch( createUser(newUser) );
 
         //Notifies the user of successful authentication
@@ -124,9 +124,9 @@ export default function RegistrationListing() {//This is a shorter method of def
               <Paper className={classes.paper}>
 
                 
-                  {/* Registration Listing Table */}
+                  {/* Club Member Registration Listing Table */}
 
-                  <Title>Registration Listing</Title>
+                  <Title>Club Member Registration Listing</Title>
 
                     <Table size="medium">
 
@@ -187,7 +187,7 @@ export default function RegistrationListing() {//This is a shorter method of def
 
                             {/* This table consists of records whose registration status equals to 0 */}
                             {/* These are the persons whose registration status is pending*/}
-                            {reg ? reg.filter((values) => {return values.status === 0}).map((record) => (
+                            {reg ? reg.map((record) => (
 
                                 <TableRow key={record.id}>
 
@@ -217,89 +217,6 @@ export default function RegistrationListing() {//This is a shorter method of def
                 </Paper>
                 
             </Grid>
-
-
-            <Grid item xs={12}>
-
-                <Paper className={classes.paper}>
-
-                                                      
-                    <Title>Authenticated Users</Title>
-                      
-                      {/* Authenticated Users Table */}
-                      <Table size="medium">
-
-                          <TableHead>
-
-                              <TableRow >
-
-                                  {/* Name Heading */}
-                                  <TableCell align="center" variant="head">
-                                      <Typography component="div">
-                                          <Box fontWeight="fontWeightBold">
-                                            Name
-                                          </Box>
-                                      </Typography>
-                                  </TableCell>
-
-                                  {/* Email Heading */}
-                                  <TableCell align="center" variant="head">
-                                      <Typography component="div">
-                                          <Box fontWeight="fontWeightBold">
-                                            Email
-                                          </Box>
-                                      </Typography>
-                                  </TableCell>
-
-                                  {/* Club Location Heading */}
-                                  <TableCell align="center" variant="head">
-                                      <Typography component="div">
-                                          <Box fontWeight="fontWeightBold">
-                                            Club Location
-                                          </Box>
-                                      </Typography>
-                                  </TableCell>
-
-                                  {/* Club Address Heading */}
-                                  <TableCell align="center" variant="head">
-                                      <Typography component="div">
-                                          <Box fontWeight="fontWeightBold">
-                                            Club Address
-                                          </Box>
-                                      </Typography>
-                                  </TableCell>
-
-                              </TableRow>
-
-                          </TableHead>
-
-                          <TableBody>
-                            
-                              {/* This table consists of records whose registration status equals to 1 */}
-                              {/* These are the persons who have valid user accounts and can login => Club members*/}
-                              {reg ? reg.filter((values) => {return values.status === 1}).map((record) => (
-                                
-                                <TableRow key={record.id}>
-
-                                  <TableCell align="center">{record.name}</TableCell>
-
-                                  <TableCell align="center">{record.email}</TableCell>
-
-                                  <TableCell align="center">{record.location}</TableCell>
-
-                                  <TableCell align="center">{record.address}</TableCell>
-                                  
-                                </TableRow>
-
-                              )): null}
-
-                          </TableBody>
-
-                      </Table>
-
-                  </Paper>
-
-            </Grid>  
 
         </React.Fragment>
   );

@@ -50,7 +50,7 @@ router.post('/', (req, res)=>{
                         return res.status(500).json({ msg: 'Error in registering user'});
                     });    
                     
-                }).catch(err => console.log(err));
+                }).catch(err => res.status(500).json({ msg: 'Error in hashing the password'}));
 
             
         }).catch(err => {
@@ -62,12 +62,29 @@ router.post('/', (req, res)=>{
 
 
 //@route    GET api/register/listing
-//@desc     Get Register Listing
+//@desc     Get club member registration listing
 //@access   Private
 router.get('/listing', auth, (req, res)=>{
 
-    //Pull all the records in the registrations table
-    db.query("SELECT `registrations`.`id`, `registrations`.`name`, `registrations`.`email`, `registrations`.`clubID` ,`registrations`.`password` ,`clubs`.`location`, `clubs`.`address`, `registrations`.`status`  FROM `registrations` INNER JOIN `clubs` ON `registrations`.`clubID` = `clubs`.`id`;", { type: QueryTypes.SELECT})
+    //Pull all the records in the registrations table with a status of 0
+    db.query("SELECT `registrations`.`id`, `registrations`.`name`, `registrations`.`email`, `registrations`.`clubID` ,`registrations`.`password` ,`clubs`.`location`, `clubs`.`address`, `registrations`.`status`  FROM `registrations` INNER JOIN `clubs` ON `registrations`.`clubID` = `clubs`.`id` WHERE `registrations`.`status` = 0;", { type: QueryTypes.SELECT})
+        .then(listing => {
+            
+            res.status(200).json(listing);//Return registration records
+        })
+        .catch(err => res.status(500).json({msg : "Error in pulling the register listing data"}));
+
+});
+
+
+
+//@route    GET api/register/auth
+//@desc     Get authenticated club members
+//@access   Private
+router.get('/auth', auth, (req, res)=>{
+
+    //Pull all the records in the registrations table with a status of 1
+    db.query("SELECT `registrations`.`id`, `registrations`.`name`, `registrations`.`email`, `registrations`.`clubID` ,`registrations`.`password` ,`clubs`.`location`, `clubs`.`address`, `registrations`.`status`  FROM `registrations` INNER JOIN `clubs` ON `registrations`.`clubID` = `clubs`.`id` WHERE `registrations`.`status` = 1;", { type: QueryTypes.SELECT})
         .then(listing => {
             
             res.status(200).json(listing);//Return registration records
@@ -117,27 +134,31 @@ router.post('/update', auth, (req, res)=>{
 
 
 //@route    POST api/register/user
-//@desc     Create a new Club member user account
+//@desc     Create a new user account
 //@access   Public
 router.post('/user', (req, res)=>{
     
-    const { name, email, password, clubID } = req.body;
+    const { name, email, password, clubID, userType } = req.body;
 
     //Simple validation
-    if(!name || !email || !password || !clubID){
+    if(!name || !email || !password || !clubID || !userType ){
+        console.log('Error');
         return res.status(400).json({ msg: 'Please enter all fields'});
     }
 
-    //Checking for existing user
-    User.findOne({ where: { email } })
+    //If the user to be created to does not have a clubID (e.g. donors)
+    if(parseInt(clubID) == -1){
+   
+        //Checking for existing user
+        User.findOne({ where: { email } })
         .then(user =>{
             
-            if(user) return res.status(400).json({ msg: 'User already exists'}); 
+            if(user) {return res.status(400).json({ msg: 'User already exists'});}
             
             //Create record in the users table
-            User.create({name, email, password, reg_date: Date.now(), userType:2, clubID})
+            User.create({name, email, password, reg_date: Date.now(), userType})
                 .then(user => {     
-
+                    
                     res.status(200).json(user);//Return user details
 
                 }).catch(err => {
@@ -148,6 +169,33 @@ router.post('/user', (req, res)=>{
                 });
 
         });
+
+    }else{
+
+        //Checking for existing user
+        User.findOne({ where: { email } })
+        .then(user =>{
+            
+            if(user) return res.status(400).json({ msg: 'User already exists'});
+            
+            //Create record in the users table
+            User.create({name, email, password, reg_date: Date.now(), userType, clubID})
+                .then(user => {     
+                    
+                    res.status(200).json(user);//Return user details
+
+                }).catch(err => {
+                    
+                    console.log(err);
+                    res.status(500).json({msg: 'Error in creating a user'});//If an error is caught
+
+                });
+
+        });
+
+    }
+
+    
 });
 
 

@@ -12,11 +12,11 @@ import {
     GET_REG_LISTING,
     REG_LISTING_LOADING,
     UPDATE_REG_STATUS, 
-    REGISTER_SUCCESS
+    REGISTER_SUCCESS,
 } from '../actions/types';
 
 
-//This function sends the information from the 'Register' form on the front-end to the backend database
+//This function sends the information from the 'Club Member Register' form on the front-end to the backend database
 export const registerUser = ({name, email, clubID, password}) => dispatch => {
     //Headers
     const config = {
@@ -70,6 +70,25 @@ export const getRegListing = () => (dispatch, getState) =>{
         );
 };
 
+
+//This function gets the all the authenticated club members from the database
+export const getCMListing = () => (dispatch, getState) =>{
+    
+    dispatch(setRegListLoading());
+
+    //Access the backend api (Express & Nodejs) to get all the authenticated club member records from the database
+    axios
+        .get('/api/register/auth', tokenConfig(getState))
+        .then(res => dispatch({
+            type: GET_REG_LISTING,
+            payload: res.data
+        }))
+        .catch(err => //If errors are caught
+            dispatch(returnErrors(err.response.data, err.response.status))
+        );
+};
+
+
 export const setRegListLoading = () => {
     return {
         type: REG_LISTING_LOADING
@@ -94,8 +113,9 @@ export const updateRegStatus = (id) => (dispatch, getState) =>{
 };
 
 
+
 //This function creates a new user in the database based on their provided information
-export const createUser = ({ name, email, password, clubID}) => dispatch => {
+export const createUser = ({ name, email, password, clubID, userType}) => dispatch => {
     //Headers
     const config = {
         headers: {
@@ -104,7 +124,7 @@ export const createUser = ({ name, email, password, clubID}) => dispatch => {
     }
 
     //Create request body
-    const body = JSON.stringify({ name, email, password, clubID });
+    const body = JSON.stringify({ name, email, password, clubID, userType });
 
     //Send headers and request body to the the api endpoints
     //Access the backend api (Express & Nodejs) to create a new user in the users table of the database

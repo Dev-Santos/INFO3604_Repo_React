@@ -24,6 +24,9 @@ app.use('/api/upload', require('./routes/api/ImgUpload'));
 //Club Middleware - Use Routes
 app.use('/api/clubs', require('./routes/api/Clubs'));
 
+//Donor Middleware - Use Routes
+app.use('/api/donor', require('./routes/api/Donors'));
+
 //EWaste Report Middleware - Use Routes
 app.use('/api/ereport', require('./routes/api/EWaste_Report'));
 

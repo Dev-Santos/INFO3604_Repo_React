@@ -2,10 +2,9 @@
 import React, { Component, Fragment } from 'react';
 
 //Imported Bootstrap elements
-import { Navbar, Nav} from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
 
 //Imported Components to be included
-import RegisterModal from './auth/RegisterModal';
 import CreateAdmin from './auth/CreateAdmin';
 import LoginModal from './auth/LoginModal';
 import Logout from "./auth/Logout";
@@ -32,7 +31,7 @@ class AppNavbar extends Component{
         //Capture the user information and authentication status from the state of the component
         const {isAuthenticated, user} = this.props.auth;
 
-        //NavBar options for authenticated users
+        //NavBar options for authenticated users (Club Members and Club Executives)
         //We can define HTML/JSX elements before rendering them on the browser
         const authLinks = (
             <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
@@ -59,17 +58,53 @@ class AppNavbar extends Component{
         //We can define HTML/JSX elements before rendering them on the browser
         const guestLinks = (
             <Fragment>
+                
+                
+                {/* NavBar Register Dropdown */}
+                <NavDropdown title="Register" id="basic-nav-dropdown">
+                    
+                    <NavDropdown.Item href="/api/register/club_member">
+                        As A Club Member
+                    </NavDropdown.Item>
 
-                <Nav.Item>
-                    <CreateAdmin/> {/* Positioning of the CreateAdmin Modal */}
-                </Nav.Item>
+                    <NavDropdown.Item href="/api/register/donor">
+                        As A Donor
+                    </NavDropdown.Item>
 
-                <Nav.Item>
-                    <RegisterModal/> {/* Positioning of the Register Modal */}
-                </Nav.Item>
+                    <NavDropdown.Item>As A Beneficiary</NavDropdown.Item>
+
+                    <NavDropdown.Item >
+                        <CreateAdmin/>
+                    </NavDropdown.Item>
+
+                </NavDropdown> 
+
 
                 <Nav.Item className="mr-5">
                     <LoginModal/> {/* Positioning of the Login Modal */}
+                </Nav.Item>
+
+            </Fragment>
+        );
+
+        //NavBar options for authenticated donors
+        //We can define HTML/JSX elements before rendering them on the browser
+        const donorLinks = (
+            <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
+                    
+                <Nav.Item>
+                        <Nav.Link href="/api/donate">Submit Donation</Nav.Link> 
+                </Nav.Item>
+                
+                <Nav.Item>
+                    <Logout/> {/* Positioning of the Logout Modal */}
+                </Nav.Item>
+
+                <Nav.Item>
+                    {/* This is how you see Welcome 'your_name' on the navbar when you login  */}
+                    <span className="navbar-text mr-3 ml-3">
+                        <strong>{user ? `Welcome ${user.name}`: ''}</strong>
+                    </span>
                 </Nav.Item>
 
             </Fragment>
@@ -118,9 +153,17 @@ class AppNavbar extends Component{
                     </Nav>
 
                     <Nav>
-                        {/* The isAuthenticated state is boolean*/}
-                        {/* If the user is authenticated, show the authenticated options. Else show the guest/public options */}
-                        {isAuthenticated ? authLinks: guestLinks}
+                        
+                        
+                        {/* If you are not authenticated (guest user) -> render the respective navbar options*/}
+                        {!isAuthenticated && guestLinks}
+
+                        {/* If you are a Club Executive/Club Member -> render the respective navbar options*/}
+                        {isAuthenticated && (user.userType === 1 || user.userType === 2) && authLinks}
+
+                        {/* If you are an authenticated donor -> render the respective navbar options*/}
+                        {isAuthenticated && user.userType === 4 && donorLinks}
+
                     </Nav>
                         
                 </Navbar.Collapse>

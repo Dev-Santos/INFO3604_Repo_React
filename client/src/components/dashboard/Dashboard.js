@@ -15,11 +15,13 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
 //Imported components to be included somewhere in the document
-
 import { CE_MainListItems, CE_SecondaryListItems } from './club_exec/listItems'; //These are the items seen on the left-hand side of the dashboard for the club executive interface
-import RegistrationListing from './club_exec/RegistrationListing'; // This component captures the registration tables seen
+import RegistrationListing from './club_exec/club_members/RegistrationListing'; // This component captures the registration listing of club members
+import AuthUsers from './club_exec/club_members/AuthUsers';//This component captures the listing of authenticated club members
 import CE_DashboardOptions from './club_exec/DashboardOptions';//This component displays the initial options/features on the dashboard
 import EWasteReportsListing from './club_exec/EWasteReportsListing';//This component captures all the e-waste records from the database
+import DonorRegistrationListing from './club_exec/donors/DonorRegistrationListing';//This component captures the registration listing of company and individual donors
+import DonorListing from './club_exec/donors/AuthDonors';//This component captured the authenticated individual and company donors
 
 
 import { CM_MainListItems } from './club_member/listItems';//These are the items seen on the left-hand side of the dashboard for the club member interface
@@ -28,7 +30,7 @@ import CM_DashboardOptions from './club_member/DashboardOptions';//This componen
 //These modules allow us to use the states defined in the reducer folder 
 import {useSelector, shallowEqual}  from 'react-redux';
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 //Styling classes defined => which referenced by different elements in the component
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   container: {
-    width: '90%',
+    width: '100%',
     paddingTop: theme.spacing(0),
     paddingBottom: theme.spacing(0),
   },
@@ -123,7 +125,7 @@ function Dashboard() {
       
                   {/* Left-Hand Sidebar of Options  */}
 
-                      <Drawer variant="permanent" classes={{ paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose), }} open={open}>
+                      <Drawer variant="permanent" classes={{ paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose), }} open={open} style={{zIndex: 0}}>
                         
                         {/*  First Half of Options  */}
                         <List>{CE_MainListItems}</List>
@@ -152,11 +154,19 @@ function Dashboard() {
 
 
                       {/* Only this route/url, the RegistrationListing component is shown*/}
-                      <Route path="/api/dashboard/register" exact  component={RegistrationListing} />     
+                      <Route path="/api/dashboard/reg_listing" exact  component={RegistrationListing} />     
 
+                      {/* Only this route/url, the RegistrationListing component is shown*/}
+                      <Route path="/api/dashboard/reg_users" exact  component={AuthUsers} />
 
                       {/* Only this route/url, the EWasteReportsListing component is shown*/}
                       <Route path="/api/dashboard/ereports" exact  component={EWasteReportsListing} />
+
+                      {/* Only this route/url, the DonorRegistrationListing component is shown*/}
+                      <Route path="/api/dashboard/donor_reg_listing" exact  component={DonorRegistrationListing} />
+
+                      {/* Only this route/url, the DonorRegistrationListing component is shown*/}
+                      <Route path="/api/dashboard/donor_listing" exact  component={DonorListing} />
 
                 </Grid>
 

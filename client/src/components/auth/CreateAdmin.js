@@ -11,7 +11,7 @@ import {
     FormGroup,
     Label,
     Input,
-    NavLink,
+    NavItem,
     UncontrolledAlert
 } from 'reactstrap';
 
@@ -153,9 +153,17 @@ class adminModal extends Component{
             <div>
 
                 {/* Text and Link on the Navigation Bar  */}
-                <NavLink onClick={this.toggle} href="#">
+
+                <NavItem onClick={this.toggle}>
                     Create Admin
-                </NavLink>
+                </NavItem>
+
+                {/*<NavItem>
+                    <NavLink onClick={this.toggle} href="#">
+                        Create Admin
+                    </NavLink>
+                </NavItem>*/}
+                
 
                 {/* Registration Modal  */}
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>

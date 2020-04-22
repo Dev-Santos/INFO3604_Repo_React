@@ -20,7 +20,7 @@ export default function(state = initialState, action){
     switch(action.type){
         case REGISTER_SUCCESS_AWAITING:
             return{
-                msg: "Awaiting approval from Admin user",
+                msg: "Successful Submission - Awaiting approval from Admin user",
             };
         case CLEAR_REG_MESSAGE:
             return{
