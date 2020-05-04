@@ -1,7 +1,7 @@
 import { FORM_SUCCESS, GET_ER_LISTING, ER_LISTING_LOADING } from '../actions/types';
 
 const initialState = {
-    ereport : null,
+    report : null,
     msg : null,
     loading: false
 };
@@ -10,7 +10,7 @@ export default function(state = initialState, action){
     switch(action.type){
         case FORM_SUCCESS:
             return{
-                ereport: action.payload
+                report: action.payload
             };
         case GET_ER_LISTING:
             return {

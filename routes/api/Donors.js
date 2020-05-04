@@ -17,6 +17,9 @@ const Company = require('../../models/Company');
 //Donor Model
 const Donor = require('../../models/Donor');
 
+//Donation Model
+const Donation = require('../../models/Donation');
+
 //@route    GET api/donor/listing
 //@desc     Get all individual and company donor registration records
 //@access   Private
@@ -30,13 +33,13 @@ router.get('/listing',auth, (req, res)=>{
             db.query("SELECT `id`, `FirstName`, `LastName`, `Email`, `Phone`, `CompanyID`, `reg_date`, `password` FROM `donors` WHERE `status`= 0 AND `CompanyID` IS NULL;", { type: QueryTypes.SELECT})
             .then(listing2 => {
 
-                res.status(200).json({comp: listing, ind: listing2});//Return all the records
+                return res.status(200).json({comp: listing, ind: listing2});//Return all the records
 
             })
-            .catch(err => res.status(500).json({msg : "Error in pulling the individual donor listing data"}));           
+            .catch(err => { return res.status(500).json({msg : "Error in pulling the individual donor listing data"})});           
 
         })
-        .catch(err => res.status(500).json({msg : "Error in pulling the company donor listing data"}));
+        .catch(err => { return res.status(500).json({msg : "Error in pulling the company donor listing data"})});
     
 });
 
@@ -54,13 +57,13 @@ router.get('/auth', auth, (req, res)=>{
             db.query("SELECT `id`, `FirstName`, `LastName`, `Email`, `Phone`, `CompanyID`, `reg_date`, `password` FROM `donors` WHERE `status`= 1 AND `CompanyID` IS NULL;", { type: QueryTypes.SELECT})
             .then(listing2 => {
 
-                res.status(200).json({comp: listing, ind: listing2});//Return all the records
+               return res.status(200).json({comp: listing, ind: listing2});//Return all the records
 
             })
-            .catch(err => res.status(500).json({msg : "Error in pulling the individual donor listing data"}));            
+            .catch(err => { return res.status(500).json({msg : "Error in pulling the individual donor listing data"});});            
 
         })
-        .catch(err => res.status(500).json({msg : "Error in pulling the company donor listing data"}));
+        .catch(err => { return res.status(500).json({msg : "Error in pulling the company donor listing data"});});
     
 });
 
@@ -75,7 +78,7 @@ router.post('/register', (req, res) => {
     //Simple validation
     if(!type){
 
-        res.status(400).json({msg: 'Please provide all fields'});
+        return res.status(400).json({msg: 'Please provide all fields'});
 
     }
 
@@ -87,7 +90,7 @@ router.post('/register', (req, res) => {
 
         if(!fname || !lname || !email || !tel || !password){
 
-            res.status(400).json({msg: 'Please provide all fields'});            
+            return res.status(400).json({msg: 'Please provide all fields'});            
 
         }
 
@@ -95,7 +98,7 @@ router.post('/register', (req, res) => {
         Donor.findOne({where: {Email: email}})
             .then(record => {
                 if (record)
-                    res.status(400).json({msg: 'Individual Donor Already Exists'});
+                    return res.status(400).json({msg: 'Individual Donor Already Exists'});
                 else{
 
                     //Hash their password
@@ -104,17 +107,17 @@ router.post('/register', (req, res) => {
 
                         //Create a new donor record in the donors table
                         Donor.create({FirstName: fname, LastName: lname, Email: email, Phone: tel, password: hash, CompanyID: null, status: 0, reg_date: Date.now()})
-                        .then(donor => res.status(200).json(donor))//Return the newly created donor record
+                        .then(donor => { return res.status(200).json(donor);})//Return the newly created donor record
                         .catch(err => {
                             console.log(err);
                             return res.status(500).json({ msg: 'Error in creating donor record'});
                         });
                         
-                    }).catch(err => res.status(500).json({ msg: 'Error in hashing the password'}));
+                    }).catch(err => { return res.status(500).json({ msg: 'Error in hashing the password'}); });
                     
                 }
             })
-            .catch( err => res.status(500).json({msg: 'Error in finding Donor record'}));
+            .catch( err => { return res.status(500).json({msg: 'Error in finding Donor record'});} );
 
     }else if(type === 'comp'){ //If the user wanted to create a company donor
         
@@ -123,7 +126,7 @@ router.post('/register', (req, res) => {
         //Simple validation
         if( !comp_name || !comp_add || !comp_website ||!comp_email || !comp_tel || !comp_cp_fname || !comp_cp_lname || !comp_pos || !comp_cp_tel || !comp_cp_email || !password ){
          
-            res.status(400).json({msg: 'Please provide all fields'});
+            return res.status(400).json({msg: 'Please provide all fields'});
 
         }
 
@@ -131,7 +134,7 @@ router.post('/register', (req, res) => {
         Company.findOne({where : sequelize.or( { CompanyName: comp_name}, {CompanyEmail: comp_email} ) })
         .then(company => {
             if (company)
-                res.status(400).json({msg: 'Company Donor Already Exists'});
+                return res.status(400).json({msg: 'Company Donor Already Exists'});
             else{
 
                 //Create a new company record in the companies table
@@ -144,12 +147,12 @@ router.post('/register', (req, res) => {
 
                             //Create a new donor record in the donors table
                             Donor.create({FirstName: comp_cp_fname, LastName: comp_cp_lname, Email: comp_cp_email, Phone: comp_cp_tel, password: hash, CompanyID: new_company.id, status: 0, reg_date: Date.now()})
-                                .then(donor => res.status(200).json(donor))//Return the newly created donor record
+                                .then(donor => { return res.status(200).json(donor);})//Return the newly created donor record
                                 .catch(err => {
                                     console.log(err);
                                     return res.status(500).json({ msg: 'Error in creating donor record'});
                                 });
-                        }).catch(err => res.status(500).json({ msg: 'Error in hashing the password'}));
+                        }).catch(err => { return res.status(500).json({ msg: 'Error in hashing the password'});});
                         
                     }).catch(err =>{
                         
@@ -163,7 +166,7 @@ router.post('/register', (req, res) => {
 
     }else{
 
-        res.status(400).json({msg: 'Invalid donor type'});
+        return res.status(400).json({msg: 'Invalid donor type'});
 
     }
 
@@ -193,19 +196,132 @@ router.post('/update', auth, (req, res)=>{
                     
                     //Update changes
                     record.save()
-                        .then( record => res.status(200).json(record))//Return details of updated donor
-                        .catch(err => res.status(400).json({msg: 'Record not saved'}));
+                        .then( record => { return res.status(200).json(record);})//Return details of updated donor
+                        .catch(err => { return res.status(400).json({msg: 'Record not saved'});});
                     
                 }else{
-                    res.status(400).json({msg: 'Record does not exists'});
+                    return res.status(400).json({msg: 'Record does not exists'});
                 }
 
             })
-            .catch(err => res.status(400).json({msg: 'Error in pulling the record data'}));
+            .catch(err => { return res.status(400).json({msg: 'Error in pulling the record data'});});
 
     }else{
         res.status(400).json({msg: 'Data not received!'});
     }
+
+});
+
+
+
+//@route    POST api/donor/donation
+//@desc     Submit a donation form
+//@access   Private
+router.post('/donation', auth, (req, res)=>{
+   
+    const { donor, item_type, item_desc, serial_no, units, 
+        location, retrieval_loc, image_url, classification,  } = req.body;
+
+    //Simple validation        
+    if( !donor || !item_type || !item_desc || !serial_no || !units || !location || !retrieval_loc || !image_url 
+        || !classification ){
+
+            return res.status(400).json({msg: 'Please provide all fields'});
+
+    }
+
+
+    //Check to see if the donor is a company or an individual
+    Company.findOne({ where: {CompanyName: donor}})
+    .then(rec => {
+        
+        let val = 0;
+
+        //If a record is found, that means it is a company donor
+        if (rec)
+            val = 1;
+
+        //Create donation record in the donations table (database)
+        Donation.create({ donor, company: val, item_type, item_desc, serial_no, units, location, retrieval_loc, image_url, classification, status: 0, date: Date.now() })
+            .then( donation => {
+                return res.status(200).json(donation);//Return newly created record
+            })
+            .catch( err => {  return res.status(500).json({msg: 'Error in creating donor record'}); }); //If an error is caught
+
+    })
+    .catch( err =>{//If an error is caught
+        return res.status(500).json({msg: 'Error in pulling company donor data'});
+    });
+
+});
+
+//@route    GET api/donor/donations
+//@desc     Get listing of submitted donations
+//@access   Private
+router.get('/donations', auth, (req, res)=>{
+   
+    //Pull all the donations (database) with a status of 0 (pending)
+    db.query("SELECT * FROM `donations` WHERE `status` = 0;", { type: QueryTypes.SELECT})
+        .then(listing => {
+
+            return res.status(200).json(listing);//Return all the records
+
+        })
+        .catch(err => { return res.status(500).json({msg : "Error in pulling the company donor listing data"});});//If an error is caught
+
+});
+
+//@route    GET api/donor/donations_auth
+//@desc     Get listing of approved donations
+//@access   Private
+router.get('/donations_auth', auth, (req, res)=>{
+   
+    //Pull all the donations (database) with a status of 1 (approved)
+    db.query("SELECT * FROM `donations` WHERE `status` = 1;", { type: QueryTypes.SELECT})
+        .then(listing => {
+
+            return res.status(200).json(listing);//Return all the records
+
+        })
+        .catch(err => { return res.status(500).json({msg : "Error in pulling the company donor listing data"});});//If an error is caught
+
+});
+
+
+
+//@route    POST api/donor/donation/update
+//@desc     Approve a donation (based on their donation id)
+//@access   Private
+router.post('/donation/update', auth, (req, res)=>{
+   
+    //Extract id field from the request body
+    const { id } = req.body;
+
+    //Simple validation
+    if(!id)
+        return res.status(400).json({ msg: 'Please enter all fields' });
+    
+    //Check to see if there is a donation with the inputted id
+    Donation.findOne({ where: { id } })
+        .then(record => {
+
+            //If a record is found
+            if(record){
+
+                //If a record is found set their status to 1 (meaning the donation is approved)
+                record.status = 1;
+                
+                //Update changes
+                record.save()
+                    .then( record => { return res.status(200).json(record);})//Return details of updated donor
+                    .catch(err => { return res.status(400).json({msg: 'Record not saved'});});
+                
+            }else{
+                return res.status(400).json({msg: 'Record does not exists'});
+            }
+        
+        })
+        .catch(err => { return res.status(500).json({msg: 'Error in accessing donation records'}); });
 
 });
 

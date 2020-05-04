@@ -11,6 +11,7 @@ import {
     GET_REG_LISTING,
     REG_LISTING_LOADING,
     UPDATE_REG_STATUS, 
+    FORM_SUCCESS
 } from '../actions/types';
 
 
@@ -126,6 +127,79 @@ export const updateDonorStatus = (id) => (dispatch, getState) =>{
   
     //Access the backend api (Express & Nodejs) to update the donor information in the database
     axios.post('/api/donor/update', body, tokenConfig(getState))
+        .then(res => dispatch({
+            type: UPDATE_REG_STATUS,
+            payload: res.data
+        }))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));//If an error is caught
+};
+
+//This function sends the information from the Donation form on the front-end to the backend database
+export const submitDonation = ({donor, item_type, item_desc, serial_no, units, location, retrieval_loc, classification, image_url}) => (dispatch, getState) => {
+
+    //Create request body
+    const body = JSON.stringify({ donor, item_type, item_desc, serial_no, units, location, retrieval_loc, classification, image_url });
+
+    //Access the backend api (Express & Nodejs) to send the donation information in the database
+    axios.post('/api/donor/donation', body, tokenConfig(getState))
+        .then(res => dispatch({
+            type: FORM_SUCCESS,
+            payload: res.data
+        }))
+        .catch(err => {//If an error is caught
+            dispatch(returnErrors(err.response.data, err.response.status, 'FORM_FAIL'));
+        });
+
+};
+
+//This function gets the all the approved donations from the database
+export const getApprovedDonations = () => (dispatch, getState) => {
+
+    dispatch(setRegListLoading());
+
+    //Access the backend api (Express & Nodejs) to get all the approved donation from the database
+    axios
+        .get('/api/donor/donations_auth', tokenConfig(getState))
+        .then(res => dispatch({
+            type: GET_REG_LISTING,
+            payload: res.data
+        }))
+        .catch(err => //If errors are caught
+            dispatch(returnErrors(err.response.data, err.response.status))
+        );
+
+
+}
+
+//This function gets the all the submitted donations from the database
+export const getSubmittedDonations = () => (dispatch, getState) => {
+
+    dispatch(setRegListLoading());
+
+    //Access the backend api (Express & Nodejs) to get all the submitted donations from the database
+    axios
+        .get('/api/donor/donations', tokenConfig(getState))
+        .then(res => dispatch({
+            type: GET_REG_LISTING,
+            payload: res.data
+        }))
+        .catch(err => //If errors are caught
+            dispatch(returnErrors(err.response.data, err.response.status))
+        );
+
+
+}
+
+
+//This function is responsible for changing the status of a donation from 0 (Pending) to 1 (Approved)
+//in the database based on their donation id
+export const approveDonation = (id) => (dispatch, getState) =>{
+
+    //Create request body
+    const body = JSON.stringify({ id });
+  
+    //Access the backend api (Express & Nodejs) to update the donation information in the database
+    axios.post('/api/donor/donation/update', body, tokenConfig(getState))
         .then(res => dispatch({
             type: UPDATE_REG_STATUS,
             payload: res.data

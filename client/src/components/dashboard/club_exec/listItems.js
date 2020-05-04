@@ -119,6 +119,8 @@ export const CE_MainListItems = (
               <ListGroup>
                 <ListGroup.Item action href="/api/dashboard/donor_reg_listing">Registration Listing</ListGroup.Item>
                 <ListGroup.Item action href="/api/dashboard/donor_listing" >Authenticated Donors</ListGroup.Item>
+                <ListGroup.Item action href="/api/dashboard/donations" >Submitted Donations</ListGroup.Item>
+                <ListGroup.Item action href="/api/dashboard/donations_auth" >Approved Donations</ListGroup.Item>
               </ListGroup>
               
             </ExpansionPanelDetails>

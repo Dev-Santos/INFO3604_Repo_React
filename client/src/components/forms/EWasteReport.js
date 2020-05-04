@@ -53,19 +53,24 @@ class EWasteReport extends Component {
             progress: 0
         };
 
-        //These are additional properties (both state variables and functions) of the component that can be accessed at any point
-        this.propTypespropTypes = {
-            error: PropTypes.object.isRequired,
-            ereport: PropTypes.object.isRequired,
-            submitEReport: PropTypes.func.isRequired,
-        }
-
         this.getLocation = this.getLocation.bind(this);
         this.getCoordinates = this.getCoordinates.bind(this);
         this.reverseCoordinates = this.reverseCoordinates.bind(this);
         this.handleUpload = this.handleUpload.bind(this);
         this.classify = this.classify.bind(this);
 
+    }
+
+    //Execute the getLocation function only when the component is completely loaded
+    componentDidMount(){
+        this.getLocation();
+    }
+ 
+    //These are additional properties (both state variables and functions) of the component that can be accessed at any point
+    static propTypes = {
+        error: PropTypes.object.isRequired,
+        report: PropTypes.object.isRequired,
+        submitEReport: PropTypes.func.isRequired,
     }
 
     //Executed everytime an input field on the form is changed - the value is stored in the state of the component
@@ -106,7 +111,7 @@ class EWasteReport extends Component {
             console.log(storage_name);
 
             //This function (its a call-back function) is responsible for storing the image in the firebase db
-            const uploadTask = storage.ref(`${class_res}/${storage_name}`).put(this.state.file);
+            const uploadTask = storage.ref(`EReports/${class_res}/${storage_name}`).put(this.state.file);
 
             //Once the state of the callback function changes, do the following
             uploadTask.on('state_changed',
@@ -128,7 +133,7 @@ class EWasteReport extends Component {
 
                     //complete function (Once the image has been successfully uploaded)
                     // We want to capture the url where you can download the image just uploaded and store it in the backend database
-                    storage.ref(`${class_res}`).child(storage_name).getDownloadURL() 
+                    storage.ref(`EReports/${class_res}`).child(storage_name).getDownloadURL() 
                     .then(url => {
                         
                         console.log(url);
@@ -146,21 +151,11 @@ class EWasteReport extends Component {
                         //Aims to submit the E-Waste Report to the backend db
                         this.props.submitEReport(newEReport);
 
-                        //Reset our component's state to how it initially was
-                        this.setState({
-                            filename: 'Select file',
-                            imageUrl: null,
-                            results: {},
-                            showResults: false,
-                            classBtn: false, 
-                            progress: 0
-                        })
+                        //Reset input fields on the form
+                        this.onReset()
 
                         //Message alert to the user
                         window.alert( 'Your report was successfully sent, please await an email with further instructions' );
-
-                        //Reset or clear all fields in the form
-                        document.getElementById('ereport_form').reset();
 
                     })
                     .catch(err => console.log(err));
@@ -170,6 +165,23 @@ class EWasteReport extends Component {
             window.alert('Please classify your image.');
         }
         
+    }
+
+    onReset = e =>{
+
+        //Reset our component's state to how it initially was
+        this.setState({
+            filename: 'Select file',
+            imageUrl: null,
+            results: {},
+            showResults: false,
+            classBtn: false, 
+            progress: 0
+        })
+
+        //Reset or clear all fields in the form
+        document.getElementById('ereport_form').reset();
+
     }
 
     getLocation(){
@@ -194,7 +206,14 @@ class EWasteReport extends Component {
         .then(data => this.setState({
             userAddress: data.locality
         }))
-        .catch(error => alert(error));
+        .catch(error => {
+            this.setState({
+                latitude: null, 
+                longitude: null,
+                userAddress: null
+            });
+            alert(error);
+        });
     }
 
     handleLocationError(error){
@@ -217,6 +236,7 @@ class EWasteReport extends Component {
     }
  
 
+    //Function to handle when an image is uploaded to the form
     handleUpload = (e) => {
 
         //Extracts all the file information submitted on the form
@@ -227,32 +247,24 @@ class EWasteReport extends Component {
 
             //Save the image file (the first file) in file state of the component using its designated function
             this.setState({file: e.target.files[0]});
-            //setFile(e.target.files[0]);
 
             //Similarly, save the image's filename in filename state of the component using its designated function
             this.setState({filename: e.target.files[0].name});
-            //setFilename(e.target.files[0].name);
 
             //Get the image's url
             const url = URL.createObjectURL(files[0]);
 
-
             //Save it to the imageUrl state of the component using its designated function 
-            //setImageUrl(url);
             this.setState({imageUrl: url});
 
-            //showClassBtn(true);
             this.setState({classBtn: true});
             //Change the classBtn state of the component to true using its designated function 
             //This essentially means show the classification button only when an image file is uploaded
             
-            //setShowResults(false);
-            //Change the showResults state of the component to false using its designated function 
-            //This essentially means don't show the results until it is classified.
-            
         }
     };
 
+    //Function used to send the image provided to the backend for classification
     classify = async e => {
        
         e.preventDefault();
@@ -278,11 +290,9 @@ class EWasteReport extends Component {
                 
                 //Save the result to the results state of the component using its designated function 
                 this.setState({results: list});
-                //setResults(list);
                 
                 //Change the showResults state to true as we have classified the image
                 this.setState({showResults: true});
-                //setShowResults(true);
 
             } catch (err) {//If an error is caught
                 if(err.response.status === 500 )
@@ -304,11 +314,11 @@ class EWasteReport extends Component {
             <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
                 
                 <h2 className="ml-5" style={{textAlign: "center"}}>E-Waste Report Form</h2>
-                {this.getLocation()}
-
+                {/*This was placed on line 66*/} 
+                {/*this.getLocation()*/} 
 
                 {/* E-Waste Form */}
-                <Form onSubmit={this.onSubmit} id="ereport_form">
+                <Form onSubmit={this.onSubmit} onReset={this.onReset} id="ereport_form">
 
                     <FormGroup>       
 
@@ -367,8 +377,11 @@ class EWasteReport extends Component {
                             </div>
                         }                        
 
-                        <Button color="dark" style={{ marginTop: '2rem', fontSize: '20px', display: 'block'}} type="submit" >Submit Form</Button> 
-
+                        <div>
+                            <Button color="dark" style={{ marginTop: '2rem', fontSize: '20px'}} type="reset" >Clear Fields</Button> 
+                            <Button color="dark" style={{ marginTop: '2rem', marginLeft: '2rem', fontSize: '20px'}} type="submit" >Submit Form</Button> 
+                        </div>
+                        
                     </FormGroup>
 
                 </Form> 
@@ -381,7 +394,7 @@ class EWasteReport extends Component {
 //This is used to import various states of the system as defined in the reducers folder
 const mapStateToProps = (state) => ({
     error: state.error,
-    ereport: state.form.ereport
+    report: state.form.report
 });
 
 //This is where the imported connect module incorporates all the functions/actions from the actions folder and states from the reducers folder into the actual component.

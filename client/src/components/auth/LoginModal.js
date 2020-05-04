@@ -52,6 +52,10 @@ class LoginModal extends Component{
             //Check for register error
             if(error.id === 'LOGIN_FAIL'){
                 this.setState({ msg: error.msg.msg });
+
+                //Removes the error message on the screen after 4 seconds
+                setTimeout(() => this.setState({msg: null}), 4000);
+
             }else{
                 this.setState({ msg: null});
             }

@@ -11,8 +11,7 @@ const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     isLoading: false,
-    user: null,
-    userType: null
+    user: null
 };
 
 export default function(state = initialState, action){
@@ -35,8 +34,7 @@ export default function(state = initialState, action){
                 ...state,
                 ...action.payload,
                 isAuthenticated: true,
-                isLoading: false,
-                userType: action.payload.user.userType
+                isLoading: false
             };
         case AUTH_ERROR:
         case LOGIN_FAIL:
@@ -47,8 +45,7 @@ export default function(state = initialState, action){
                 token: null,
                 user: null,
                 isAuthenticated: false,
-                isLoading: false,
-                userType: null
+                isLoading: false
             };
         default:
             return state;
