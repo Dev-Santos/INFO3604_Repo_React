@@ -311,12 +311,12 @@ class donate extends Component {
     render(){
         
         //Capture the donor's information from the auth reducer (state)
-        const { user } = this.props.auth;
+        const { user, isAuthenticated } = this.props.auth;
 
-        //The following is rendered/displayed on the browser
 
-        return( 
-     
+        // Donation Form (View) for authenticated donors 
+        //We can define HTML/JSX elements before rendering them on the browser
+        const view = (
             <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
                 
                 <h2 className="ml-5" style={{textAlign: "center"}}>Donation Form</h2>
@@ -395,7 +395,7 @@ class donate extends Component {
 
                         <div>
                             <Button color="dark" style={{ marginTop: '2rem', fontSize: '20px'}} type="reset" >Clear Fields</Button> 
-                            <Button color="dark" style={{ marginTop: '2rem', marginLeft: '2rem', fontSize: '20px'}} type="submit" >Submit Form</Button> 
+                            <Button color="dark" style={{ marginTop: '2rem', marginLeft: '2rem', fontSize: '20px'}} type="submit" >Submit Donation Form</Button> 
                         </div>
 
                     </FormGroup>
@@ -403,6 +403,16 @@ class donate extends Component {
                 </Form> 
                 
             </Fragment>
+        );
+
+
+        //The following is rendered/displayed on the browser
+
+        return( 
+            <div>
+                {/* Only If the user is authenticated as a beneficiary, render the elements in view variable (line 319) */}
+                { isAuthenticated ? view : null }
+            </div>
         );
     }
 }

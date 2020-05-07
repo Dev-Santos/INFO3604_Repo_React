@@ -10,7 +10,8 @@ export default function(state = initialState, action){
     switch(action.type){
         case FORM_SUCCESS:
             return{
-                report: action.payload
+                report: action.payload,
+                msg: 'Successful Submission - Awaiting approval from Admin user'
             };
         case GET_ER_LISTING:
             return {

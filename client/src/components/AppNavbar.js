@@ -71,7 +71,9 @@ class AppNavbar extends Component{
                         As A Donor
                     </NavDropdown.Item>
 
-                    <NavDropdown.Item>As A Beneficiary</NavDropdown.Item>
+                    <NavDropdown.Item href="/api/register/beneficiary">
+                        As A Beneficiary
+                    </NavDropdown.Item>
 
                     <NavDropdown.Item >
                         <CreateAdmin/>
@@ -94,6 +96,29 @@ class AppNavbar extends Component{
                     
                 <Nav.Item>
                         <Nav.Link href="/api/donate">Submit Donation</Nav.Link> 
+                </Nav.Item>
+                
+                <Nav.Item>
+                    <Logout/> {/* Positioning of the Logout Modal */}
+                </Nav.Item>
+
+                <Nav.Item>
+                    {/* This is how you see Welcome 'your_name' on the navbar when you login  */}
+                    <span className="navbar-text mr-3 ml-3">
+                        <strong>{user ? `Welcome ${user.name}`: ''}</strong>
+                    </span>
+                </Nav.Item>
+
+            </Fragment>
+        );
+
+        //NavBar options for authenticated beneficiaries
+        //We can define HTML/JSX elements before rendering them on the browser
+        const beneficiariesLinks = (
+            <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
+                    
+                <Nav.Item>
+                        <Nav.Link href="/api/request">Submit Donation Request</Nav.Link> 
                 </Nav.Item>
                 
                 <Nav.Item>
@@ -142,10 +167,6 @@ class AppNavbar extends Component{
                                 <Nav.Link href="/api/ereport">Make EWaste Report</Nav.Link> 
                         </Nav.Item>
 
-                        <Nav.Item>
-                            <Nav.Link href="/api/request">Request</Nav.Link>
-                        </Nav.Item>
-
                     </Nav>
 
                     <Nav>
@@ -159,6 +180,9 @@ class AppNavbar extends Component{
 
                         {/* If you are an authenticated donor -> render the respective navbar options*/}
                         {isAuthenticated && user.userType === 4 && donorLinks}
+
+                        {/* If you are an authenticated beneficiary -> render the respective navbar options*/}
+                        {isAuthenticated && user.userType === 5 && beneficiariesLinks}
 
                     </Nav>
                         

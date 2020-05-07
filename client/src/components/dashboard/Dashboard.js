@@ -21,9 +21,13 @@ import AuthUsers from './club_exec/club_members/AuthUsers';//This component capt
 import CE_DashboardOptions from './club_exec/DashboardOptions';//This component displays the initial options/features on the dashboard
 import EWasteReportsListing from './club_exec/EWasteReportsListing';//This component captures all the e-waste records from the database
 import DonorRegistrationListing from './club_exec/donors/DonorRegistrationListing';//This component captures the registration listing of company and individual donors
-import DonorListing from './club_exec/donors/AuthDonors';//This component captured the authenticated individual and company donors
+import DonorListing from './club_exec/donors/AuthDonors';//This component captures the authenticated individual and company donors
 import Donations from './club_exec/donors/Donations';// This component displays all the submmitted donations by authenticated donors
 import ApprovedDonations from './club_exec/donors/ApprovedDonations';// This component displays all the approved donations
+import BeneficiaryRegListing from './club_exec/beneficiaries/BeneficiaryRegListing';//This componeny displays registration listing of beneficiaries
+import BeneficiaryListing from './club_exec/beneficiaries/AuthBeneficiaries';//This component captures the authenticated beneficiaries
+import DonationRequests from './club_exec/beneficiaries/DonationRequests';// This component displays all the submmitted donations requests by authenticated beneficiaries
+import ApprovedDonationRequests from './club_exec/beneficiaries/ApprovedDonationReqs';// This component displays all the approved donation requests
 
 import { CM_MainListItems } from './club_member/listItems';//These are the items seen on the left-hand side of the dashboard for the club member interface
 import CM_DashboardOptions from './club_member/DashboardOptions';//This component displays the initial options/features on the dashboard
@@ -31,7 +35,7 @@ import CM_DashboardOptions from './club_member/DashboardOptions';//This componen
 //These modules allow us to use the states defined in the reducer folder 
 import {useSelector, shallowEqual}  from 'react-redux';
 
-const drawerWidth = 280;
+const drawerWidth = 300;
 
 //Styling classes defined => which referenced by different elements in the component
 const useStyles = makeStyles((theme) => ({
@@ -174,6 +178,18 @@ function Dashboard() {
 
                       {/* Only this route/url, the ApprovedDonations component is shown*/}
                       <Route path="/api/dashboard/donations_auth" exact  component={ApprovedDonations} />
+
+                      {/* Only this route/url, the BeneficiaryRegListing component is shown*/}
+                      <Route path="/api/dashboard/ben_reg_listing" exact  component={BeneficiaryRegListing} />
+
+                      {/* Only this route/url, the BeneficiaryListing component is shown*/}
+                      <Route path="/api/dashboard/ben_listing" exact  component={BeneficiaryListing} />
+
+                      {/* Only this route/url, the DonationRequests component is shown*/}
+                      <Route path="/api/dashboard/donation_reqs" exact  component={DonationRequests} />
+
+                      {/* Only this route/url, the ApprovedDonationRequests component is shown*/}
+                      <Route path="/api/dashboard/donation_reqs_auth" exact  component={ApprovedDonationRequests} />
 
                 </Grid>
 

@@ -130,11 +130,34 @@ export const CE_MainListItems = (
     </ListItem>
 
 
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Beneficiaries" />
+    {/* Beneficiaries Option */}
+    <ListItem>
+
+        <ExpansionPanel>
+
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} style={{width: '260px'}}>
+
+                <ListItemIcon>
+                  <PeopleIcon />
+                </ListItemIcon>
+
+                <ListItemText primary="Beneficiaries" />
+                    
+            </ExpansionPanelSummary>
+
+            <ExpansionPanelDetails>
+              
+              <ListGroup>
+                <ListGroup.Item action href="/api/dashboard/ben_reg_listing">Registration Listing</ListGroup.Item>
+                <ListGroup.Item action href="/api/dashboard/ben_listing" >Authenticated Benefic... </ListGroup.Item>
+                <ListGroup.Item action href="/api/dashboard/donation_reqs" >Donation Requests</ListGroup.Item>
+                <ListGroup.Item action href="/api/dashboard/donation_reqs_auth" >Approved Requests</ListGroup.Item>
+              </ListGroup>
+              
+            </ExpansionPanelDetails>
+
+        </ExpansionPanel>
+
     </ListItem>
 
   </div>

@@ -21,6 +21,7 @@ import Footer from './components/Footer';
 import Dashboard from './components/dashboard/Dashboard';
 import CMRegisterForm from './components/reg_forms/ClubMember';
 import DonorRegisterForm from './components/reg_forms/Donor';
+import BeneficiaryRegisterForm from './components/reg_forms/Beneficiary';
 
 //Imported Bootstrap elements
 import {Container} from 'reactstrap';
@@ -70,6 +71,8 @@ class App extends Component{
                 <Route path="/api/register/club_member" exact component={CMRegisterForm}/>
 
                 <Route path="/api/register/donor" exact component={DonorRegisterForm}/>
+
+                <Route path="/api/register/beneficiary" exact component={BeneficiaryRegisterForm}/>
 
                 <Route path="/api/donate" exact component={Donate}/>
 

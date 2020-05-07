@@ -118,7 +118,7 @@ export default function DonorRegistrationListing() {//This is a shorter method o
     const recId = e.target.id;   
 
     //Once the user selects 'OK' on  the confirmation box
-    if(window.confirm("Are you sure you want validate the donor: " + recName)){
+    if(window.confirm("Are you sure you want authenticate the donor: " + recName)){
 
       let validateRec = null;
 
@@ -174,7 +174,7 @@ export default function DonorRegistrationListing() {//This is a shorter method o
       }
 
       //Notifies the user of successful authentication
-      window.alert(recName + " authenticated successfully!");
+      window.alert(recName + " approved successfully!");
 
       //This captures the updated donor registration information from our backend database
       dispatch(getDonorRegListing());

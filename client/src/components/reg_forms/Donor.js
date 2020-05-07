@@ -7,8 +7,7 @@ import {
     Form,
     FormGroup,
     Label,
-    Input,
-    UncontrolledAlert
+    Input
 } from 'reactstrap';
 
 //This module is used to connect to all the different actions/functions in the actions folder 
@@ -43,6 +42,7 @@ class DonorRegisterForm extends Component{
         password: '',
         password2: '',
         msg: null,
+        confirm: null,
         donorType: null,
     }
 
@@ -57,13 +57,26 @@ class DonorRegisterForm extends Component{
 
     componentDidUpdate(prevProps) {
         
-        const { error } = this.props;
+        const { error, msg } = this.props;
         if( error !== prevProps.error){
             //Check for register error
             if(error.id === 'REGISTER_FAIL'){
                 this.setState({ msg: error.msg.msg });
+                //Remove the error after 3 seconds
+                setTimeout(() => this.setState({msg: null}), 3000);
             }else{
                 this.setState({ msg: null});
+            }
+        }
+
+        if( msg !== prevProps.msg){
+            //Check for confirmation message
+            if(msg){
+                this.setState({ confirm: msg });
+                //Remove the error after 3 seconds
+                setTimeout(() => this.setState({confirm: null}), 3000);
+            }else{
+                this.setState({ confirm: null});
             }
         }
           
@@ -161,8 +174,8 @@ class DonorRegisterForm extends Component{
             
         }
 
-        //Removes the error message on the screen after 6 seconds
-        setTimeout(() => this.setState({msg: null}), 6000);
+        //Reset the form fields
+        this.onReset();
         
     }
 
@@ -186,6 +199,7 @@ class DonorRegisterForm extends Component{
             password: '',
             password2: '',
             msg: null,
+            confirm: null,
             donorType: null,
         });
     }
@@ -249,14 +263,14 @@ class DonorRegisterForm extends Component{
 
                 <br/><br/>
 
-                {/* If there is an error message, display it on the form. */}
+                {/* If there is an error message, display an alert  */}
                 {this.state.msg ? (
-                    <UncontrolledAlert color="danger" fade={true}>{this.state.msg}</UncontrolledAlert>
+                    window.alert(this.state.msg)
                 ): null}
                 
                 {/* If there is a successful submission, notify the user of this  */}
-                {this.props.msg ? (
-                    <UncontrolledAlert color="success" fade={true} >{this.props.msg}</UncontrolledAlert>
+                {this.state.confirm ? (
+                    window.alert(this.state.confirm)
                 ): null}
 
                 {/* Overall Registration Form */}

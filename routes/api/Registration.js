@@ -109,9 +109,8 @@ router.post('/update', auth, (req, res)=>{
                 
                 if(record){
 
-                    //If a record is found set their status to 1 (meaning the user is authenticated) and block out their password
+                    //If a record is found set their status to 1 (meaning the user is authenticated)
                     record.status = 1;
-                    record.password = "********";
                     
                     //Update changes
                     record.save()

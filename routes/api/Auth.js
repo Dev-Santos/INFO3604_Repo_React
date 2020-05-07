@@ -60,7 +60,7 @@ router.post('/', (req, res)=>{
                                 jwt.sign(
                                     {id: user.id},
                                     config.get('SECRET_KEY'),
-                                    { expiresIn: 3600 },//A token expires in an hour
+                                    { expiresIn: 10800 },//A token expires in 3 hours
                                     (err, token) => {
                                         if(err) throw err;
                                         res.json({ token, user:
@@ -78,7 +78,7 @@ router.post('/', (req, res)=>{
                         jwt.sign(
                             {id: user.id},
                             config.get('SECRET_KEY'),
-                            { expiresIn: 3600 },//A token expires in an hour
+                            { expiresIn: 10800 },//A token expires in 3 hours
                             (err, token) => {
                                 if(err) throw err;
                                 res.json({ token, user:
@@ -99,7 +99,7 @@ router.post('/', (req, res)=>{
 
                         //If a user registration record is found with a status = 0 (pending)
                         if (reg_user){
-                            return res.status(400).json({ msg: 'User account stil awaiting approval'});
+                            return res.status(400).json({ msg: 'Account stil awaiting approval'});
                         }else{
 
                             // Check for a pending donor account
@@ -108,17 +108,17 @@ router.post('/', (req, res)=>{
 
                                     //If a donor registration record is found with a status = 0 (pending)
                                     if (reg_donor){
-                                        return res.status(400).json({ msg: 'Donor account stil awaiting approval'});
+                                        return res.status(400).json({ msg: 'Account stil awaiting approval'});
                                     }else{
 
-                                        //Check to see if it is a company donor
+                                        //Check to see if it is a company donor OR  beneficiary
                                         Company.findOne({ where:{CompanyEmail: email}})
                                             .then(comp_rec => {
 
                                                 //If a company record is found
                                                 if (comp_rec){
 
-                                                    return res.status(400).json({ msg: 'Donor account stil awaiting approval'});
+                                                    return res.status(400).json({ msg: 'Account stil awaiting approval'});
 
                                                 }else{
 

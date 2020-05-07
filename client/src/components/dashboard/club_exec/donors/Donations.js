@@ -119,8 +119,8 @@ export default function DonationListing() {//This is a shorter method of definin
       //This essentially changes a donation's status from 0 (Pending) to 1 (Approved)
       dispatch( approveDonation(recId) );
 
-      //Notifies the user of successful authentication
-      window.alert("Donation authenticated successfully!");
+      //Notifies the user of successful approval
+      window.alert("Donation approved successfully!");
 
       //This captures the updated donation information from our backend database
       dispatch(getSubmittedDonations());

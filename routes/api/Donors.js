@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const sequelize = require('sequelize');
-const config = require('config');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');//Authentication middleware
 
 const { QueryTypes } = require('sequelize');
@@ -190,9 +188,8 @@ router.post('/update', auth, (req, res)=>{
                 
                 if(record){
 
-                    //If a record is found set their status to 1 (meaning the donor is authenticated) and block out their password
+                    //If a record is found set their status to 1 (meaning the donor is authenticated)
                     record.status = 1;
-                    record.password = "********";
                     
                     //Update changes
                     record.save()
@@ -313,7 +310,7 @@ router.post('/donation/update', auth, (req, res)=>{
                 
                 //Update changes
                 record.save()
-                    .then( record => { return res.status(200).json(record);})//Return details of updated donor
+                    .then( record => { return res.status(200).json(record);})//Return details of updated donation
                     .catch(err => { return res.status(400).json({msg: 'Record not saved'});});
                 
             }else{

@@ -7,8 +7,7 @@ import {
     Form,
     FormGroup,
     Label,
-    Input,
-    UncontrolledAlert
+    Input
 } from 'reactstrap';
 
 //This module is used to connect to all the different actions/functions in the actions folder 
@@ -36,6 +35,7 @@ class CMRegisterForm extends Component{
         password: '',
         password2: '',
         msg: null,
+        confirm: null,
         clubID: null
     }
 
@@ -59,13 +59,26 @@ class CMRegisterForm extends Component{
 
     componentDidUpdate(prevProps) {
         
-        const { error } = this.props;
+        const { error, msg } = this.props;
         if( error !== prevProps.error){
             //Check for register error
             if(error.id === 'REGISTER_FAIL'){
                 this.setState({ msg: error.msg.msg });
+                //Remove the error after 3 seconds
+                setTimeout(() => this.setState({msg: null}), 3000);
             }else{
                 this.setState({ msg: null});
+            }
+        }
+
+        if( msg !== prevProps.msg){
+            //Check for confirmation message
+            if(msg){
+                this.setState({ confirm: msg });
+                //Remove the error after 3 seconds
+                setTimeout(() => this.setState({confirm: null}), 3000);
+            }else{
+                this.setState({ confirm: null});
             }
         }
     }
@@ -97,9 +110,8 @@ class CMRegisterForm extends Component{
 
             console.log(newRecord);
 
-            //Reset or clear all fields in the form
-            document.getElementById('reg_form').reset();
-
+            //Reset the form input fields
+            this.onReset();
             
             //Utilises the registerUser function in the regActions file in the actions folder
             //Aims to create a record in the registrations table
@@ -108,9 +120,6 @@ class CMRegisterForm extends Component{
         }else{
             this.setState({msg: 'Your passwords do not match'});
         }
-
-        //Removes the error message on the screen after 6 seconds
-        setTimeout(() => this.setState({msg: null}), 6000);
         
     }
 
@@ -123,14 +132,17 @@ class CMRegisterForm extends Component{
             password: '',
             password2: null,
             msg: null,
+            confirm: null,
             clubID: null    
         });
     }
 
     //This is executed when the 'Clear All fields' button is clicked on the form
     onReset = e => {
-        this.setState({msg: null});
         this.resetState();
+
+        //Reset or clear all fields in the form
+        document.getElementById('reg_form').reset();
     }
 
     render(){
@@ -146,14 +158,14 @@ class CMRegisterForm extends Component{
 
                 <br/><br/>
 
-                {/* If there is an error message, display it on the form  */}
+                {/* If there is an error message, display an alert  */}
                 {this.state.msg ? (
-                    <UncontrolledAlert color="danger" fade={true}>{this.state.msg}</UncontrolledAlert>
+                    window.alert(this.state.msg)
                 ): null}
                 
                 {/* If there is a successful submission, notify the user of this  */}
-                {this.props.msg ? (
-                    <UncontrolledAlert color="success" fade={true} >{this.props.msg}</UncontrolledAlert>
+                {this.state.confirm ? (
+                    window.alert(this.state.confirm)
                 ): null}
 
                 {/* Registration Form */}
