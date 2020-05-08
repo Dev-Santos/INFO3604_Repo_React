@@ -1,15 +1,17 @@
 .slider{
     position: relative;
-    width: 90%;
-    height: 60vh;
+    width: 80%;
+    height: 40vh;
     box-sizing: border-box;
-    margin-left: 55px;
+    margin: auto;
     padding: 0;
     display: flex;
     /*justify-content: center;*/
     align-items: center;
     overflow: hidden;
     background: black;
+    border-style: solid;
+    border-color: black;
     i {
         font-size: 2vw;
     }

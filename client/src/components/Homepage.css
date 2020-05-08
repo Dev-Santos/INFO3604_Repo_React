@@ -1,0 +1,27 @@
+.description {
+    text-align: center;
+}
+
+body {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,99,19,1) 0%, rgba(8,255,97,1) 100%, rgba(0,212,255,1) 100%);
+}
+
+/* body {
+    background-color: green;
+} */
+
+.posts {
+    background-color: rgb(201, 209, 81);
+}
+
+.imageDetails {
+    /* max-height: 100px; */
+    max-width: 150px;
+    /* padding: auto; */
+    /* width: 20%; */
+}
+
+/* .imagePos {
+    vertical-align: middle;
+} */
