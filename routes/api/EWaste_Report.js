@@ -40,8 +40,8 @@ router.post('/', (req, res)=>{
 //@route    GET api/ereport/listing
 //@desc     Get All E-Waste Reports
 //@access   Private
-router.get('/listing', auth, (req, res) => {
-
+//router.get('/listing', auth, (req, res) => {
+router.get('/listing', (req, res) => {
     //Pull all the e-waste reports in the database
     db.query("SELECT `id`, `rep_person`, `email`, `description`, `location`, `image_url`, `classification`, `date` FROM `ewaste_reports`;", { type: QueryTypes.SELECT})
         .then(ereports => {
