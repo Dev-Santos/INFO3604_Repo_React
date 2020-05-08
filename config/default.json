@@ -4,5 +4,7 @@
     "DB_NAME": "a6XERCK5OC",
     "DB_USER": "a6XERCK5OC",
     "DB_PASSWORD": "Bqws3gKffQ",
-    "DB_HOST": "remotemysql.com"
+    "DB_HOST": "remotemysql.com",
+    "EMAIL_USER": "emargin8.rsc@gmail.com",
+    "EMAIL_PASSWORD": "passwordrsc"
 }
