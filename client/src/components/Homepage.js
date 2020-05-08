@@ -1,76 +1,131 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 
 //Imported Bootstrap elements
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
+
+//These modules allow us to use the actions in the actions folder and states defined in the reducer folder 
+import {useSelector, useDispatch, shallowEqual}  from 'react-redux';
+
+//Functions imported from the formActions file in the actions folder
+import { getERListing } from '../../src/actions/formActions';
 
 //Import the Slider Component to show the different images
 import Slider from './Slider';
 
+import './Homepage.css';
+
 //Component Specification as a class
-class Homepage extends Component{
-    //The following is rendered/displayed on the browser
-    render(){
-        return(
-            <div>
+export default function Homepage() {
 
-                <br/>
+    //This constant stores the e-waste reports. These were captured as a state in the reducers folder
+    const ereports = useSelector((state) => state.form.listing, shallowEqual);
 
-                {/* Main Header*/}
-                <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                    Welcome to the website's Homepage
-                </Typography>
+    const dispatch = useDispatch();
 
-                <Slider/> {/* Positioning of the Slider component */}
-                
-                <hr/>
+    //This function executes the getERListing function from the formActions file
+    const listing = () => {
+        dispatch(getERListing());
+    };
 
-                <br/>
+    //The useEffect function executes once the component is loaded and it references the listing function defined above
+    //This essentially pulls the e-waste reports from our backend database
+    useEffect(listing,[]);
 
-                <div style={{textAlign: 'center'}}>
-                    <h5>This can be a quote or moto...</h5>
-                </div>
+    return(
+        <div>
+                        
+            <br/>
+            
+            <Slider/> {/* Positioning of the Slider component */}
+            
+            <br/>
 
-		        <hr/>
+            <hr/>
 
-                <div className="container">
+            <div className="container">
 
-                    <h3>Recent Posts:</h3>
+                <div className="description">
+                    <h3>E-waste or Electronic Waste </h3>
+                    <p>                    
+                        is growing three times faster than the rate of standard municipal waste.
+                        E-waste contains potentially hazardous and valuable materials,
+                        which don‘t belong in landfill.
+                    </p>
+                    {/* <h3>What is e-waste?</h3>
+                    <p>E-waste is any item with a</p>
+                    <p>plug</p>
+                    <p>battery</p>
+                    <p>or power cord</p>
+                    <p>that is no longer working or wanted.</p>
+                    <p>It covers a whole range of items from phones and</p>
+                    <p>refrigerators to fluorescent light tubes.</p> */}
+                </div>                
 
-                    <div className="row">
+                <hr />
 
-                        <div className="col-12">
+                <div className="posts">
 
-                            <table className="table table-image">
+                    <h3>Recently Posted E-waste:</h3>
+                    
+                    {ereports ? ereports.map((record) => (
+                        // <h1>{record.rep_person}</h1>,
+                        // <img src={record.image_url} alt="..."></img>
+                        <div className="row" key={record.id}>
 
-                                <tbody>
+                            <div className="col-12">
 
-                                    <tr>
-                                        <td className="w-25">
-                                            <img src="" className="img-fluid img-thumbnail" alt="Sample Pic1"/>
-                                        </td>
-                                        <td>This could be some information that the user posts along with the picture</td>
-                                    </tr>
+                                <table className="table table-image">
 
-                                    <tr>
-                                        <td className="w-25">
-                                            <img src="" className="img-fluid img-thumbnail" alt="Sample Pic2"/>
-                                        </td>
-                                        <td>This information could contain the location, e-waste type, condition, etc...</td>
-                                    </tr>
+                                    <tbody>
 
-                                </tbody>
+                                        <tr>
+                                            <td className="w-25">
+                                                <img src={record.image_url} className="imageDetails img-fluid img-thumbnail" alt="..."/>
+                                            </td>
+                                            <td>
+                                                <tr>
+                                                    Posted by: {record.rep_person}
+                                                </tr>
+                                                <tr>
+                                                    Description: {record.description}
+                                                </tr>
+                                                {/* <tr>
+                                                    Location: {record.location}
+                                                </tr> */}
+                                                <tr>
+                                                    Device type: {record.classification}
+                                                </tr>
+                                                <tr>
+                                                    Date posted: {record.date}
+                                                </tr>
+                                            </td>
+                                            {/* <td className="w-25">
+                                                <img src={record.image_url} className="img-fluid img-thumbnail" alt="Sample Pic1"/>
+                                            </td>
+                                            <td>{record.rep_person}</td>
+                                            <td>{record.email}</td>
+                                            <td>{record.description}</td>
+                                            <td>{record.location}</td>
+                                            <td>{record.classification}</td>
+                                            <td>{record.date}</td> */}
+                                        </tr>
 
-                            </table>
+                                    </tbody>
+
+                                </table>
+
+                            </div>
 
                         </div>
 
-                    </div>    
+
+
+                    )): "null"}
 
                 </div>
 
-            </div>   
-        );
-    }
-}
+            </div>
 
-export default Homepage; //Export the component to be used
+        </div>   
+    );
+}
