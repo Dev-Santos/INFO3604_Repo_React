@@ -3,6 +3,7 @@ const router = express.Router();
 const sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
 const auth = require('../../middleware/auth');//Authentication middleware
+const sendMail = require('../../mail');// Imported function used to send mail
 
 const { QueryTypes } = require('sequelize');
 
@@ -85,9 +86,34 @@ router.post('/register', (req, res) => {
                     bcrypt.hash(password,13)
                     .then((hash)=>{
 
+                        //Send confirmation email
+                        let subject = "Beneficiary Registration";
+
+                        let text = "Your beneficiary registration form has been submitted successfully"
+                        
+                        let html = `<p>Dear ${new_company.CompanyName},</p>
+                                    <strong>${text}</strong>
+                                    <ul>
+                                        <li>Company Address: ${new_company.CompanyAddress}</li>
+                                        <li>Company Website: ${new_company.CompanyWebsite}</li>
+                                        <li>Company Email: ${new_company.CompanyEmail}</li>
+                                        <li>Company Phone Number: ${new_company.CompanyPhoneNumber}</li>
+                                        <li>Main Contact: ${new_company.MainContact}</li>
+                                    </ul>
+                                    <br/>
+                                    Kind Regards,<br/>
+                                    RSC.
+                        `;
+
+                        sendMail(new_company.CompanyEmail, subject, text, html);
+
                         //Create beneficiary record in the beneficiaries table
                         Beneficiary.create({ company_id: new_company.id, password: hash, status: 0 })
-                        .then( record => { return res.status(200).json(record); } )
+                        .then( record => { 
+
+                            return res.status(200).json(record); //Return beneficiary record
+
+                        } )
                         .catch( err => { return res.status(500).json({msg: 'Error in creating beneficary record'}) ; } );
 
                     })
@@ -150,24 +176,47 @@ router.post('/update', auth, (req, res)=>{
 router.post('/request', (req, res)=>{
     
     //Extract neeeded fields from the request body
-    const { name, request, quantity, reason, location } = req.body;
+    const { name, email, request, quantity, reason, location } = req.body;
 
     //Simple validation
-    if(!name || !request || !quantity || !reason || !location ){
+    if(!name || !email || !request || !quantity || !reason || !location ){
         return res.status(400).json({msg: 'Please enter all fields'});
     }
 
     // Search for the id of the beneficiary that submitted the form
-    db.query('SELECT  `beneficiaries`.`id` AS ben_id FROM `beneficiaries` INNER JOIN `companies` ON `beneficiaries`.`company_id` = `companies`.`id` WHERE `companies`.`CompanyName` = ? ;', { replacements: [name], type: QueryTypes.SELECT })
+    db.query('SELECT  `beneficiaries`.`id` AS ben_id, `companies`.`CompanyEmail` FROM `beneficiaries` INNER JOIN `companies` ON `beneficiaries`.`company_id` = `companies`.`id` WHERE `companies`.`CompanyName` = ? ;', { replacements: [name], type: QueryTypes.SELECT })
     .then(record => {
         
         //If a record is found
         if (record){
 
             //Create a donation request in the donation_requests table
-            DonationRequest.create({ ben_id: record[0].ben_id, name, request, quantity, reason, status: 0, location, date: Date.now()})
+            DonationRequest.create({ ben_id: record[0].ben_id, name, email, request, quantity, reason, status: 0, location, date: Date.now()})
             .then(newRecord => {
-                return res.status(200).json(newRecord);
+
+                //Send confirmation email
+                let subject = "Donation Request Submission";
+
+                let text = "Your donation request form has been submitted successfully"
+                
+                let html = `<p>Dear ${newRecord.name},</p>
+                            <strong>${text}</strong>
+                            <ul>
+                                <li>Request Item: ${newRecord.request}</li>
+                                <li>Quantity: ${newRecord.quantity}</li>
+                                <li>Reason for Request: ${newRecord.reason}</li>
+                                <li>Delivery Location: ${newRecord.location}</li>
+                            </ul>
+                            <br/>
+                            Kind Regards,<br/>
+                            RSC.
+                `;
+
+                sendMail(newRecord.email, subject, text, html);
+
+
+                return res.status(200).json(newRecord);// Return newly created donation request
+
             })
             .catch(err => { return res.status(500).json({msg: 'Error in creating donation request record'}); })
 
@@ -240,7 +289,31 @@ router.post('/request/update', auth, (req, res)=>{
                 
                 //Update changes
                 record.save()
-                    .then( record => { return res.status(200).json(record);})//Return details of updated donation request
+                    .then( record => {
+                        
+                        //Send confirmation email
+                        let subject = "Donation Request Approval";
+
+                        let text = "Your donation request (with the following details) has been approved by RSC."
+
+                        let html = `<p>Dear ${record.name},</p>
+                                    <strong>${text}</strong>
+                                    <ul>
+                                        <li>Request Item: ${record.request}</li>
+                                        <li>Quantity: ${record.quantity}</li>
+                                        <li>Reason for Request: ${record.reason}</li>
+                                        <li>Delivery Location: ${record.location}</li>
+                                    </ul>
+                                    <p>You will be contacted in the coming days to confirm delivery details.<p><br/>
+                                    Kind Regards,<br/>
+                                    RSC.
+                                `;
+
+                        sendMail(record.email, subject, text, html); 
+
+                        return res.status(200).json(record);//Return details of updated donation request
+
+                    })
                     .catch(err => { return res.status(400).json({msg: 'Record not saved'});});
                 
             }else{

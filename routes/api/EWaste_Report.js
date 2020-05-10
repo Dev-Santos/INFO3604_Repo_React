@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
 const auth = require('../../middleware/auth');//Authentication middleware
+const sendMail = require('../../mail');// Imported function to send mail
 
 //Database connection - sequelize var
 const db = require('../../config/database');
@@ -26,7 +26,27 @@ router.post('/', (req, res)=>{
         //Create a record in the ewaste_reports table
         EWasteReport.create({ rep_person, email, description, location, classification, image_url, date: Date.now()})
             .then(ereport => {
+                
+                //Send confirmation email
+                let subject = "E-Waste Report Submission ";
+
+                let text = "Your e-waste report has been submitted sucessfully."
+
+                let html = `<p>Dear ${ereport.rep_person},</p>
+                            <strong>${text}</strong>
+                            <ul>
+                                <li>E-Waste description: ${ereport.description}</li>
+                                <li>Location: ${ereport.location}</li>
+                            </ul>
+                            <p>You will be contacted in the coming days to confirm details for collection.<p><br/>
+                            Kind Regards,<br/>
+                            RSC.
+                        `;
+                
+                sendMail(ereport.email, subject, text, html); 
+
                 return res.status(200).json(ereport);//Return details of newly created record
+
             }).catch(err => {
                 console.log(err);
                 return res.status(500).json({ msg: 'Error in submitting EWaste Report'});
@@ -39,7 +59,7 @@ router.post('/', (req, res)=>{
 
 //@route    GET api/ereport/listing
 //@desc     Get All E-Waste Reports
-//@access   Private
+//@access   Public
 //router.get('/listing', auth, (req, res) => {
 router.get('/listing', (req, res) => {
     //Pull all the e-waste reports in the database

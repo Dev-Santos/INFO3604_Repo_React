@@ -8,6 +8,9 @@ const DonationRequest = db.define('donation_requests' , {
         name:{
             type: Sequelize.TEXT
         },
+        email:{
+            type: Sequelize.TEXT
+        },
         request:{
             type: Sequelize.TEXT
         },

@@ -14,7 +14,10 @@ import {
 //and the different states/events in the reducers folder
 import {connect} from 'react-redux';
 
+//Imported functions from the actions folder
 import { registerIndDonor, registerCompDonor } from '../../actions/donorActions';
+import {clearErrors} from '../../actions/errorActions';
+import { clearRegMessage } from '../../actions/regActions';
 
 import PropTypes from 'prop-types';
 
@@ -52,7 +55,9 @@ class DonorRegisterForm extends Component{
         error: PropTypes.object.isRequired,
         reg: PropTypes.object.isRequired,
         registerIndDonor: PropTypes.func.isRequired,
-        registerCompDonor: PropTypes.func.isRequired
+        registerCompDonor: PropTypes.func.isRequired,
+        clearErrors: PropTypes.func.isRequired,
+        clearRegMessage: PropTypes.func.isRequired
     }
 
     componentDidUpdate(prevProps) {
@@ -173,6 +178,9 @@ class DonorRegisterForm extends Component{
             }
             
         }
+
+        this.props.clearRegMessage();
+        this.props.clearErrors();
 
         //Reset the form fields
         this.onReset();
@@ -362,4 +370,4 @@ const mapStateToProps = (state) => ({
 });
 
 //This is where the imported connect module incorporates all the functions/actions from the actions folder and states from the reducers folder into the actual component.
-export default connect(mapStateToProps, {registerIndDonor, registerCompDonor})(DonorRegisterForm);
+export default connect(mapStateToProps, {registerIndDonor, registerCompDonor, clearErrors, clearRegMessage})(DonorRegisterForm);

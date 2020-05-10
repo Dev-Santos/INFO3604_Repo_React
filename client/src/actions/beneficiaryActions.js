@@ -107,10 +107,10 @@ export const setRegListLoading = () => {
 
 
 //This function sends the information from the Donation Request form on the front-end to the backend database
-export const submitDonationRequest = ({name, request, quantity, reason, location}) => (dispatch, getState) => {
+export const submitDonationRequest = ({name, email, request, quantity, reason, location}) => (dispatch, getState) => {
 
     //Create request body
-    const body = JSON.stringify({ name, request, quantity, reason, location });
+    const body = JSON.stringify({ name, email, request, quantity, reason, location });
 
     //Access the backend api (Express & Nodejs) to send the donation request information in the database
     axios.post('/api/beneficiary/request', body, tokenConfig(getState))

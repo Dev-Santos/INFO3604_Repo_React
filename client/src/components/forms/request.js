@@ -20,6 +20,7 @@ class request extends Component {
 
     state ={
         name: '',
+        email: '',
         req: '',
         quan: '',
         reason: '',
@@ -31,7 +32,9 @@ class request extends Component {
     //These are additional properties (both state variables and functions) of the component that can be accessed at any point
     static propTypes = {
         auth: PropTypes.object.isRequired,
-        submitDonationRequest: PropTypes.func.isRequired
+        submitDonationRequest: PropTypes.func.isRequired,
+        error: PropTypes.object.isRequired,
+        msg: PropTypes.string
     }
 
     componentDidUpdate(prevProps) {
@@ -66,6 +69,7 @@ class request extends Component {
         const { user } = this.props.auth
         if (user){
             this.setState({name: user.name});
+            this.setState({email: user.email});
         }
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -76,11 +80,11 @@ class request extends Component {
         e.preventDefault();
 
         //Extract states from the component
-        const { name, req, quan, reason, loc } = this.state;
+        const { name, email, req, quan, reason, loc } = this.state;
 
         //Create donation request object
         const newRequest = {
-            name, request: req, quantity: quan, reason, location: loc
+            name, email ,request: req, quantity: quan, reason, location: loc
         };        
 
         console.log(newRequest);
@@ -97,6 +101,7 @@ class request extends Component {
     onReset = e => {
         this.setState({
             name: '',
+            email: '',
             req: '',
             quan: '',
             reason: '',
@@ -138,6 +143,9 @@ class request extends Component {
 
                         <Label for="name">Company/Club</Label>
                         <Input type="text" name="name" id="name" placeholder={ user ? user.name : "Enter your company/club"} className="mb-3" required readOnly/>
+
+                        <Label for="email">Email</Label>
+                        <Input type="email" name="email" id="email" placeholder={ user ? user.email : "Enter your email"} className="mb-3" required readOnly/>
 
                         <Label for="req">Request Item</Label>
                         <Input type="text" name="req" id="req" placeholder="Enter a brief description of the item which you require" className="mb-3" onChange={this.onChange} required/>

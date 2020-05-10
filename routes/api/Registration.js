@@ -4,6 +4,7 @@ const config = require('config');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');//Authentication middleware
+const sendMail = require('../../mail');// Imported function to send mail
 
 const { QueryTypes } = require('sequelize');
 
@@ -45,7 +46,28 @@ router.post('/', (req, res)=>{
                     //Create a record in the registrations table
                     Register.create({name, email, clubID, password: hash, status: 0})
                     .then(register => {
+
+                        //Send confirmation email
+                        let subject = "Club Member Registration";
+
+                        let text = "Your club member registration form has been submitted successfully"
+                        
+                        let html = `<p>Dear ${register.name},</p>
+                                    <strong>${text}</strong>
+                                    <ul>
+                                        <li>Name: ${register.name}</li>
+                                        <li>Email: ${register.email}</li>
+                                    </ul>
+                                    <br/>
+                                    Kind Regards,<br/>
+                                    RSC.
+                        `;
+
+                        sendMail(register.email, subject, text, html);
+                        
                         return res.status(200).json(register);//Return details of newly created record
+
+                        
                     }).catch(err => {
                         return res.status(500).json({ msg: 'Error in registering user'});
                     });    
@@ -145,7 +167,7 @@ router.post('/user', (req, res)=>{
         return res.status(400).json({ msg: 'Please enter all fields'});
     }
 
-    //If the user to be created to does not have a clubID (e.g. donors)
+    //If the user to be created to does not have a clubID (e.g. donors, beneficiaries)
     if(parseInt(clubID) == -1){
    
         //Checking for existing user
@@ -156,9 +178,24 @@ router.post('/user', (req, res)=>{
             
             //Create record in the users table
             User.create({name, email, password, reg_date: Date.now(), userType})
-                .then(user => {     
+                .then(new_user => {     
+         
+                    //Send confirmation email
+                    let subject = "Account Authentication";
+
+                    let text = "Your account credentials has been authenticated."
                     
-                    res.status(200).json(user);//Return user details
+                    let html = `<p>Dear ${new_user.name},</p>
+                                <strong>${text}</strong><br/>
+                                <p>You can now login into the system using your account.</p>
+                                <br/>
+                                Kind Regards,<br/>
+                                RSC.
+                    `;
+
+                    sendMail(new_user.email, subject, text, html);
+
+                    res.status(200).json(new_user);//Return user details
 
                 }).catch(err => {
                     
@@ -181,6 +218,21 @@ router.post('/user', (req, res)=>{
             User.create({name, email, password, reg_date: Date.now(), userType, clubID})
                 .then(user => {     
                     
+                    //Send confirmation email
+                    let subject = "Account Authentication";
+
+                    let text = "Your account credentials has been authenticated."
+                    
+                    let html = `<p>Dear ${user.name},</p>
+                                <strong>${text}</strong><br/>
+                                <p>You can now login into the system using your account.</p>
+                                <br/>
+                                Kind Regards,<br/>
+                                RSC.
+                    `;
+
+                    sendMail(user.email, subject, text, html);
+
                     res.status(200).json(user);//Return user details
 
                 }).catch(err => {

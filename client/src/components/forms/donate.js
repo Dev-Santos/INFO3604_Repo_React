@@ -43,6 +43,7 @@ class donate extends Component {
             longitude: null,
             userAddress: null,
             name: null,
+            email: null,
             type: null,
             desc: null,
             serial: null,
@@ -54,7 +55,9 @@ class donate extends Component {
             results: {},
             showResults: false,
             classBtn: false, 
-            progress: 0
+            progress: 0,
+            msg: null,
+            confirm: null
         };
 
         this.getLocation = this.getLocation.bind(this);
@@ -66,7 +69,8 @@ class donate extends Component {
     static propTypes = {
         error: PropTypes.object.isRequired,
         auth: PropTypes.object.isRequired,
-        submitDonation: PropTypes.func.isRequired
+        submitDonation: PropTypes.func.isRequired,
+        msg: PropTypes.string
     }
 
     //Execute the getLocation function only when the component is completely loaded
@@ -74,11 +78,40 @@ class donate extends Component {
         this.getLocation();
     }
     
+    componentDidUpdate(prevProps) {
+        
+        const { error, msg } = this.props;
+        if( error !== prevProps.error){
+            //Check for register error
+            if(error.id === 'FORM_FAIL'){
+                this.setState({ msg: error.msg.msg });
+                //Remove after 3 seconds
+                setTimeout(() => this.setState({msg: null}), 3000);
+            }else{
+                this.setState({ msg: null});
+            }
+        }
+
+        if( msg !== prevProps.msg){
+            //Check for confirmation message
+            if(msg){
+                this.setState({ confirm: msg });
+                //Remove after 3 seconds
+                setTimeout(() => this.setState({confirm: null}), 3000);
+            }else{
+                this.setState({ confirm: null});
+            }
+        }
+
+    }
+
+
     //Executed everytime an input field on the form is changed - the value is stored in the state of the component
     onChange = (e) =>{
         const { user } = this.props.auth
         if (user){
             this.setState({name: user.name});
+            this.setState({email: user.email});
         }
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -114,7 +147,7 @@ class donate extends Component {
 
             //console.log(storage_name);
 
-            const { name, type, desc, serial, units, rloc } = this.state;
+            const { name, email, type, desc, serial, units, rloc } = this.state;
 
             //This function (its a call-back function) is responsible for storing the image in the firebase db
             const uploadTask = storage.ref(`Donations/${name}/${class_res}/${storage_name}`).put(this.state.file);
@@ -145,7 +178,7 @@ class donate extends Component {
                         //Construct our Donation object to be sent to the backend db
                         
                         const newDonation = {
-                            donor: name, item_type: type, item_desc: desc, serial_no: serial, units, location: loc, retrieval_loc: rloc, classification: class_res, image_url: url 
+                            donor: name, email, item_type: type, item_desc: desc, serial_no: serial, units, location: loc, retrieval_loc: rloc, classification: class_res, image_url: url 
                         };
 
                         console.log(newDonation);
@@ -156,9 +189,6 @@ class donate extends Component {
 
                         //Reset input fields on the form
                         this.onReset();
-
-                        //Message alert to the user
-                        window.alert( 'Your report was successfully sent, please await an email with further instructions' );
 
                     })
                     .catch(err => console.log(err));
@@ -179,7 +209,9 @@ class donate extends Component {
             results: {},
             showResults: false,
             classBtn: false, 
-            progress: 0
+            progress: 0,
+            msg: null,
+            confirm: null
         });
 
         //Reset or clear all fields in the form
@@ -323,6 +355,16 @@ class donate extends Component {
                 {/*This was placed on line 74*/} 
                 {/*this.getLocation()*/}
                 
+                {/* If there is an error message, display it on the form  */}
+                {this.state.msg ? (
+                    window.alert(this.state.msg)
+                ): null}
+                    
+                {/* If there is a successful submission, notify the user of this  */}
+                {this.state.confirm ? (
+                    window.alert( 'Your donation form was successfully sent, please await an email with further instructions' )
+                ): null}
+
 
                 {/* Donation Form */}
                 <Form onSubmit={this.onSubmit} id="donation_form" onReset={this.onReset}>
@@ -331,6 +373,9 @@ class donate extends Component {
 
                         <Label for="name">Name/Company</Label>
                         <Input type="text" name="name" id="name" placeholder={user ? user.name: 'Enter Name/Company Name'} className="mb-3" onChange={this.onChange} required readOnly/>
+
+                        <Label for="email">Email</Label>
+                        <Input type="email" name="email" id="email" placeholder={user ? user.email: 'Enter Email'} className="mb-3" onChange={this.onChange} required readOnly/>
 
                         <Label for="type">Type of Donation Item</Label>
                         <Input type="text" name="type" id="type" placeholder="Enter the type of item you wish to donate (eg. PC, laptop, etc.)" className="mb-3" onChange={this.onChange} required/> 
@@ -420,7 +465,8 @@ class donate extends Component {
 //This is used to import various states of the system as defined in the reducers folder
 const mapStateToProps = (state) => ({
     error: state.error,
-    auth: state.auth
+    auth: state.auth,
+    msg: state.form.msg
 });
 
 //This is where the imported connect module incorporates all the functions/actions from the actions folder and states from the reducers folder into the actual component.

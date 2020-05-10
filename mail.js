@@ -1,31 +1,29 @@
-const nodemailer = require('nodemailer');
 const config = require('config');
+const sgMail = require('@sendgrid/mail');//Sendgrid Email module
 
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: config.get('EMAIL_USER'),
-        pass: config.get('EMAIL_PASSWORD')
-    }
-});
+sgMail.setApiKey(config.get('EMAIL_API_KEY'));
 
-const sendMail = (email, subject, text, cb) => {
+const sendMail = (email, subject, text, html) => {
 
-    let mailOptions = {
-        from: 'emargin8.rsc@gmail.com',
+    //Setup email information
+    const msg = {
         to: email,
+        from: config.get('EMAIL_USER'),
         subject,
-        text
-    }
-    
-    transporter.sendMail(mailOptions, function(err, data){
-        if (err){
-            cb(err, null);
-        }else{
-            cb(null, data);
-        }
+        text,
+        html
+    };
+  
+    //Send email to corresponding user
+    sgMail.send(msg)
+    .then( sent => {
+        console.log('Email sent');
     })
-
+    .catch( err => {
+        console.log('Email not sent');//If an error is caught in sending the email
+        console.log(err);
+    });
+    
 }
 
 module.exports = sendMail;

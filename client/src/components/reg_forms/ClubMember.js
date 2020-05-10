@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 //Different actions/functions imported from the actions folder
 import {clearErrors} from '../../actions/errorActions';
 import {getClubs} from '../../actions/clubActions';
-import { registerUser, clearRegMessage } from '../../actions/regActions'
+import { registerUser, clearRegMessage } from '../../actions/regActions';
 
 
 //Component Specification
@@ -120,6 +120,9 @@ class CMRegisterForm extends Component{
         }else{
             this.setState({msg: 'Your passwords do not match'});
         }
+
+        this.props.clearRegMessage();
+        this.props.clearErrors();
         
     }
 

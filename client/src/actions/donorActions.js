@@ -135,10 +135,10 @@ export const updateDonorStatus = (id) => (dispatch, getState) =>{
 };
 
 //This function sends the information from the Donation form on the front-end to the backend database
-export const submitDonation = ({donor, item_type, item_desc, serial_no, units, location, retrieval_loc, classification, image_url}) => (dispatch, getState) => {
+export const submitDonation = ({donor, email, item_type, item_desc, serial_no, units, location, retrieval_loc, classification, image_url}) => (dispatch, getState) => {
 
     //Create request body
-    const body = JSON.stringify({ donor, item_type, item_desc, serial_no, units, location, retrieval_loc, classification, image_url });
+    const body = JSON.stringify({ donor, email, item_type, item_desc, serial_no, units, location, retrieval_loc, classification, image_url });
 
     //Access the backend api (Express & Nodejs) to send the donation information in the database
     axios.post('/api/donor/donation', body, tokenConfig(getState))

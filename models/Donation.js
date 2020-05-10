@@ -5,6 +5,9 @@ const Donation = db.define('donations' , {
         donor:{
             type: Sequelize.TEXT
         },
+        email:{
+            type: Sequelize.TEXT
+        },
         company:{
             type: Sequelize.NUMBER
         },

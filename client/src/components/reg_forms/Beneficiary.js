@@ -19,6 +19,8 @@ import PropTypes from 'prop-types';
 //Different actions/functions imported from the actions folder
 import { registerBeneficiary } from '../../actions/beneficiaryActions';
 
+import { clearRegMessage } from '../../actions/regActions';
+import { clearErrors } from '../../actions/errorActions';
 
 //Component Specification
 class BeneficiaryRegisterForm extends Component{
@@ -47,7 +49,9 @@ class BeneficiaryRegisterForm extends Component{
         isAuthenticated: PropTypes.bool,
         msg: PropTypes.string,
         error: PropTypes.object.isRequired,
-        registerBeneficiary: PropTypes.func.isRequired
+        registerBeneficiary: PropTypes.func.isRequired,
+        clearRegMessage: PropTypes.func.isRequired,
+        clearErrors: PropTypes.func.isRequired
     }
 
 
@@ -119,8 +123,11 @@ class BeneficiaryRegisterForm extends Component{
                 window.alert('Your passwords do not match');
 
             }
-
+            
         }
+
+        this.props.clearErrors();
+        this.props.clearRegMessage();
         
     }
 
@@ -234,4 +241,4 @@ const mapStateToProps = (state) => ({
 });
 
 //This is where the imported connect module incorporates all the functions/actions from the actions folder and states from the reducers folder into the actual component.
-export default connect(mapStateToProps, { registerBeneficiary })(BeneficiaryRegisterForm);
+export default connect(mapStateToProps, { registerBeneficiary, clearRegMessage, clearErrors })(BeneficiaryRegisterForm);
