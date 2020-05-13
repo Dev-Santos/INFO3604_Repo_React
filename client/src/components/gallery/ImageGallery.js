@@ -16,10 +16,13 @@ import Img from './Img';
 
 
 //Here is where we import our respective images
-import i1 from '../../pics/slider1.png';
-import i2 from '../../pics/slider2.png';
-import i3 from '../../pics/slider3.png';
-
+import i1 from '../../pics/gallery1.jpg';
+import i2 from '../../pics/gallery2.jpg';
+import i3 from '../../pics/gallery3.jpg';
+import i4 from '../../pics/gallery4.jpg';
+import i5 from '../../pics/gallery5.jpg';
+import i6 from '../../pics/gallery6.PNG';
+import i7 from '../../pics/gallery7.jpg';
 
 //Some styling definitions (directly taken from a website)
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +69,7 @@ export default function Album() { //Export the component to be used - It is done
   return (
 
     <React.Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
-      <div>    
+      <div class="bordered">    
 
         <div>
 
@@ -77,38 +80,10 @@ export default function Album() { //Export the component to be used - It is done
                 Gallery
               </Typography>
 
-              
-              {/* Three buttons placed below */}
-              <div className={classes.heroButtons}>
-
-                <Grid container spacing={2} justify="center">
-
-                  <Grid item>
-                    <Button variant="contained" color="primary">
-                      Images
-                    </Button>
-                  </Grid>
-
-                  <Grid item>
-                    <Button variant="outlined" color="primary">
-                      Videos
-                    </Button>
-                  </Grid>
-
-                  <Grid item>
-                    <Button variant="outlined" color="primary">
-                      Posts
-                    </Button>
-                  </Grid>
-
-                </Grid>
-
-              </div>
-
           </Container>
-
+        
         </div>
-
+      
 
         {/* Section with different pictures */}
         <Container className={classes.cardGrid} maxWidth="md">
@@ -122,18 +97,19 @@ export default function Album() { //Export the component to be used - It is done
                         
                         <div className={classes.cardContent}>
                           {/* This is where the image is positioned and we just pass the image reference (lines 19-22) */}
-                          <Img src={i1}/>
+                          <Img id="i1" alt="Snow" src={i1}/>
                         </div>
+                     
 
                         {/* CARD DESCRIPTION */}
                         <CardContent className={classes.cardContent}>
                             
                             <Typography gutterBottom variant="h5" component="h2">
-                                Image1
+                                RSC teaches E-waste Refurbishment
                             </Typography>
 
                             <Typography>
-                                Image1 Description
+                                Seen here: Members of RSC teaching PC Refurbishment at their secondary school club at Naparima College
                             </Typography>
 
                         </CardContent>
@@ -142,12 +118,10 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                              View
+                          <a  href="https://www.facebook.com/photo/?fbid=3058877897511722&set=pcb.3239310046113194" target="_blank">View in Detail</a>
                           </Button>
+                          
 
-                          <Button size="small" color="primary">
-                              Edit
-                          </Button>
 
                         </CardActions>
 
@@ -170,11 +144,11 @@ export default function Album() { //Export the component to be used - It is done
                         <CardContent className={classes.cardContent}>
                             
                             <Typography gutterBottom variant="h5" component="h2">
-                                Image2
+                                Members of Tech Clubs Repair Old PC
                             </Typography>
 
                             <Typography>
-                                Image2 Description
+                                Seen here: Members of the RSC Tech Club in Naparima College held a "Repair Day" in their Gymnasium/Auditorium. There with the guidance of RSC, many PC's were repaired for donation.
                             </Typography>
 
                         </CardContent>
@@ -183,11 +157,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                              View
-                          </Button>
-
-                          <Button size="small" color="primary">
-                              Edit
+                          <a  href="https://www.facebook.com/photo?fbid=3058878224178356&set=pcb.3239310046113194" target="_blank">View in Detail</a>
                           </Button>
 
                         </CardActions>
@@ -211,11 +181,11 @@ export default function Album() { //Export the component to be used - It is done
                         <CardContent className={classes.cardContent}>
                             
                             <Typography gutterBottom variant="h5" component="h2">
-                                Image3
+                                RSC teaches Assists Club Members with E-waste Refurbishment
                             </Typography>
 
                             <Typography>
-                                Image3 Description
+                                Seen here: Volunteers of the Non-Profit RSC assists Club Members with the repair and refurbishment of Old PC's
                             </Typography>
 
                         </CardContent>
@@ -224,11 +194,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                              View
-                          </Button>
-
-                          <Button size="small" color="primary">
-                              Edit
+                          <a  href="https://www.facebook.com/photo?fbid=3058878320845013&set=pcb.3239310046113194" target="_blank">View in Detail</a>
                           </Button>
 
                         </CardActions>
@@ -245,18 +211,18 @@ export default function Album() { //Export the component to be used - It is done
                         
                         <div className={classes.cardContent}>
                           {/* This is where the image is positioned and we just pass the image reference (lines 19-22) */}
-                          <Img src={i1}/>
+                          <Img src={i4}/>
                         </div>
 
                         {/* CARD DESCRIPTION */}
                         <CardContent className={classes.cardContent}>
                             
                             <Typography gutterBottom variant="h5" component="h2">
-                                Image4
+                                RSC Club Members Gather Old E-Waste
                             </Typography>
 
                             <Typography>
-                                Image4 Description
+                                Seen here: Members of RSC Tech Club Form a line to empty an a storage room of old e-waste
                             </Typography>
 
                         </CardContent>
@@ -265,11 +231,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                              View
-                          </Button>
-
-                          <Button size="small" color="primary">
-                              Edit
+                          <a  href="https://www.facebook.com/photo?fbid=3058878554178323&set=pcb.3239310046113194" target="_blank">View in Detail</a>
                           </Button>
 
                         </CardActions>
@@ -286,18 +248,18 @@ export default function Album() { //Export the component to be used - It is done
                         
                         <div className={classes.cardContent}>
                           {/* This is where the image is positioned and we just pass the image reference (lines 19-22) */}
-                          <Img src={i2}/>
+                          <Img src={i5}/>
                         </div>
 
                         {/* CARD DESCRIPTION */}
                         <CardContent className={classes.cardContent}>
                             
                             <Typography gutterBottom variant="h5" component="h2">
-                                Image5
+                                RSC Donates Refurbished E-waste
                             </Typography>
 
                             <Typography>
-                                Image5 Description
+                                Seen here: Members of RSC donate refurbished E-waste to places in need.
                             </Typography>
 
                         </CardContent>
@@ -306,11 +268,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                              View
-                          </Button>
-
-                          <Button size="small" color="primary">
-                              Edit
+                          <a  href="https://www.facebook.com/photo?fbid=3058878257511686&set=pcb.3239310046113194" target="_blank">View in Detail</a>
                           </Button>
 
                         </CardActions>
@@ -327,18 +285,18 @@ export default function Album() { //Export the component to be used - It is done
                         
                         <div className={classes.cardContent}>
                           {/* This is where the image is positioned and we just pass the image reference (lines 19-22) */}
-                          <Img src={i3}/>
+                          <Img src={i6}/>
                         </div>
 
                         {/* CARD DESCRIPTION */}
                         <CardContent className={classes.cardContent}>
                             
                             <Typography gutterBottom variant="h5" component="h2">
-                                Image6
+                                RSC Executive: The R.I.D.E. Project
                             </Typography>
 
                             <Typography>
-                                Image6 Description
+                                Seen here: RSC Executive Raj Ramdass Speak of the RSC E-waste Project, R.I.D.E. (Reduce the Indiscriminate Dumoing of E-waste) 
                             </Typography>
 
                         </CardContent>
@@ -347,11 +305,43 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                              View
+                          <a  href="https://www.youtube.com/watch?v=5pjesuht4Pw&t=20s" target="_blank">View Video</a>
                           </Button>
 
+                        </CardActions>
+
+                    </Card>
+
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={4}>
+                    
+                    {/* CARD #7  */}
+                    <Card className={classes.card}>
+                        
+                        <div className={classes.cardContent}>
+                          {/* This is where the image is positioned and we just pass the image reference (lines 19-22) */}
+                          <Img src={i7}/>
+                        </div>
+
+                        {/* CARD DESCRIPTION */}
+                        <CardContent className={classes.cardContent}>
+                            
+                            <Typography gutterBottom variant="h5" component="h2">
+                                RSC Tech Club Collects E-waste
+                            </Typography>
+
+                            <Typography>
+                                Seen here: Members of RSC Tech Club collects old E-waste
+                            </Typography>
+
+                        </CardContent>
+
+                        {/* CARD BUTTONS */}
+                        <CardActions>
+                          
                           <Button size="small" color="primary">
-                              Edit
+                          <a  href="https://www.facebook.com/photo/?fbid=3049384445105756&set=a.1603414999702715" target="_blank">View in Detail</a>
                           </Button>
 
                         </CardActions>

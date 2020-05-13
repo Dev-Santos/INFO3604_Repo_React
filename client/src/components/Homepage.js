@@ -45,20 +45,39 @@ export default function Homepage() {
             <div className="container">
 
                 <div className="description">
-                    <h3>E-waste or Electronic Waste </h3>
-                    <p>                    
-                        is growing three times faster than the rate of standard municipal waste.
+                <div class="bg-light">
+                <div class="container py-5">
+                    <div class="row h-100 align-items-center py-5">
+                        <div class="col-lg-6">
+                        <h1 class="display-4">E-waste or Electronic Waste</h1>
+                        <p class="lead text-muted mb-0">is growing three times faster than the rate of standard municipal waste.
                         E-waste contains potentially hazardous and valuable materials,
-                        which don‘t belong in landfill.
-                    </p>
-                    {/* <h3>What is e-waste?</h3>
-                    <p>E-waste is any item with a</p>
-                    <p>plug</p>
-                    <p>battery</p>
-                    <p>or power cord</p>
-                    <p>that is no longer working or wanted.</p>
-                    <p>It covers a whole range of items from phones and</p>
-                    <p>refrigerators to fluorescent light tubes.</p> */}
+                        which don‘t belong in landfill.</p>
+                        </div>
+                        <div class="col-lg-6 d-none d-lg-block"><img src="https://lh3.googleusercontent.com/proxy/RIMAomzsEBA9B60y-l6aCl1LVnISV_2KZMDhiaLbnHNl09fCT1z_HHVQQik-Kw3WVHk83P3Cp0lK6F6qsgeBE3SLrUw" alt="" class="img-fluid"/></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white py-5">
+                <div class="container py-5">
+                <h1 class="display-4">What you can do to help</h1>
+                    <div class="row align-items-center mb-5">                        
+                        <div class="col-lg-6 order-2 order-lg-1"><i class="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
+                        <h2 class="font-weight-light">Become a Donor</h2>
+                        <p class="lead text-muted mb-0">Help RSC by donating your used eletronics such as old laptops, desktops and phones.</p><a href="/api/register/donor" class="btn btn-light px-5 rounded-pill shadow-sm">Sign Up Now</a>
+                        </div>
+                        <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img src="https://webstockreview.net/images/electronics-clipart-e-waste.png" alt="" class="img-fluid mb-4 mb-lg-0"/></div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 px-5 mx-auto"><img src="https://lh3.googleusercontent.com/proxy/TXRin96qtypsX_n1lSmJyyO80OVuwwr1pgj6ee1MMVZ5LBAK2bOP9K_xUxcHNjDXlJb28QGET5yZlVT_cDdcJ8K_pw" alt="" class="img-fluid mb-4 mb-lg-0"/></div>
+                        <div class="col-lg-6"><i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
+                        <h2 class="font-weight-light">Report Ewaste</h2>
+                        <p class="lead text-muted mb-0">Don't be a bystander. If you see E-waste in landfills or even at the side of the road, report it here.</p><a href="/api/ereport" class="btn btn-light px-5 rounded-pill shadow-sm">Make Report</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
                 </div>                
 
                 <hr />
@@ -89,9 +108,9 @@ export default function Homepage() {
                                                 <tr>
                                                     Description: {record.description}
                                                 </tr>
-                                                {/* <tr>
+                                                { <tr>
                                                     Location: {record.location}
-                                                </tr> */}
+                                                </tr> }
                                                 <tr>
                                                     Device type: {record.classification}
                                                 </tr>

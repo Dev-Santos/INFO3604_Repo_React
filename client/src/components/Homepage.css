@@ -3,8 +3,12 @@
 }
 
 body {
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,99,19,1) 0%, rgba(8,255,97,1) 100%, rgba(0,212,255,1) 100%);
+
+    background-image: url("https://i.pinimg.com/originals/f1/47/2f/f1472f334b2df7c0002176ddf26ca638.jpg");   
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,99,19,1) 0%, rgba(8,255,97,1) 100%, rgba(0,212,255,1) 100%); */
 }
 
 /* body {
@@ -12,9 +16,17 @@ body {
 } */
 
 .posts {
-    background-color: rgb(201, 209, 81);
+    background-color:rgba(207, 241, 212, 0.8);
+    padding: 15px;
+    border: 5px inset #ABFA2B;
+    border-radius: 20px;
 }
-
+.description {
+    padding: 15px;
+    border: 5px inset #ABFA2B;
+    border-radius: 20px;
+    background-color:rgba(255, 255, 255, 0.9);
+}
 .imageDetails {
     /* max-height: 100px; */
     max-width: 150px;
@@ -25,3 +37,10 @@ body {
 /* .imagePos {
     vertical-align: middle;
 } */
+
+.bordered {
+    padding: 30px;
+    border: 5px inset #ABFA2B;
+    border-radius: 20px;
+    background-color:rgba(255, 255, 255, 0.9);
+}

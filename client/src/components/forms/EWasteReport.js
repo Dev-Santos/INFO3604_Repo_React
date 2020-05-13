@@ -312,7 +312,7 @@ class EWasteReport extends Component {
         return( 
      
             <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
-                
+                <div class="bordered">
                 <h2 className="ml-5" style={{textAlign: "center"}}>E-Waste Report Form</h2>
                 {/*This was placed on line 66*/} 
                 {/*this.getLocation()*/} 
@@ -385,8 +385,9 @@ class EWasteReport extends Component {
                     </FormGroup>
 
                 </Form> 
-                
+                </div>
             </Fragment>
+
         );
     }
 }

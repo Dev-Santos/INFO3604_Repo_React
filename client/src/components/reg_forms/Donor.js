@@ -257,7 +257,7 @@ class DonorRegisterForm extends Component{
 
         //The following is rendered/displayed on the browser
         return(
-            <div>
+            <div class="bordered">
 
                 <h2 style={{textAlign: 'center'}}>Donor Account Registration Form</h2>
 

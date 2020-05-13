@@ -165,7 +165,7 @@ class BeneficiaryRegisterForm extends Component{
 
         //The following is rendered/displayed on the browser
         return(
-            <div>
+            <div class="bordered">
 
                 <h2 style={{textAlign: 'center'}}>Beneficiary Registration Form</h2>
 

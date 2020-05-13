@@ -155,7 +155,7 @@ class CMRegisterForm extends Component{
 
         //The following is rendered/displayed on the browser
         return(
-            <div>
+            <div class="bordered">
 
                 <h2 style={{textAlign: 'center'}}>Club Member Account Registration Form</h2>
 
