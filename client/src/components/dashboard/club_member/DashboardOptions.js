@@ -41,13 +41,20 @@ const useStyles = makeStyles((theme) => ({
   },
 
   fixedHeight: {
-    height: 180,
+    height: 200,
     width: 280
   },
 
   depositContext: {
     flex: 1,
   },
+
+  centered: {
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 
 }));
 
@@ -73,21 +80,23 @@ function DashboardOptions() {
 
                 <Paper className={fixedHeightPaper}>
 
-                    <Title>Record Club Activities</Title>
+                      <div className={classes.centered}><Title>Activity Schedule</Title></div>
 
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
-                    </Typography>
+                      <Typography color="textPrimary" style={{textAlign: 'center'}}>
+                        View Assigned Activities That Are Upcoming
+                      </Typography>
 
-                    <div>
-                      <Link color="primary" href="/api/dashboard/register">
+                      <div className={classes.centered} style={{marginTop: '10px'}}>
 
-                        <Button variant="contained" color="primary">
-                          Log Completed Activities
-                        </Button>
-                        
-                      </Link>
-                    </div>
+                        <Link color="primary" href="/api/dashboard/upcoming_act">
+                          
+                          <Button variant="contained" color="primary">
+                            Upcoming Activities
+                          </Button>
+
+                        </Link>
+                      
+                      </div>
 
                 </Paper>
 
@@ -100,76 +109,24 @@ function DashboardOptions() {
 
                 <Paper className={fixedHeightPaper}>
 
-                    <Title>Delivery Schedule</Title>
+                      <div className={classes.centered}><Title>Log Club Activities</Title></div>
 
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
-                    </Typography>
+                      <Typography color="textPrimary" style={{textAlign: 'center'}}>
+                        Identify Completed Activities And Provide Additional Comments
+                      </Typography>
 
-                    <div>
-                      <Link color="primary" href="#">
+                      <div className={classes.centered} style={{marginTop: '10px'}}>
                         
-                        <Button variant="contained" color="primary">
-                          View Delivery Schedule
-                        </Button>
+                        <Link color="primary" href="/api/dashboard/log_act">
+                          
+                          <Button variant="contained" color="primary">
+                            Log Completed Activities
+                          </Button>
 
-                      </Link>
-                    </div>
+                        </Link>
+                      
+                      </div>
 
-                </Paper>
-
-            </Grid>
-
-
-            {/*  Second Box on the Left */}
-
-            <Grid item xs={12} md={7} lg={6} style={{paddingLeft: '50px'}}>
-
-                <Paper className={fixedHeightPaper}>
-
-                    <Title>Club Notice Board</Title>
-
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
-                    </Typography>
-
-                    <div>
-                      <Link color="primary" href="#">
-                        
-                        <Button variant="contained" color="primary">
-                          View Club Notice Board
-                        </Button>
-
-                      </Link>
-                    </div>
-
-                </Paper>
-
-            </Grid>
-            
-
-            {/*  Second Box on the Right */}
-
-            <Grid item xs={12} md={7} lg={6} style={{paddingLeft: '50px'}}>
-
-                <Paper className={fixedHeightPaper}>
-
-                    <Title>Warehouse Inventory</Title>
-
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
-                    </Typography>
-
-                    <div>
-                      <Link color="primary" href="#">
-                        
-                        <Button variant="contained" color="primary">
-                          View Warehouse Details
-                        </Button>
-
-                      </Link>
-                    </div>
-                
                 </Paper>
 
             </Grid>

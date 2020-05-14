@@ -5,11 +5,13 @@ import {
     GET_REG_LISTING,
     REG_LISTING_LOADING,
     UPDATE_REG_STATUS,
-    REGISTER_SUCCESS
+    REGISTER_SUCCESS,
+    GET_CM_LISTING
 } from '../actions/types';
 
 const initialState = {
     listing: [],
+    cm: [],
     msg: null,
     loading: false,
     regRecord: null,
@@ -41,6 +43,12 @@ export default function(state = initialState, action){
             return {
                 ...state,
                 listing: action.payload,
+                loading: false
+            };
+        case GET_CM_LISTING:
+            return {
+                ...state,
+                cm: action.payload,
                 loading: false
             };
         case REG_LISTING_LOADING:

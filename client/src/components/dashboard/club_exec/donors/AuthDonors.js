@@ -155,15 +155,6 @@ export default function AuthDonors() {//This is a shorter method of defining a c
                                   </Typography>
                               </TableCell>
 
-                              {/* Main Contact Heading */}
-                              <TableCell align="center" variant="head">
-                                  <Typography component="div">
-                                      <Box fontWeight="fontWeightBold">
-                                        Main Contact
-                                      </Box>
-                                  </Typography>
-                              </TableCell>
-
                               {/* Registration Date Heading */}
                               <TableCell align="center" variant="head">
                                   <Typography component="div">
@@ -198,8 +189,6 @@ export default function AuthDonors() {//This is a shorter method of defining a c
                                   <TableCell align="center">{record.CompanyEmail}</TableCell>
 
                                   <TableCell align="center">{record.CompanyPhoneNumber}</TableCell>
-
-                                  <TableCell align="center">{record.MainContact}</TableCell>
 
                                  <TableCell align="center">{record.reg_date}</TableCell>
 

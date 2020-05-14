@@ -46,7 +46,7 @@ export default function AuthUsers() {//This is a shorter method of defining a co
   const classes = useStyles();
 
   //This constant stores the authenticated club member records. These were captured as a state in the reducers folder
-  const reg = useSelector((state) => state.reg.listing, shallowEqual);
+  const reg = useSelector((state) => state.reg.cm, shallowEqual);
 
   const dispatch = useDispatch();
 
@@ -56,7 +56,7 @@ export default function AuthUsers() {//This is a shorter method of defining a co
   };
 
   //The useEffect function executes once the component is loaded and it references the listing function defined above
-  //This essentially pulls the registration results from our backend database
+  //This essentially pulls the club member records from our backend database
   useEffect(listing,[]);
 
 

@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
 //Additional imported Bootstrap elements
-import { Button, Modal, ModalBody, ModalHeader, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
+import { Alert, Button, Modal, ModalBody, ModalHeader, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
 
 //Imported Title Component
 import Title from '../../Title';
@@ -143,15 +143,6 @@ export default function ApprovedDonations() {//This is a shorter method of defin
                                   </Typography>
                               </TableCell>
 
-                              {/* Units Heading */}
-                              <TableCell align="center" variant="head">
-                                  <Typography component="div">
-                                      <Box fontWeight="fontWeightBold">
-                                        Units
-                                      </Box>
-                                  </Typography>
-                              </TableCell>
-
                               {/* Retrieval Location Heading */}
                               <TableCell align="center" variant="head">
                                   <Typography component="div">
@@ -189,7 +180,20 @@ export default function ApprovedDonations() {//This is a shorter method of defin
                                   </Typography>
                               </TableCell>
 
+
+                              {/* Status Heading */}
+                              <TableCell align="center" variant="head">
+                                  <Typography component="div">
+                                      <Box fontWeight="fontWeightBold">
+                                        Status
+                                      </Box>
+                                  </Typography>
+                              </TableCell>
+
+
                           </TableRow>
+
+                          
 
                       </TableHead>
 
@@ -204,8 +208,6 @@ export default function ApprovedDonations() {//This is a shorter method of defin
                                   <TableCell align="center">{item.donor}</TableCell>
 
                                   <TableCell align="center">{item.item_desc}</TableCell>
-
-                                  <TableCell align="center">{item.units}</TableCell>
 
                                   <TableCell align="center">{item.retrieval_loc}</TableCell>
 
@@ -226,6 +228,16 @@ export default function ApprovedDonations() {//This is a shorter method of defin
                                             View Image
                                         </Button>
                                       </a>
+                                  </TableCell>
+
+                                  <TableCell align="center">
+                                    
+                                      {/* If a donation is pending collection */}
+                                      { item.completed === 0 && <Alert color="danger">Pending Completion</Alert>}
+
+                                      {/* If a donation was collected */}
+                                      { item.completed === 1 && <Alert color="success">Donation Collected</Alert> }
+                                  
                                   </TableCell>
 
 
@@ -265,20 +277,11 @@ export default function ApprovedDonations() {//This is a shorter method of defin
                                   </Typography>
                               </TableCell>
 
-                              {/* Company Email Heading */}
+                              {/* Item Description Heading */}
                               <TableCell align="center" variant="head">
                                   <Typography component="div">
                                       <Box fontWeight="fontWeightBold">
                                         Item Description
-                                      </Box>
-                                  </Typography>
-                              </TableCell>
-
-                              {/* Company Telephone Heading */}
-                              <TableCell align="center" variant="head">
-                                  <Typography component="div">
-                                      <Box fontWeight="fontWeightBold">
-                                        Units
                                       </Box>
                                   </Typography>
                               </TableCell>
@@ -319,6 +322,16 @@ export default function ApprovedDonations() {//This is a shorter method of defin
                                   </Typography>
                               </TableCell>
 
+
+                              {/* Status Heading */}
+                              <TableCell align="center" variant="head">
+                                  <Typography component="div">
+                                      <Box fontWeight="fontWeightBold">
+                                        Status
+                                      </Box>
+                                  </Typography>
+                              </TableCell>
+
                           </TableRow>
 
                       </TableHead>
@@ -334,8 +347,6 @@ export default function ApprovedDonations() {//This is a shorter method of defin
                                   <TableCell align="center">{item.donor}</TableCell>
 
                                   <TableCell align="center">{item.item_desc}</TableCell>
-
-                                  <TableCell align="center">{item.units}</TableCell>
 
                                   <TableCell align="center">{item.retrieval_loc}</TableCell>
 
@@ -356,6 +367,16 @@ export default function ApprovedDonations() {//This is a shorter method of defin
                                         </Button>
                                       </a>
                                   </TableCell>
+
+                                  <TableCell align="center">
+                                    
+                                      {/* If a donation is pending collection */}
+                                      { item.completed === 0 && <Alert color="danger">Pending Completion</Alert>}
+
+                                      {/* If a donation was collected */}
+                                      { item.completed === 1 && <Alert color="success">Donation Collected</Alert> }
+                                  
+                                  </TableCell>                                  
 
                                 </TableRow>
                           
@@ -378,7 +399,7 @@ export default function ApprovedDonations() {//This is a shorter method of defin
 
                 <ModalBody>
 
-                  {/* For each of the following entries, the respective component states defined lines 53-60 are referenced */}
+                  {/* For each of the following entries, the respective component states defined (lines 52-60) are referenced */}
 
                   <ListGroup>
         

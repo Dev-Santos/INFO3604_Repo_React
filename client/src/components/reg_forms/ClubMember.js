@@ -187,7 +187,7 @@ class CMRegisterForm extends Component{
                         
                         <FormGroup>
 
-                            <Label for="exampleSelect">Club Location</Label>
+                            <Label for="clubID">Club Location</Label>
                             <Input type="select" name="clubID" id="clubID" onChange={this.onChange} >
                                     <option hidden></option>
                                 

@@ -4,7 +4,7 @@ const router = express.Router();
 //Club Model
 const Club = require('../../models/Club');
 
-//@route    GET api/users
+//@route    GET api/clubs
 //@desc     Select all club information
 //@access   Public
 router.get('/', (req, res)=>{

@@ -100,6 +100,22 @@ router.get('/listing', auth, (req, res)=>{
 
 
 
+//@route    GET api/register/auth_users
+//@desc     Get authenticated club members in the users table
+//@access   Private
+router.get('/auth_users', auth, (req, res)=>{
+
+    User.findAll({where: {userType: 2}}) //Club Members have a userType of 2
+        .then( records => {
+
+           return res.status(200).json(records); //Record corresponding records
+
+        })
+        .catch( err => { return res.status(500).json({ msg: 'Error in pulling user records'}); });
+
+
+});
+
 //@route    GET api/register/auth
 //@desc     Get authenticated club members
 //@access   Private

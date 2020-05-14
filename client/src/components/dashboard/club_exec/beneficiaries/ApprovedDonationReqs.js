@@ -13,6 +13,8 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
+import { Alert } from 'reactstrap'
+
 //Imported Title Component
 import Title from '../../Title';
 
@@ -132,6 +134,15 @@ export default function ApprovedDonationReqListing() {//This is a shorter method
                                   </Typography>
                               </TableCell>
 
+                              {/* Status Heading */}
+                              <TableCell align="center" variant="head">
+                                  <Typography component="div">
+                                      <Box fontWeight="fontWeightBold">
+                                        Status
+                                      </Box>
+                                  </Typography>
+                              </TableCell>
+
                           </TableRow>
 
                       </TableHead>
@@ -154,6 +165,14 @@ export default function ApprovedDonationReqListing() {//This is a shorter method
                                   <TableCell align="center">{record.location}</TableCell>
 
                                   <TableCell align="center">{record.date}</TableCell>
+
+                                  <TableCell align="center">
+                                    
+                                    { record.completed === 0 && <Alert color="danger">Pending Completion</Alert>}
+
+                                    { record.completed === 1 && <Alert color="success">Donation Delivered</Alert> }
+                                
+                                  </TableCell>
 
                                 </TableRow>
                           

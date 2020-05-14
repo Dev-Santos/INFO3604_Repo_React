@@ -16,15 +16,15 @@ const EWasteReport = require('../../models/EWasteReport');
 //@access   Public
 router.post('/', (req, res)=>{
     
-    const { rep_person, email, description, location, classification ,image_url } = req.body;
+    const { rep_person, email, telephone, description, location, classification ,image_url } = req.body;
 
     //Simple validation
-    if( !rep_person || !email || !description || !location || !classification || !image_url){
+    if( !rep_person || !email || !telephone || !description || !location || !classification || !image_url){
         res.status(400).json('Please enter all fields');
     }else{
 
         //Create a record in the ewaste_reports table
-        EWasteReport.create({ rep_person, email, description, location, classification, image_url, date: Date.now()})
+        EWasteReport.create({ rep_person, email, telephone, description, location, classification, image_url, date: Date.now()})
             .then(ereport => {
                 
                 //Send confirmation email
@@ -35,6 +35,7 @@ router.post('/', (req, res)=>{
                 let html = `<p>Dear ${ereport.rep_person},</p>
                             <strong>${text}</strong>
                             <ul>
+                                <li>Telephone Contact: ${ereport.telephone}</li>
                                 <li>E-Waste description: ${ereport.description}</li>
                                 <li>Location: ${ereport.location}</li>
                             </ul>
@@ -58,12 +59,13 @@ router.post('/', (req, res)=>{
 });
 
 //@route    GET api/ereport/listing
-//@desc     Get All E-Waste Reports
+//@desc     Get All pending E-Waste Reports
 //@access   Public
 //router.get('/listing', auth, (req, res) => {
 router.get('/listing', (req, res) => {
+    
     //Pull all the e-waste reports in the database
-    db.query("SELECT `id`, `rep_person`, `email`, `description`, `location`, `image_url`, `classification`, `date` FROM `ewaste_reports`;", { type: QueryTypes.SELECT})
+    db.query("SELECT `id`, `rep_person`, `email`, `telephone`, `description`, `location`, `image_url`, `classification`, `date`, `completed` FROM `ewaste_reports` WHERE `completed` = 0;", { type: QueryTypes.SELECT})
         .then(ereports => {
             
             res.status(200).json(ereports);//Returns e-waste reports
@@ -71,6 +73,61 @@ router.get('/listing', (req, res) => {
         })
         .catch(err => res.status(500).json({msg : "Error in pulling the e-waste reports data"}));
 
-})
+});
+
+//@route    GET api/ereport/listing_comp
+//@desc     Get All completed E-Waste Reports
+//@access   Public
+//router.get('/listing_comp', auth, (req, res) => {
+router.get('/listing_comp', (req, res) => {
+    
+    //Pull all the e-waste reports in the database
+    db.query("SELECT `id`, `rep_person`, `email`, `telephone`, `description`, `location`, `image_url`, `classification`, `date`, `completed` FROM `ewaste_reports` WHERE `completed` = 1;", { type: QueryTypes.SELECT})
+        .then(ereports => {
+            
+            res.status(200).json(ereports);//Returns e-waste reports
+
+        })
+        .catch(err => res.status(500).json({msg : "Error in pulling the e-waste reports data"}));
+
+});
+
+
+//@route    POST api/ereport/update
+//@desc     Indicate an e-waste report as completed (based on the report id)
+//@access   Private
+router.post('/update', auth, (req, res)=>{
+   
+    //Extract id field from the request body
+    const { id } = req.body;
+
+    //Simple validation
+    if(!id)
+        return res.status(400).json({ msg: 'Please enter all fields' });
+    
+    //Check to see if there is an e-waste report with the inputted id
+    EWasteReport.findOne({ where: { id } })
+        .then(record => {
+
+            //If a record is found
+            if(record){
+
+                //Indicate the report to be completed
+                record.completed = 1;
+                
+                //Save changes
+                record.save()
+                    .then( record => {                                 
+                        return res.status(200).json(record);//Return details of updated e-waste report
+                    })
+                    .catch(err => { return res.status(400).json({msg: 'Record not saved'});});
+
+            }else{
+                return res.status(400).json({msg: 'Record does not exists'});
+            }
+        })
+        .catch(err => { return res.status(500).json({msg: 'Error in accessing e-waste reports'}); });
+
+});
 
 module.exports = router;

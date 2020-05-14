@@ -9,10 +9,11 @@ import {
     REGISTER_SUCCESS_AWAITING,
     CLEAR_REG_MESSAGE,
     REGISTER_FAIL,
-    GET_REG_LISTING,
     REG_LISTING_LOADING,
     UPDATE_REG_STATUS, 
     REGISTER_SUCCESS,
+    CLEAR_REG_LISTING,
+    GET_CM_LISTING
 } from '../actions/types';
 
 
@@ -29,7 +30,7 @@ export const registerUser = ({name, email, clubID, password}) => dispatch => {
     const body = JSON.stringify({ name, email, clubID, password});
 
     //Send headers and request body to the the api endpoints
-    //Access the backend api (Express & Nodejs) to post/store registration information to the database
+    //Access the backend api (Express & Nodejs) to post/store the registration information to the database
     axios.post('/api/register', body, config)
         .then(res => {
                 dispatch(clearErrors());
@@ -53,16 +54,16 @@ export const clearRegMessage = () => {
 };
 
 
-//This function gets the all the registration records from the database
+//This function gets the all the club member registration records from the database
 export const getRegListing = () => (dispatch, getState) =>{
     
     dispatch(setRegListLoading());
 
-    //Access the backend api (Express & Nodejs) to get all the registration records from the database
+    //Access the backend api (Express & Nodejs) to get all the club member registration records from the database
     axios
         .get('/api/register/listing', tokenConfig(getState))
         .then(res => dispatch({
-            type: GET_REG_LISTING,
+            type: GET_CM_LISTING,
             payload: res.data
         }))
         .catch(err => //If errors are caught
@@ -71,7 +72,7 @@ export const getRegListing = () => (dispatch, getState) =>{
 };
 
 
-//This function gets the all the authenticated club members from the database
+//This function gets all the authenticated club members from the database
 export const getCMListing = () => (dispatch, getState) =>{
     
     dispatch(setRegListLoading());
@@ -80,7 +81,25 @@ export const getCMListing = () => (dispatch, getState) =>{
     axios
         .get('/api/register/auth', tokenConfig(getState))
         .then(res => dispatch({
-            type: GET_REG_LISTING,
+            type: GET_CM_LISTING,
+            payload: res.data
+        }))
+        .catch(err => //If errors are caught
+            dispatch(returnErrors(err.response.data, err.response.status))
+        );
+};
+
+
+//This function gets the all the authenticated club members from the database (in the users table)
+export const getCMAuthListing = () => (dispatch, getState) =>{
+    
+    dispatch(setRegListLoading());
+
+    //Access the backend api (Express & Nodejs) to get all the authenticated club member records from the database
+    axios
+        .get('/api/register/auth_users', tokenConfig(getState))
+        .then(res => dispatch({
+            type: GET_CM_LISTING,
             payload: res.data
         }))
         .catch(err => //If errors are caught
@@ -96,8 +115,8 @@ export const setRegListLoading = () => {
 };
 
 
-//This function is responsible for changing the registration status of a user from 0 (Pending) to 1 (Authenticated)
-//in the database based on their registration id
+//This function is responsible for changing the registration status of a club member
+//from 0 (Pending) to 1 (Authenticated) in the database based on their registration id
 export const updateRegStatus = (id) => (dispatch, getState) =>{
 
     //Create request body
@@ -166,6 +185,12 @@ export const createAdmin = ({ name, email, password, clubID}) => dispatch => {
         });
 }
 
+//This function sets the reg reducer to its initial state
+export const clearRegListing = () =>{
+    return{
+        type: CLEAR_REG_LISTING
+    }
+};
 
 //Setup config/headers and token
 export const tokenConfig = (getState) => {

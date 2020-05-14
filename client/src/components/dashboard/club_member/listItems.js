@@ -6,7 +6,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import BarChartIcon from '@material-ui/icons/BarChart';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import Link from '@material-ui/core/Link';
@@ -17,9 +16,10 @@ export const CM_MainListItems = (
   
   <div>
 
+
     {/* Set of Options */}
 
-    <Link href="/api/dashboard">
+    <Link href="/api/dashboard" style={{textDecoration: 'none', color: 'black'}}>
       <ListItem button >
         <ListItemIcon>
           <DashboardIcon />
@@ -28,27 +28,24 @@ export const CM_MainListItems = (
       </ListItem>
     </Link>
 
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Log Club Activities" />
-    </ListItem>
+    <Link href="/api/dashboard/upcoming_act" style={{textDecoration: 'none', color: 'black'}}>
+      <ListItem button>
+        <ListItemIcon>
+          <ScheduleIcon/>
+        </ListItemIcon>
+        <ListItemText primary="Activity Schedule" />
+      </ListItem>
+    </Link>
 
-    <ListItem button>
-      <ListItemIcon>
-        <ScheduleIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Delivery Schedule" />
-    </ListItem>
-
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Inventory" />
-    </ListItem>
-
+    
+    <Link href="/api/dashboard/log_act" style={{textDecoration: 'none', color: 'black'}}>
+      <ListItem button>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Log Club Activities" />
+      </ListItem>
+    </Link>
 
   </div>
 );

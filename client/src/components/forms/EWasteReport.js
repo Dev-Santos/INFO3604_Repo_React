@@ -43,6 +43,7 @@ class EWasteReport extends Component {
             userAddress: null,
             name: null,
             email: null,
+            tel: null,
             desc: null,
             file: '',
             filename: 'Select file',
@@ -138,11 +139,11 @@ class EWasteReport extends Component {
                         
                         console.log(url);
 
-                        const { name, email, desc } = this.state;
+                        const { name, email, tel, desc } = this.state;
 
                         //Construct our E-Waste Report object to be sent to the backend db
                         const newEReport = {
-                            rep_person: name, email, description: desc, location: loc, classification: class_res ,image_url: url
+                            rep_person: name, email, telephone: tel, description: desc, location: loc, classification: class_res ,image_url: url
                         };
 
                         console.log(newEReport);
@@ -327,6 +328,9 @@ class EWasteReport extends Component {
 
                         <Label for="email">Email</Label>
                         <Input type="email" name="email" id="email" placeholder="Enter email" className="mb-3" onChange={this.onChange} required/>
+
+                        <Label for="tel">Telephone Contact   (Format: 123-4567)</Label>
+                        <Input type="tel" name="tel" id="tel" placeholder="Format: 123-4567" onChange={this.onChange} className="mb-3" pattern="[0-9]{3}-[0-9]{4}" required/>
 
                         <Label for="desc">Description</Label>
                         <Input type="text" name="desc" id="desc" placeholder="Enter E-Waste description" className="mb-3" onChange={this.onChange} required/>

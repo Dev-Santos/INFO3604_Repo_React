@@ -8,6 +8,9 @@ const EWasteReport = db.define('ewaste_reports' , {
         email:{
             type: Sequelize.TEXT
         },
+        telephone:{
+            type: Sequelize.TEXT
+        },
         description:{
             type: Sequelize.TEXT
         },
@@ -22,6 +25,9 @@ const EWasteReport = db.define('ewaste_reports' , {
         },
         date:{
             type: Sequelize.DATE,
+        },
+        completed:{
+            type: Sequelize.INTEGER,
         }
     },{
         timestamps: false

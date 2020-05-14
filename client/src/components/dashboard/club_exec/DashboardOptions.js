@@ -41,13 +41,20 @@ const useStyles = makeStyles((theme) => ({
   },
 
   fixedHeight: {
-    height: 180,
-    width: 280
+    height: 365,
+    width: 350
   },
 
   depositContext: {
     flex: 1,
   },
+
+  centered: {
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 
 }));
 
@@ -69,21 +76,55 @@ function DashboardOptions() {
 
             {/*  First Box on the Left */}
 
-            <Grid item xs={12} md={7} lg={6} style={{paddingLeft: '50px'}}>
+            <Grid item xs={12} md={7} lg={6} style={{paddingLeft: '30px'}}>
 
                 <Paper className={fixedHeightPaper}>
 
-                    <Title>Registration Listing</Title>
+                    <div className={classes.centered}><Title>Club Members</Title></div>
 
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      View pending registrations submitted by the public
+                    <Typography color="textPrimary" style={{textAlign: 'center'}} >
+                      Pending registrations and Existing Club Members.
                     </Typography>
 
-                    <div>
-                      <Link color="primary" href="/api/dashboard/register">
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/reg_listing">
 
                         <Button variant="contained" color="primary">
-                          View Registration Listing
+                          Registration Listing
+                        </Button>
+                        
+                      </Link>
+                    </div>
+
+                    <div style={{marginTop: '10px'}} className={classes.centered}>
+                      <Link color="primary" href="/api/dashboard/reg_users">
+
+                        <Button variant="contained" color="primary">
+                          Authenticated Users
+                        </Button>
+                        
+                      </Link>
+                    </div>
+
+                    <Typography color="textPrimary" style={{marginTop: '10px', textAlign: 'center'}}>
+                      Create and View Club Activities
+                    </Typography>
+
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/activity">
+
+                        <Button variant="contained" color="primary">
+                          Create Activity
+                        </Button>
+                        
+                      </Link>
+                    </div>
+
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/activity_listing">
+
+                        <Button variant="contained" color="primary">
+                          Activity Listing
                         </Button>
                         
                       </Link>
@@ -100,21 +141,55 @@ function DashboardOptions() {
 
                 <Paper className={fixedHeightPaper}>
 
-                    <Title>Donor Information</Title>
+                    <div className={classes.centered}><Title>Donors</Title></div>
 
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
+                    <Typography color="textPrimary" style={{textAlign: 'center'}}>
+                      Pending registrations and Existing Donors.
                     </Typography>
 
-                    <div>
-                      <Link color="primary" href="#">
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/donor_reg_listing">
                         
                         <Button variant="contained" color="primary">
-                          View Donor Info
+                          Registration Listing
                         </Button>
 
                       </Link>
                     </div>
+
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/donor_listing">
+                        
+                        <Button variant="contained" color="primary">
+                          Authenticated Donors
+                        </Button>
+
+                      </Link>
+                    </div>
+
+                    <Typography color="textPrimary" style={{marginTop: '10px', textAlign: 'center'}}>
+                      Submitted and Approved Donations
+                    </Typography>
+
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/donations">
+
+                        <Button variant="contained" color="primary">
+                          Submitted Donations
+                        </Button>
+                        
+                      </Link>
+                    </div>
+
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/donations_auth">
+
+                        <Button variant="contained" color="primary">
+                          Approved Donations
+                        </Button>
+                        
+                      </Link>
+                    </div>                    
 
                 </Paper>
 
@@ -123,23 +198,57 @@ function DashboardOptions() {
 
             {/*  Second Box on the Left */}
 
-            <Grid item xs={12} md={7} lg={6} style={{paddingLeft: '50px'}}>
+            <Grid item xs={12} md={7} lg={6} style={{paddingLeft: '30px'}}>
 
                 <Paper className={fixedHeightPaper}>
 
-                    <Title>Beneficiary Information</Title>
+                    <div className={classes.centered}><Title>Beneficiaries</Title></div>
 
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
+                    <Typography color="textPrimary" style={{textAlign: 'center'}}>
+                      Pending registrations and Existing Beneficiaries.
                     </Typography>
 
-                    <div>
-                      <Link color="primary" href="#">
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/ben_reg_listing">
                         
                         <Button variant="contained" color="primary">
-                          View Beneficiary Info
+                          Registration Listing
                         </Button>
 
+                      </Link>
+                    </div>
+
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/ben_listing">
+                        
+                        <Button variant="contained" color="primary">
+                          Authenticated Beneficiaries
+                        </Button>
+
+                      </Link>
+                    </div>
+
+                    <Typography color="textPrimary" style={{marginTop: '10px', textAlign: 'center'}}>
+                      Submitted and Approved Donation Requests
+                    </Typography>
+
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/donation_reqs">
+
+                        <Button variant="contained" color="primary">
+                          Submitted Donation Requests
+                        </Button>
+                        
+                      </Link>
+                    </div>
+
+                    <div className={classes.centered} style={{marginTop: '10px'}}>
+                      <Link color="primary" href="/api/dashboard/donation_reqs_auth">
+
+                        <Button variant="contained" color="primary">
+                          Approved Donations Requests
+                        </Button>
+                        
                       </Link>
                     </div>
 
@@ -154,76 +263,32 @@ function DashboardOptions() {
 
                 <Paper className={fixedHeightPaper}>
 
-                    <Title>Warehouse Inventory</Title>
+                      <div className={classes.centered}><Title>E-Waste Reports</Title></div>
 
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
-                    </Typography>
+                      <Typography color="textPrimary" style={{textAlign: 'center'}}>
+                        Submitted and Collected E-Waste Report Instances.
+                      </Typography>
 
-                    <div>
-                      <Link color="primary" href="#">
-                        
-                        <Button variant="contained" color="primary">
-                          View Warehouse Details
-                        </Button>
+                      <div className={classes.centered} style={{marginTop: '10px'}}>
+                        <Link color="primary" href="/api/dashboard/ereports">
+                          
+                          <Button variant="contained" color="primary">
+                            E-Waste For Collection
+                          </Button>
 
-                      </Link>
-                    </div>
-                
-                </Paper>
+                        </Link>
+                      </div>
 
-            </Grid>
+                      <div className={classes.centered} style={{marginTop: '10px'}}>
+                        <Link color="primary" href="/api/dashboard/ereports_collected">
+                          
+                          <Button variant="contained" color="primary">
+                            Collected E-Waste
+                          </Button>
 
+                        </Link>
+                      </div>
 
-            {/*  Third Box on the Left */}
-
-            <Grid item xs={12} md={7} lg={6} style={{paddingLeft: '50px'}}>
-
-                <Paper className={fixedHeightPaper}>
-
-                    <Title>E-Waste Reports</Title>
-
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
-                    </Typography>
-
-                    <div>
-                      <Link color="primary" href="/api/dashboard/ereports">
-                        
-                        <Button variant="contained" color="primary">
-                          View E-Waste Reports
-                        </Button>
-
-                      </Link>
-                    </div>
-                
-                </Paper>
-
-            </Grid>
-
-
-            {/*  Third Box on the Right */}
-
-            <Grid item xs={12} md={7} lg={6} style={{paddingLeft: '50px'}}>
-
-                <Paper className={fixedHeightPaper}>
-
-                    <Title>Club Information</Title>
-
-                    <Typography color="textPrimary" className={classes.depositContext}>
-                      Brief Description
-                    </Typography>
-
-                    <div>
-                      <Link color="primary" href="#">
-                        
-                        <Button variant="contained" color="primary">
-                          View Club Details
-                        </Button>
-
-                      </Link>
-                    </div>
-                
                 </Paper>
 
             </Grid>

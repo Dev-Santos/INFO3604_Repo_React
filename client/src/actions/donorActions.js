@@ -92,7 +92,7 @@ export const getDonorRegListing = () => (dispatch, getState) =>{
         
 };
 
-//This function gets the all the authenticated donors from the database
+//This function gets all the authenticated donors from the database
 export const getDonorListing = () => (dispatch, getState) =>{
     
     dispatch(setRegListLoading());
@@ -140,7 +140,7 @@ export const submitDonation = ({donor, email, item_type, item_desc, serial_no, u
     //Create request body
     const body = JSON.stringify({ donor, email, item_type, item_desc, serial_no, units, location, retrieval_loc, classification, image_url });
 
-    //Access the backend api (Express & Nodejs) to send the donation information in the database
+    //Access the backend api (Express & Nodejs) to send the donation information to the database
     axios.post('/api/donor/donation', body, tokenConfig(getState))
         .then(res => dispatch({
             type: FORM_SUCCESS,
@@ -157,7 +157,7 @@ export const getApprovedDonations = () => (dispatch, getState) => {
 
     dispatch(setRegListLoading());
 
-    //Access the backend api (Express & Nodejs) to get all the approved donation from the database
+    //Access the backend api (Express & Nodejs) to get all the approved donations from the database
     axios
         .get('/api/donor/donations_auth', tokenConfig(getState))
         .then(res => dispatch({

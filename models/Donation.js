@@ -40,6 +40,9 @@ const Donation = db.define('donations' , {
         },
         date:{
             type: Sequelize.DATE,
+        },
+        completed:{
+            type: Sequelize.INTEGER,
         }
     },{
         timestamps: false

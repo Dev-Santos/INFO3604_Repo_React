@@ -197,15 +197,6 @@ export default function BeneficiaryRegListing() {//This is a shorter method of d
                                   </Typography>
                               </TableCell>
 
-                              {/* Main Contact Heading */}
-                              <TableCell align="center" variant="head">
-                                  <Typography component="div">
-                                      <Box fontWeight="fontWeightBold">
-                                        Main Contact
-                                      </Box>
-                                  </Typography>
-                              </TableCell>
-
                               {/* Submission Date Heading */}
                               <TableCell align="center" variant="head">
                                   <Typography component="div">
@@ -249,8 +240,6 @@ export default function BeneficiaryRegListing() {//This is a shorter method of d
                                   <TableCell align="center">{record.CompanyEmail}</TableCell>
 
                                   <TableCell align="center">{record.CompanyPhoneNumber}</TableCell>
-
-                                  <TableCell align="center">{record.MainContact}</TableCell>
 
                                   <TableCell align="center">{record.reg_date}</TableCell>
 

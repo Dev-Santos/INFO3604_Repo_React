@@ -28,6 +28,9 @@ const DonationRequest = db.define('donation_requests' , {
         },
         date:{
             type: Sequelize.DATE,
+        },
+        completed:{
+            type: Sequelize.INTEGER,
         }
     },{
         timestamps: false

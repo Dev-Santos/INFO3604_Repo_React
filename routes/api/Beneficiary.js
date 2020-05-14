@@ -191,7 +191,7 @@ router.post('/request', (req, res)=>{
         if (record){
 
             //Create a donation request in the donation_requests table
-            DonationRequest.create({ ben_id: record[0].ben_id, name, email, request, quantity, reason, status: 0, location, date: Date.now()})
+            DonationRequest.create({ ben_id: record[0].ben_id, name, email, request, quantity, reason, status: 0, location, date: Date.now(), completed: 0})
             .then(newRecord => {
 
                 //Send confirmation email

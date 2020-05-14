@@ -33,6 +33,9 @@ app.use('/api/ereport', require('./routes/api/EWaste_Report'));
 //Beneficiary Middleware - Use Routes
 app.use('/api/beneficiary', require('./routes/api/Beneficiary'));
 
+//Beneficiary Middleware - Use Routes
+app.use('/api/assignment', require('./routes/api/Assignment'));
+
 //Serve static assets if in production
 if(process.env.NODE_ENV === 'production'){
     //Set static folder

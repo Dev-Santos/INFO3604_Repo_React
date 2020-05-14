@@ -80,7 +80,7 @@ export default function DonationListing() {//This is a shorter method of definin
 
   }
 
-  // This function handles populating the component states used for the 'Donor Details' modal
+  // This function handles populating the component states used for the 'Donation Details' modal
   const donationDetails = e => {
     
     //We capture the donation id for the respective row where the button was selected
@@ -169,15 +169,6 @@ export default function DonationListing() {//This is a shorter method of definin
                                   </Typography>
                               </TableCell>
 
-                              {/* Units Heading */}
-                              <TableCell align="center" variant="head">
-                                  <Typography component="div">
-                                      <Box fontWeight="fontWeightBold">
-                                        Units
-                                      </Box>
-                                  </Typography>
-                              </TableCell>
-
                               {/* Retrieval Location Heading */}
                               <TableCell align="center" variant="head">
                                   <Typography component="div">
@@ -238,8 +229,6 @@ export default function DonationListing() {//This is a shorter method of definin
                                   <TableCell align="center">{item.donor}</TableCell>
 
                                   <TableCell align="center">{item.item_desc}</TableCell>
-
-                                  <TableCell align="center">{item.units}</TableCell>
 
                                   <TableCell align="center">{item.retrieval_loc}</TableCell>
 
@@ -314,15 +303,6 @@ export default function DonationListing() {//This is a shorter method of definin
                                       </Typography>
                                   </TableCell>
 
-                                  {/* Units Heading */}
-                                  <TableCell align="center" variant="head">
-                                      <Typography component="div">
-                                          <Box fontWeight="fontWeightBold">
-                                            Units
-                                          </Box>
-                                      </Typography>
-                                  </TableCell>
-
                                   {/* Retrieval Location Heading */}
                                   <TableCell align="center" variant="head">
                                       <Typography component="div">
@@ -384,8 +364,6 @@ export default function DonationListing() {//This is a shorter method of definin
 
                                       <TableCell align="center">{item.item_desc}</TableCell>
 
-                                      <TableCell align="center">{item.units}</TableCell>
-
                                       <TableCell align="center">{item.retrieval_loc}</TableCell>
 
                                       <TableCell align="center">{item.date}</TableCell>
@@ -434,7 +412,7 @@ export default function DonationListing() {//This is a shorter method of definin
 
                 <ModalBody>
 
-                  {/* For each of the following entries, the respective component states defined lines 52-60 are referenced */}
+                  {/* For each of the following entries, the respective component states defined lines 51-60 are referenced */}
 
                   <ListGroup>
         

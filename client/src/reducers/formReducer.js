@@ -1,9 +1,10 @@
-import { FORM_SUCCESS, GET_ER_LISTING, ER_LISTING_LOADING } from '../actions/types';
+import { FORM_SUCCESS, ACT_SUCCESS, GET_ER_LISTING, ER_LISTING_LOADING, CLEAR_FORM_LISTING } from '../actions/types';
 
 const initialState = {
     report : null,
     msg : null,
-    loading: false
+    loading: false,
+    listing: null
 };
 
 export default function(state = initialState, action){
@@ -12,6 +13,11 @@ export default function(state = initialState, action){
             return{
                 report: action.payload,
                 msg: 'Successful Submission - Awaiting approval from Admin user'
+            };
+        case ACT_SUCCESS:
+            return{
+                report: action.payload,
+                msg: 'Successful update of activity record'
             };
         case GET_ER_LISTING:
             return {
@@ -24,6 +30,8 @@ export default function(state = initialState, action){
                 ...state,
                 loading: true
             };
+        case CLEAR_FORM_LISTING:
+            return initialState;
         default:
             return state;
     }

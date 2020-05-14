@@ -283,7 +283,7 @@ router.post('/donation', auth, (req, res)=>{
             val = 1;
         
         //Create donation record in the donations table (database)
-        Donation.create({ donor, email, company: val, item_type, item_desc, serial_no, units, location, retrieval_loc, image_url, classification, status: 0, date: Date.now() })
+        Donation.create({ donor, email, company: val, item_type, item_desc, serial_no, units, location, retrieval_loc, image_url, classification, status: 0, date: Date.now(), completed: 0 })
             .then( donation => {
                 
                 //Send confirmation email

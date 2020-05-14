@@ -233,15 +233,6 @@ export default function DonorRegistrationListing() {//This is a shorter method o
                                   </Typography>
                               </TableCell>
 
-                              {/* Main Contact Heading */}
-                              <TableCell align="center" variant="head">
-                                  <Typography component="div">
-                                      <Box fontWeight="fontWeightBold">
-                                        Main Contact
-                                      </Box>
-                                  </Typography>
-                              </TableCell>
-
                               {/* Registration Date Heading */}
                               <TableCell align="center" variant="head">
                                   <Typography component="div">
@@ -286,9 +277,7 @@ export default function DonorRegistrationListing() {//This is a shorter method o
 
                                   <TableCell align="center">{record.CompanyPhoneNumber}</TableCell>
 
-                                  <TableCell align="center">{record.MainContact}</TableCell>
-
-                            <TableCell align="center">{record.reg_date}</TableCell>
+                                  <TableCell align="center">{record.reg_date}</TableCell>
 
                                   {/* More Details Button */}
                                   <TableCell align="center" > 
@@ -423,7 +412,7 @@ export default function DonorRegistrationListing() {//This is a shorter method o
 
                 <ModalBody>
 
-                  {/* For each of the following entries, the respective component states defined lines 53-60 are referenced */}
+                  {/* For each of the following entries, the respective component states defined lines 52-60 are referenced */}
 
                   <ListGroup>
         

@@ -48,8 +48,8 @@ export default function RegistrationListing() {//This is a shorter method of def
   //Accesses the styling configuration on line 30
   const classes = useStyles();
 
-  //This constant stores the registration records. These were captured as a state in the reducers folder
-  const reg = useSelector((state) => state.reg.listing, shallowEqual);
+  //This constant stores the club member registration records. These were captured as a state in the reducers folder
+  const reg = useSelector((state) => state.reg.cm, shallowEqual);
 
   const dispatch = useDispatch();
 
@@ -59,7 +59,7 @@ export default function RegistrationListing() {//This is a shorter method of def
   };
 
   //The useEffect function executes once the component is loaded and it references the listing function defined above
-  //This essentially pulls the registration results from our backend database
+  //This essentially pulls the club member registration records from our backend database
   useEffect(listing,[]);
 
 

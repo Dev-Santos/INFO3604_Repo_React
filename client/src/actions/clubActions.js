@@ -7,6 +7,7 @@ import { GET_CLUBS, CLUBS_LOADING } from './types';
 //Imported the returnErrors function from errorActions file
 import { returnErrors } from './errorActions';
 
+//This function captures all the club information from the database
 export const getClubs = () => dispatch =>{
     
     dispatch(setClubsLoading()); 
