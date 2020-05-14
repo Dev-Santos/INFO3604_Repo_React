@@ -123,6 +123,7 @@ class request extends Component {
         const view = (
             <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
                 
+                <div class="bordered">
                 <h2 className="ml-5" style={{textAlign: "center"}}>Donation Request Form</h2>           
 
                 {/* Item Request Form */}
@@ -168,7 +169,7 @@ class request extends Component {
                     </FormGroup>
 
                 </Form> 
-                
+                </div>                
             </Fragment>
         )
 

@@ -118,7 +118,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                          <a  href="https://www.facebook.com/photo/?fbid=3058877897511722&set=pcb.3239310046113194" target="_blank">View in Detail</a>
+                          <a  href="https://www.facebook.com/photo/?fbid=3058877897511722&set=pcb.3239310046113194" target="_blank" rel="noopener noreferrer">View in Detail</a>
                           </Button>
                           
 
@@ -157,7 +157,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                          <a  href="https://www.facebook.com/photo?fbid=3058878224178356&set=pcb.3239310046113194" target="_blank">View in Detail</a>
+                          <a  href="https://www.facebook.com/photo?fbid=3058878224178356&set=pcb.3239310046113194" target="_blank" rel="noopener noreferrer">View in Detail</a>
                           </Button>
 
                         </CardActions>
@@ -194,7 +194,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                          <a  href="https://www.facebook.com/photo?fbid=3058878320845013&set=pcb.3239310046113194" target="_blank">View in Detail</a>
+                          <a  href="https://www.facebook.com/photo?fbid=3058878320845013&set=pcb.3239310046113194" target="_blank" rel="noopener noreferrer">View in Detail</a>
                           </Button>
 
                         </CardActions>
@@ -231,7 +231,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                          <a  href="https://www.facebook.com/photo?fbid=3058878554178323&set=pcb.3239310046113194" target="_blank">View in Detail</a>
+                          <a  href="https://www.facebook.com/photo?fbid=3058878554178323&set=pcb.3239310046113194" target="_blank" rel="noopener noreferrer">View in Detail</a>
                           </Button>
 
                         </CardActions>
@@ -268,7 +268,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                          <a  href="https://www.facebook.com/photo?fbid=3058878257511686&set=pcb.3239310046113194" target="_blank">View in Detail</a>
+                          <a  href="https://www.facebook.com/photo?fbid=3058878257511686&set=pcb.3239310046113194" target="_blank" rel="noopener noreferrer">View in Detail</a>
                           </Button>
 
                         </CardActions>
@@ -305,7 +305,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                          <a  href="https://www.youtube.com/watch?v=5pjesuht4Pw&t=20s" target="_blank">View Video</a>
+                          <a  href="https://www.youtube.com/watch?v=5pjesuht4Pw&t=20s" target="_blank" rel="noopener noreferrer">View Video</a>
                           </Button>
 
                         </CardActions>
@@ -341,7 +341,7 @@ export default function Album() { //Export the component to be used - It is done
                         <CardActions>
                           
                           <Button size="small" color="primary">
-                          <a  href="https://www.facebook.com/photo/?fbid=3049384445105756&set=a.1603414999702715" target="_blank">View in Detail</a>
+                          <a  href="https://www.facebook.com/photo/?fbid=3049384445105756&set=a.1603414999702715" target="_blank" rel="noopener noreferrer">View in Detail</a>
                           </Button>
 
                         </CardActions>

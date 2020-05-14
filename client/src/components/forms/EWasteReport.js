@@ -314,9 +314,7 @@ class EWasteReport extends Component {
      
             <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
                 <div class="bordered">
-                <h2 className="ml-5" style={{textAlign: "center"}}>E-Waste Report Form</h2>
-                {/*This was placed on line 66*/} 
-                {/*this.getLocation()*/} 
+                <h2 className="ml-5" style={{textAlign: "center"}}>E-Waste Report Form</h2> 
 
                 {/* E-Waste Form */}
                 <Form onSubmit={this.onSubmit} onReset={this.onReset} id="ereport_form">
