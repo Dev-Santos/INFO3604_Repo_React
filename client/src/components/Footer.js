@@ -52,11 +52,10 @@ function Footer(){
                 <div className="col-xs-6 col-md-3">
                   <h6>Quick Links</h6>
                   <ul className="footer-links">
-                    <li><a href="/api/home">About Us</a></li>
-                    <li><a href="/api/home">Contact Us</a></li>
-                    <li><a href="/api/home">Donate</a></li>
-                    <li><a href="/api/home">Request</a></li>
-                    <li><a href="/api/home">Privacy Policy</a></li>
+                    <li><a href="/api/aboutus">About Us</a></li>
+                    <li><a href="/api/register/donor">Donate</a></li>
+                    <li><a href="/api/register/beneficiary">Request</a></li>
+                    <li><a href="/api/ereport">Report E-waste</a></li>
                   </ul>
                 </div>
               </div>
@@ -72,10 +71,8 @@ function Footer(){
 
                 <div className="col-md-4 col-sm-6 col-xs-12">
                   <ul className="social-icons">
-                    <li><a className="facebook" href="/"><i className="fa fa-facebook"></i></a></li>
-                    <li><a className="twitter" href="/"><i className="fa fa-twitter"></i></a></li>
-                    <li><a className="dribbble" href="/"><i className="fa fa-dribbble"></i></a></li>
-                    <li><a className="linkedin" href="/"><i className="fa fa-linkedin"></i></a></li>   
+                    <li><a className="facebook" href="https://www.facebook.com/RSCTechClubs"><i className="fa fa-facebook"></i></a></li>
+                    <li><a className="youtube" href="https://www.youtube.com/channel/UCUk7tMMS1umtvckY0hE1slQ"><i className="fa fa-youtube"></i></a></li>  
                   </ul>
                 </div>
               </div>
