@@ -5,7 +5,6 @@ import React, { Component, Fragment } from 'react';
 import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
 
 //Imported Components to be included
-import CreateAdmin from './auth/CreateAdmin';
 import LoginModal from './auth/LoginModal';
 import Logout from "./auth/Logout";
 
@@ -73,10 +72,6 @@ class AppNavbar extends Component{
 
                     <NavDropdown.Item href="/api/register/beneficiary">
                         As A Beneficiary
-                    </NavDropdown.Item>
-
-                    <NavDropdown.Item >
-                        <CreateAdmin/>
                     </NavDropdown.Item>
 
                 </NavDropdown> 
