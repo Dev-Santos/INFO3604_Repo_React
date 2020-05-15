@@ -70,7 +70,7 @@ class EWasteReport extends Component {
     //These are additional properties (both state variables and functions) of the component that can be accessed at any point
     static propTypes = {
         error: PropTypes.object.isRequired,
-        report: PropTypes.object.isRequired,
+        report: PropTypes.object,
         submitEReport: PropTypes.func.isRequired,
     }
 
@@ -313,7 +313,7 @@ class EWasteReport extends Component {
         return( 
      
             <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
-                <div class="bordered">
+                <div className="bordered">
                 <h2 className="ml-5" style={{textAlign: "center"}}>E-Waste Report Form</h2> 
 
                 {/* E-Waste Form */}

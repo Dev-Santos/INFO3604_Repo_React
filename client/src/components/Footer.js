@@ -42,7 +42,7 @@ function Footer(){
                   <ul className="footer-links">
                     <li>Admin</li>
                     <li>Beneficiaries</li>
-                    <li>Donars</li>
+                    <li>Donors</li>
                     <li>Club Executives</li>
                     <li>Club Member</li>
                     <li>Guest User</li>

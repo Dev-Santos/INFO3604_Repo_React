@@ -351,7 +351,7 @@ class donate extends Component {
         const view = (
             <Fragment> {/* The Fragment element is used to indicated that the following is a fragment/block of elements to be rendered by React */}
                 
-                <div class="bordered">
+                <div className="bordered">
                 <h2 className="ml-5" style={{textAlign: "center"}}>Donation Form</h2>
                 
                 {/* If there is an error message, display it on the form  */}

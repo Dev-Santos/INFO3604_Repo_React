@@ -45,34 +45,34 @@ export default function Homepage() {
             <div className="container">
 
                 <div className="description">
-                <div class="bg-light">
-                <div class="container py-5">
-                    <div class="row h-100 align-items-center py-5">
-                        <div class="col-lg-6">
-                        <h1 class="display-4">E-waste or Electronic Waste</h1>
-                        <p class="lead text-muted mb-0">is growing three times faster than the rate of standard municipal waste.
+                <div className="bg-light">
+                <div className="container py-5">
+                    <div className="row h-100 align-items-center py-5">
+                        <div className="col-lg-6">
+                        <h1 className="display-4">E-waste or Electronic Waste</h1>
+                        <p className="lead text-muted mb-0">is growing three times faster than the rate of standard municipal waste.
                         E-waste contains potentially hazardous and valuable materials,
                         which don‘t belong in landfill.</p>
                         </div>
-                        <div class="col-lg-6 d-none d-lg-block"><img src="https://lh3.googleusercontent.com/proxy/RIMAomzsEBA9B60y-l6aCl1LVnISV_2KZMDhiaLbnHNl09fCT1z_HHVQQik-Kw3WVHk83P3Cp0lK6F6qsgeBE3SLrUw" alt="" class="img-fluid"/></div>
+                        <div className="col-lg-6 d-none d-lg-block"><img src="https://lh3.googleusercontent.com/proxy/RIMAomzsEBA9B60y-l6aCl1LVnISV_2KZMDhiaLbnHNl09fCT1z_HHVQQik-Kw3WVHk83P3Cp0lK6F6qsgeBE3SLrUw" alt="" className="img-fluid"/></div>
                     </div>
                 </div>
             </div>
-            <div class="bg-white py-5">
-                <div class="container py-5">
-                <h1 class="display-4">What you can do to help</h1>
-                    <div class="row align-items-center mb-5">                        
-                        <div class="col-lg-6 order-2 order-lg-1"><i class="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
-                        <h2 class="font-weight-light">Become a Donor</h2>
-                        <p class="lead text-muted mb-0">Help RSC by donating your used eletronics such as old laptops, desktops and phones.</p><a href="/api/register/donor" class="btn btn-light px-5 rounded-pill shadow-sm">Sign Up Now</a>
+            <div className="bg-white py-5">
+                <div className="container py-5">
+                <h1 className="display-4">What you can do to help</h1>
+                    <div className="row align-items-center mb-5">                        
+                        <div className="col-lg-6 order-2 order-lg-1"><i className="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
+                        <h2 className="font-weight-light">Become a Donor</h2>
+                        <p className="lead text-muted mb-0">Help RSC by donating your used eletronics such as old laptops, desktops and phones.</p><a href="/api/register/donor" className="btn btn-light px-5 rounded-pill shadow-sm">Sign Up Now</a>
                         </div>
-                        <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img src="https://webstockreview.net/images/electronics-clipart-e-waste.png" alt="" class="img-fluid mb-4 mb-lg-0"/></div>
+                        <div className="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img src="https://webstockreview.net/images/electronics-clipart-e-waste.png" alt="" className="img-fluid mb-4 mb-lg-0"/></div>
                     </div>
-                    <div class="row align-items-center">
-                        <div class="col-lg-5 px-5 mx-auto"><img src="https://lh3.googleusercontent.com/proxy/TXRin96qtypsX_n1lSmJyyO80OVuwwr1pgj6ee1MMVZ5LBAK2bOP9K_xUxcHNjDXlJb28QGET5yZlVT_cDdcJ8K_pw" alt="" class="img-fluid mb-4 mb-lg-0"/></div>
-                        <div class="col-lg-6"><i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
-                        <h2 class="font-weight-light">Report Ewaste</h2>
-                        <p class="lead text-muted mb-0">Don't be a bystander. If you see E-waste in landfills or even at the side of the road, report it here.</p><a href="/api/ereport" class="btn btn-light px-5 rounded-pill shadow-sm">Make Report</a>
+                    <div className="row align-items-center">
+                        <div className="col-lg-5 px-5 mx-auto"><img src="https://lh3.googleusercontent.com/proxy/TXRin96qtypsX_n1lSmJyyO80OVuwwr1pgj6ee1MMVZ5LBAK2bOP9K_xUxcHNjDXlJb28QGET5yZlVT_cDdcJ8K_pw" alt="" className="img-fluid mb-4 mb-lg-0"/></div>
+                        <div className="col-lg-6"><i className="fa fa-leaf fa-2x mb-3 text-primary"></i>
+                        <h2 className="font-weight-light">Report Ewaste</h2>
+                        <p className="lead text-muted mb-0">Don't be a bystander. If you see E-waste in landfills or even at the side of the road, report it here.</p><a href="/api/ereport" className="btn btn-light px-5 rounded-pill shadow-sm">Make Report</a>
                         </div>
                     </div>
                 </div>
@@ -87,8 +87,7 @@ export default function Homepage() {
                     <h3>Recently Posted E-waste:</h3>
                     
                     {ereports ? ereports.map((record) => (
-                        // <h1>{record.rep_person}</h1>,
-                        // <img src={record.image_url} alt="..."></img>
+      
                         <div className="row" key={record.id}>
 
                             <div className="col-12">
@@ -102,31 +101,26 @@ export default function Homepage() {
                                                 <img src={record.image_url} className="imageDetails img-fluid img-thumbnail" alt="..."/>
                                             </td>
                                             <td>
-                                                <tr>
-                                                    Posted by: {record.rep_person}
-                                                </tr>
-                                                <tr>
-                                                    Description: {record.description}
-                                                </tr>
-                                                { <tr>
-                                                    Location: {record.location}
-                                                </tr> }
-                                                <tr>
-                                                    Device type: {record.classification}
-                                                </tr>
-                                                <tr>
-                                                    Date posted: {record.date}
-                                                </tr>
+                                                <ul style={{listStyle: 'none'}}>
+                                                    <li>
+                                                        Posted by: {record.rep_person}
+                                                    </li>
+                                                    <li>
+                                                        Description: {record.description}
+                                                    </li>
+                                                    <li>
+                                                        Location: {record.location}
+                                                    </li>
+                                                    <li>
+                                                        Device type: {record.classification}
+                                                    </li>
+                                                    <li>
+                                                        Date posted: {record.date}
+                                                    </li>
+                                                </ul>
+
                                             </td>
-                                            {/* <td className="w-25">
-                                                <img src={record.image_url} className="img-fluid img-thumbnail" alt="Sample Pic1"/>
-                                            </td>
-                                            <td>{record.rep_person}</td>
-                                            <td>{record.email}</td>
-                                            <td>{record.description}</td>
-                                            <td>{record.location}</td>
-                                            <td>{record.classification}</td>
-                                            <td>{record.date}</td> */}
+                                            
                                         </tr>
 
                                     </tbody>

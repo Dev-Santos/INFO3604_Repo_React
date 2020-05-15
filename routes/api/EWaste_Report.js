@@ -24,7 +24,7 @@ router.post('/', (req, res)=>{
     }else{
 
         //Create a record in the ewaste_reports table
-        EWasteReport.create({ rep_person, email, telephone, description, location, classification, image_url, date: Date.now()})
+        EWasteReport.create({ rep_person, email, telephone, description, location, classification, image_url, date: Date.now(), completed:0})
             .then(ereport => {
                 
                 //Send confirmation email
