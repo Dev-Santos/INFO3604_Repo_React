@@ -2,3 +2,5 @@
 INFO 3604 (Project) with React Front-End -  Code Base and Repository
 
 This web application helps with the management and collection of eWaste around Trinidad
+
+Hosted website: https://mern-emargin8.herokuapp.com
